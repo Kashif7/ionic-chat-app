@@ -1,0 +1,36 @@
+<ion-view view-title="Profile Edit">
+
+  <ion-nav-buttons side="left">
+    <a ng-click="myGoBack()" class="button button-icon icon ion-ios-arrow-back"></a>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="secondary">
+    <button class="button button-clear button-small" ng-click="forgetPassword()">save</button>
+  </ion-nav-buttons>
+
+  <ion-content class="padding">
+    <div class="edit-profile">
+      <img align="center"
+           src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg">
+      <label class="icon ion-camera"></label>
+    </div>
+    <div class="list practera-forms">
+      <label class="item item-input">
+        <input type="text" placeholder="First Name">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Last Name">
+      </label>
+      <label class="item item-input">
+        <input type="email" placeholder="Email">
+      </label>
+    </div>
+    <div class="list card">
+      <a ng-click="forgetPassword()" class="item item-icon-left">
+        <i class="icon ion-key"></i>
+        Change Password
+      </a>
+    </div>
+  </ion-content>
+
+</ion-view>

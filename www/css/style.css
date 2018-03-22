@@ -1,0 +1,179 @@
+/* Empty. Add your own CSS if you like */
+
+.profile-image, .profile-view, .edit-profile {
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.profile-image img {
+  height: 50%;
+  width: 50%;
+  border-radius: 50%;
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
+.edit-profile img {
+  height: 50%;
+  width: 50%;
+  border-radius: 50%;
+  -webkit-filter: blur(2px) grayscale(50%); /* Safari 6.0 - 9.0 */
+  filter: blur(2px) grayscale(50%);
+}
+
+.profile-view img {
+  height: 50%;
+  width: 50%;
+  border-radius: 50%;
+}
+
+/*.profile-view button .button-icon .icon:before {*/
+/*font-size: 24px !important;*/
+/*}*/
+
+.profile-view .button {
+  background-color: white !important;
+  color: #6ebdd3 !important;
+  border: 1px solid #6ebdd3 !important;
+  border-radius: 50%;
+  position: absolute;
+  top: 60%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+}
+
+.profile-button .button-icon .icon:before {
+  font-size: 24px !important;
+}
+
+.profile-image label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 5px;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: xx-large;
+}
+
+.profile-image h5, .profile-view h5, .edit-profile h5 {
+  color: gray;
+}
+
+.edit-profile label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 5px;
+  transform: translate(-50%, -50%);
+  color: gray;
+  font-size: xx-large;
+}
+
+.practera-forms .item {
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+.practera-forms .item {
+  padding-left: 0;
+}
+
+.bubbleLeft {
+  position: relative;
+  min-height: 20px;
+  padding: 5px;
+  background: #e0e0e0;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  box-shadow: -2px 2px 2px 0 rgba(178, 178, 178, .4);
+  width: fit-content;
+}
+
+.bubbleLeft:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 7px 10px 7px 0;
+  border-color: transparent #e0e0e0;
+  display: block;
+  z-index: 1;
+  margin-top: -7px;
+  /*right: -20px;*/
+  right: 100%;
+  top: 20px;
+}
+
+.bubbleRight {
+  color: white;
+  position: relative;
+  min-height: 20px;
+  padding: 5px;
+  background: #6ebdd3;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  box-shadow: -2px 2px 2px 0 rgba(178, 178, 178, .4);
+  width: fit-content !important;
+  float: right !important;
+}
+
+.bubbleRight:after {
+  content: '';
+  color: white;
+  position: absolute;
+  border-style: solid;
+  border-width: 7px 0 7px 10px;
+  border-color: transparent #6ebdd3;
+  display: block;
+  width: 0;
+  z-index: 1;
+  margin-top: -7px;
+  right: -10px;
+  top: 20px;
+}
+
+.chat-list {
+  border: none !important;
+}
+
+.chat-time-right {
+  position: relative;
+  float: right !important;
+  width: fit-content !important;
+}
+
+.chat-user-options {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 5px;
+  transform: translate(-50%, -50%);
+  color: gray;
+  font-size: xx-large;
+}
+
+.bar-image {
+  position: relative;
+}
+
+.bar-image img {
+  border-radius: 50%;
+  max-height: 35px;
+  max-width: 35px;
+}
+
+.bar-image a {
+  color: #6ebdd3 !important;
+  position: absolute;
+  top: 60%;
+  left: 60%;
+  transform: translate(-10%, -10%);
+}
+
+.bar-edit-button {
+  font-size: 16px !important;
+}
