@@ -1,36 +1,45 @@
+<!--Start - User profile edit view-->
 <ion-view view-title="Profile Edit">
 
-  <ion-nav-buttons side="left">
-    <a ng-click="myGoBack()" class="button button-icon icon ion-ios-arrow-back"></a>
-  </ion-nav-buttons>
-
+  <!--Start - Navigation bar save button-->
   <ion-nav-buttons side="secondary">
-    <button class="button button-clear button-small" ng-click="forgetPassword()">save</button>
+    <button class="button button-clear button-small" ng-click="forgetPassword()">Save</button>
   </ion-nav-buttons>
+  <!--End - Navigation bar save button-->
 
   <ion-content class="padding">
+    <!--Start - Profile image edit-->
     <div class="edit-profile">
       <img align="center"
            src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg">
-      <label class="icon ion-camera"></label>
+      <a class="profile-button button icon ion-camera button-calm"></a>
     </div>
+    <!--End - Profile image edit-->
+    <!--Start - Profile details edit-->
     <div class="list practera-forms">
-      <label class="item item-input">
-        <input type="text" placeholder="First Name">
+
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">First Name</span>
+        <input type="text" placeholder="John">
       </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Last Name">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Last Name</span>
+        <input type="text" placeholder="Suhr">
       </label>
-      <label class="item item-input">
-        <input type="email" placeholder="Email">
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Email</span>
+        <input type="text" placeholder="john@suhr.com">
       </label>
     </div>
-    <div class="list card">
-      <a ng-click="forgetPassword()" class="item item-icon-left">
-        <i class="icon ion-key"></i>
+    <!--Start - Profile details edit-->
+    <!--Start - Change password button-->
+    <div class="list">
+      <button ng-click="forgetPassword()" class="item button icon ion-locked button-block button-calm">
         Change Password
-      </a>
+      </button>
     </div>
+    <!--End - Change password button-->
   </ion-content>
 
 </ion-view>
+<!--End - User profile edit view-->

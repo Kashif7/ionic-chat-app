@@ -25,32 +25,42 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   @extend .ion-more;
 }
 
+.message-send {
+  @extend .ion-paper-airplane
+}
+
+.add-people {
+  @extend .ion-person-add;
+}
+
 .platform-android {
   .chat-option {
     @extend .ion-android-more-vertical;
   }
+
+  .add-people {
+    @extend .ion-android-person-add;
+  }
+
+  .message-send {
+    @extend .ion-android-send;
+  }
+
 }
 
 .platform-ios {
   .chat-option {
     @extend .ion-ios-more;
   }
-}
 
-.add-people {
-  @extend .ion-more;
-}
-
-.platform-android {
-  .add-people {
-    @extend .ion-android-person-add;
-  }
-}
-
-.platform-ios {
   .add-people {
     @extend .ion-ios-personadd;
   }
+
+  .message-send {
+    @extend .ion-ios-paperplane;
+  }
+
 }
 
 //.platform-android {
