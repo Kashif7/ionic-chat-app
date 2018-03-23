@@ -7,7 +7,7 @@
 
 (function () {
 
-  angular.module('practeraChat', ['ionic', 'practeraChat.chat'])
+  angular.module('practeraChat', ['ionic', 'practeraChat.chat', 'practeraChat.group'])
 
     .run(function ($ionicPlatform) {
       $ionicPlatform.ready(function () {

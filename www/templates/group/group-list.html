@@ -1,26 +1,26 @@
 <ion-view view-title="Practera Chat App">
-
-  <ion-nav-buttons side="secondary">
-    <button class="button button-icon button-clear icon ion-compose button-small"></button>
-  </ion-nav-buttons>
-
-  <ion-content class="padding">
-    <ion-list>
-
-      <ion-item class="item-image" ng-repeat="item in items" href="#/group-chat-view/{{item.id}}">
-        <div class="row">
-          <div class="col col-25">
-            <img ng-src="{{item.image}}"
-                 src="https://cdn.pixabay.com/photo/2016/04/15/18/05/computer-1331579_960_720.png">
+  
+    <ion-nav-buttons side="secondary">
+      <button class="button button-icon button-clear icon ion-compose button-small"></button>
+    </ion-nav-buttons>
+  
+    <ion-content class="padding">
+      <ion-list>
+        <ion-item class="item-image" ng-repeat="group in groupCtrl.groups" href="#/group-chat-view/{{item.id}}">
+          <div class="row">
+            <div class="col col-25">
+              <img ng-src="{{item.image}}"
+                   src="https://cdn.pixabay.com/photo/2016/04/15/18/05/computer-1331579_960_720.png">
+            </div>
+            <div class="col col-50 text-left col-center">
+              <h2>{{group.displayName}}</h2>
+              <p>{{group.lastMessage}}</p>
+              <span class="badge badge-assertive">{{group.unseenCount}}</span>
+            </div>
           </div>
-          <div class="col col-50 text-left col-center">
-            <h2>{{item.name}}</h2>
-            <p>{{item.lastText}}</p>
-            <span class="badge badge-assertive">5</span>
-          </div>
-        </div>
-
-      </ion-item>
-    </ion-list>
-  </ion-content>
-</ion-view>
+  
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-view>
+  
