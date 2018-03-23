@@ -1,0 +1,38 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2018-3-22: Created with FontForge (http://fontforge.org)
+-->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+  <metadata>
+    Created by FontForge 20160405 at Thu Mar 22 08:46:37 2018
+    By Apache
+    Copyright (c) 2018, Apache
+  </metadata>
+  <defs>
+    <font id="Flaticon" horiz-adv-x="200">
+      <font-face
+        font-family="Flaticon"
+        font-weight="400"
+        font-stretch="normal"
+        units-per-em="512"
+        panose-1="2 0 5 3 0 0 0 0 0 0"
+        ascent="448"
+        descent="-64"
+        bbox="0 -64 512 448"
+        underline-thickness="25.6"
+        underline-position="-51.2"
+        unicode-range="U+0020-F100"
+      />
+      <missing-glyph/>
+      <glyph glyph-name="space" unicode=" "
+      />
+      <glyph glyph-name="uniF100" unicode="&#xf100;" horiz-adv-x="512"
+             d="M255 448c114.055 0 210.323 -85.3604 224.839 -195.515c-17.2295 9.58203 -36.7598 15.5146 -57.8389 15.5146h-38.8311c-18.5273 52.2354 -69.6338 90.2002 -128.169 90.2002s-107.642 -37.9658 -126.169 -90.2002h-38.8311
+c-21.0791 0 -40.6094 -5.93262 -57.8389 -15.5146c14.5156 110.154 108.784 195.515 222.839 195.515zM389.237 26h31.2471c-6.96973 -34.1914 -37.2559 -60 -73.4844 -60h-17.7627c-6.21289 -17.4219 -22.707 -30 -42.2373 -30h-32c-24.8145 0 -45 20.1855 -45 45
+s20.1855 45 45 45h32c19.5303 0 36.0244 -12.5781 42.2373 -30h17.7627c19.5303 0 36.0244 12.5781 42.2373 30zM29.998 214.59c15.96 14.3926 36.8682 23.4102 60.002 23.4102v-182c-49.6289 0 -90 42.3711 -90 92c0 25.8008 11.7139 50.1006 29.998 66.5898zM135 238
+c24.8145 0 45 -20.1855 45 -45v-92c0 -24.8145 -20.1855 -45 -45 -45h-15v182h1.51562h13.4844zM390.484 238h1.51562v-182h-15c-24.8145 0 -45 20.1855 -45 45v92c0 24.8145 20.1855 45 45 45h13.4844zM482 214.59c18.3613 -16.5527 30 -40.5791 30 -66.5898
+c0 -49.6289 -40.3711 -92 -90 -92v182c23.1338 0 44.041 -9.01758 60 -23.4102z"/>
+    </font>
+  </defs>
+</svg>

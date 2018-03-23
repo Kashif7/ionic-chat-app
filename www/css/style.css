@@ -1,5 +1,9 @@
 /* Empty. Add your own CSS if you like */
 
+.profile-view {
+  margin-bottom: 35px !important;
+}
+
 .profile-image, .profile-view, .edit-profile {
   width: 100%;
   text-align: center;
@@ -18,19 +22,14 @@
   height: 50%;
   width: 50%;
   border-radius: 50%;
-  -webkit-filter: blur(2px) grayscale(50%); /* Safari 6.0 - 9.0 */
-  filter: blur(2px) grayscale(50%);
 }
 
 .profile-view img {
-  height: 50%;
-  width: 50%;
+  height: 40%;
+  width: 40%;
   border-radius: 50%;
+  box-shadow: 1px 1px 5px gray;
 }
-
-/*.profile-view button .button-icon .icon:before {*/
-/*font-size: 24px !important;*/
-/*}*/
 
 .profile-view .button {
   background-color: white !important;
@@ -47,6 +46,10 @@
   font-size: 24px !important;
 }
 
+.profile-button .icon:before {
+  font-size: 32px !important;
+}
+
 .profile-image label {
   position: absolute;
   top: 50%;
@@ -61,14 +64,17 @@
   color: gray;
 }
 
-.edit-profile label {
+.edit-profile .button {
+  /*padding: 15px 18px 15px 18px;*/
+  /*background: white !important; !* For browsers that do not support gradients *!*/
+  background: radial-gradient(#e0e0e0, white, gray); /* Standard syntax (must be last) */
+  color: #6ebdd3 !important;
+  border: 3px solid #6ebdd3 !important;
+  border-radius: 50%;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  padding: 5px;
+  top: 85%;
+  left: 65%;
   transform: translate(-50%, -50%);
-  color: gray;
-  font-size: xx-large;
 }
 
 .practera-forms .item {
@@ -85,59 +91,35 @@
   position: relative;
   min-height: 20px;
   padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
   background: #e0e0e0;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  box-shadow: -2px 2px 2px 0 rgba(178, 178, 178, .4);
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
   width: fit-content;
 }
 
-.bubbleLeft:after {
-  content: '';
-  position: absolute;
-  border-style: solid;
-  border-width: 7px 10px 7px 0;
-  border-color: transparent #e0e0e0;
-  display: block;
-  z-index: 1;
-  margin-top: -7px;
-  /*right: -20px;*/
-  right: 100%;
-  top: 20px;
-}
-
 .bubbleRight {
-  color: white;
+  color: white !important;
   position: relative;
   min-height: 20px;
   padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
   background: #6ebdd3;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  box-shadow: -2px 2px 2px 0 rgba(178, 178, 178, .4);
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border-radius: 50px;
   width: fit-content !important;
   float: right !important;
 }
 
-.bubbleRight:after {
-  content: '';
-  color: white;
-  position: absolute;
-  border-style: solid;
-  border-width: 7px 0 7px 10px;
-  border-color: transparent #6ebdd3;
-  display: block;
-  width: 0;
-  z-index: 1;
-  margin-top: -7px;
-  right: -10px;
-  top: 20px;
-}
-
 .chat-list {
   border: none !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  padding-right: 10px !important;
 }
 
 .chat-time-right {
@@ -176,4 +158,81 @@
 
 .bar-edit-button {
   font-size: 16px !important;
+}
+
+.remove-padding {
+  padding: 0 !important;
+}
+
+.contact-checkbox {
+  padding-left: 16px !important;
+  padding: 2px !important;
+}
+
+.group-info-button {
+  margin-top: 10px !important;
+}
+
+.group-info-button button {
+  border-radius: 50% !important;
+  padding: 0;
+}
+
+.group-info-button button i:before {
+  font-size: 18px !important;
+}
+
+.tabs-stable .tab-item.tab-item-active, .tabs-striped .tab-item.activated {
+  border-color: #6ebdd3 !important;
+  color: #6ebdd3 !important;
+}
+
+.bar.bar-stable, .bar-stable .button.button-clear, .bar.bar-stable .title, .bar-stable .button {
+  color: #6ebdd3 !important;
+}
+
+.button-bar > .button {
+  padding-right: 8px !important;
+  padding-left: 8px !important;
+}
+
+ion-popover-view.fit {
+  height: auto !important;
+}
+
+ion-popover-view.fit ion-content {
+  position: relative !important;
+}
+
+.platform-android ion-popover-view.fit {
+  margin-top: 10px !important;
+}
+
+.chat-time-cell {
+  padding: 0 !important;
+}
+
+.group-see-all {
+  font-size: 14px !important;
+  line-height: 14px !important;
+  min-height: 15px !important;
+}
+
+.group-remove-user:before {
+  font-size: 24px !important;
+  line-height: 24px !important;
+  min-height: 25px !important;
+}
+
+.helpdesk h6 {
+  margin: 0 !important;
+}
+
+.helpdesk-item {
+  border-bottom: 1px solid #e0e0e0 !important;
+  border-top: none !important;
+}
+
+.hrlpdesk-remove-left-padding {
+  padding-left: 0px !important;
 }

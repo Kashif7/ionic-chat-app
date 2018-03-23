@@ -1,9 +1,9 @@
 <ion-view view-title="Practera Chat App">
-  
+
     <ion-nav-buttons side="secondary">
       <button class="button button-icon button-clear icon ion-compose button-small"></button>
     </ion-nav-buttons>
-  
+
     <ion-content class="padding">
       <ion-list>
         <ion-item class="item-image" ng-repeat="group in groupCtrl.groups" href="#/group-chat-view/{{item.id}}">
@@ -18,9 +18,8 @@
               <span class="badge badge-assertive">{{group.unseenCount}}</span>
             </div>
           </div>
-  
+
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-view>
-  
