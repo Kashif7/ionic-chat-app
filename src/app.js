@@ -7,7 +7,7 @@
 
 (function () {
 
-  angular.module('practeraChat', ['ionic', 'practeraChat.chat', 'practeraChat.group'])
+  angular.module('practeraChat', ['ionic', 'practeraChat.chat', 'practeraChat.group', 'practeraChat.auth', 'practeraChat.config'])
 
     .run(function ($ionicPlatform) {
       $ionicPlatform.ready(function () {
@@ -42,7 +42,7 @@
         });
 
       // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/nav/chat');
+      $urlRouterProvider.otherwise('/login');
 
     });
 })();
