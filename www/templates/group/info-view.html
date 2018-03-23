@@ -1,47 +1,56 @@
+<!--Start - Group info view-->
 <ion-view view-title="Group Details" hide-back-button="true">
 
+  <!--Start - Navigation back button-->
   <ion-nav-buttons side="left">
     <a ng-click="myGoBack()" class="button button-icon icon ion-ios-arrow-back"></a>
   </ion-nav-buttons>
+  <!--End - Navigation back button-->
 
-  <ion-nav-buttons side="secondary">
-    <button class="button button-icon button-clear icon ion-ios-information-outline button-small"></button>
-  </ion-nav-buttons>
+  <ion-content class="has-footer">
 
-  <ion-content class="has-subheader">
-
+    <!--Start - Group name and image card-->
     <ion-list>
-      <ion-item class="item-text-wrap">
+      <ion-item class="info-icons item-avatar item-button-right">
+        <img src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
         <div class="row row-center">
-          <div class="col col-20 col-center">
-            <div class="bar-image">
-              <img ng-click="editGroupPhoto()" style="cursor: pointer"
-                   src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
-              <a ng-click="editGroupPhoto()" style="cursor: pointer"><i class="bar-edit-button icon ion-camera"></i></a>
-            </div>
-          </div>
-          <div class="col col-80 col-center">
-            <h2 ng-click="editGroupName()" class="title"
-                style="text-align: center; cursor: pointer; width: 60% !important; left: 20%;">Group Name
-              <i class="icon ion-edit calm"></i></h2>
+          <div class="col col-90 col-center">
+            <h2>Group Name</h2>
           </div>
         </div>
+        <!--Start - Group name and image edit buttons-->
+        <div class="buttons group-info-button">
+          <button class="button button-calm" ng-click="editGroupPhoto()">
+            <i class="icon ion-camera"></i>
+          </button>
+          <button class="button button-calm" ng-click="editGroupName()">
+            <i class="icon ion-edit"></i>
+          </button>
+        </div>
+        <!--End - Group name and image edit buttons-->
       </ion-item>
     </ion-list>
+    <!--End - Group name and image card-->
 
+    <!--Start - Group member card-->
     <div class="card">
-      <div class="item item-divider">
-        <p style="color: #6ebdd3">Members</p>
+      <!--Start - Group member card header-->
+      <div class="item item-divider item-button-right">
+        <p style="color: #6ebdd3">Group Members</p>
+        <a class="button button-clear button-small button-calm group-see-all">See All</a>
       </div>
+      <!--End - Group member card header-->
       <ion-list>
-        <ion-item class="item-icon-left item-avatar item-text-wrap">
-          <i class="icon add-people calm"></i>
+        <!--Start - Group member card Add member section-->
+        <ion-item class="item-icon-left item-avatar item-text-wrap" href="#/contact-list/groupInfo">
+          <i class="icon ion-person-add calm"></i>
           <div class="row row-center">
             <div class="col col-100 col-center">
-              <p>Add Members</p>
+              <p>Add Member</p>
             </div>
           </div>
         </ion-item>
+        <!--End - Group member card Add member section-->
         <ion-item class="item-avatar item-text-wrap item-icon-right">
           <img src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
           <div class="row row-center">
@@ -49,7 +58,8 @@
               <h2>User Name</h2>
             </div>
           </div>
-          <button class="button button-icon icon chat-option button-clear button-calm" style="top: 20%"></button>
+          <button class="button button-icon icon ion-close-circled button-clear button-stable group-remove-user"
+                  style="top: 20%"></button>
         </ion-item>
         <ion-item class="item-avatar item-text-wrap item-icon-right">
           <img src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
@@ -58,9 +68,35 @@
               <h2>User Name</h2>
             </div>
           </div>
-          <button class="button button-icon icon chat-option button-clear button-calm" style="top: 20%"></button>
+          <button class="button button-icon icon ion-close-circled button-clear button-stable group-remove-user"
+                  style="top: 20%"></button>
+        </ion-item>
+        <ion-item class="item-avatar item-text-wrap item-icon-right">
+          <img src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+          <div class="row">
+            <div class="col col-80 col-center">
+              <h2>User Name</h2>
+            </div>
+          </div>
+          <button class="button button-icon icon ion-close-circled button-clear button-stable group-remove-user"
+                  style="top: 20%"></button>
         </ion-item>
       </ion-list>
     </div>
+    <!--End - Group member card-->
+
   </ion-content>
+
+  <!--Start - Leave Group section-->
+  <div class="bar bar-footer item-icon-right assertive">
+    <i class="icon ion-ios-arrow-right placeholder-icon" style="font-size: 16px"></i>
+    <div class="row">
+      <div class="col col-100 col-center">
+        <p>Leave this group</p>
+      </div>
+    </div>
+  </div>
+  <!--End - Leave Group section-->
+
 </ion-view>
+<!--End - Group info view-->

@@ -1,0 +1,68 @@
+<!--Start - One to One chat view-->
+<ion-view view-title="Jone" hide-back-button="true">
+
+  <!--Start - Navigation bar back button-->
+  <ion-nav-buttons side="left">
+    <a ng-click="myGoBack()" class="button button-icon icon ion-ios-arrow-back"></a>
+  </ion-nav-buttons>
+  <!--End - Navigation bar back button-->
+
+  <!--Start - Navigation bar popup menu button-->
+  <ion-nav-buttons side="secondary">
+    <button ng-if="chatType === 'single'" class="button button-icon button-clear icon chat-option button-small"
+            ng-click="openPopover($event)"></button>
+    <a ng-if="chatType === 'group'" class="button button-icon button-clear icon ion-information-circled button-small"
+       href="#/group-chat-info"></a>
+  </ion-nav-buttons>
+  <!--End - Navigation bar popup menu button-->
+
+  <ion-content>
+    <!--Start - Chat message list view-->
+    <ion-list class="list">
+      <li class="item item-text-wrap chat-list chat-time-cell">
+        <p class="text-center">
+          <small>10.00 PM</small>
+        </p>
+      </li>
+      <li class="item item-avatar-left item-text-wrap chat-list">
+        <img src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg" alt=""/>
+        <div class="bubbleLeft">
+          <p>Hello</p>
+        </div>
+      </li>
+      <li class="item item-text-wrap chat-list chat-time-cell">
+        <p class="text-center">
+          <small>10.20 PM</small>
+        </p>
+      </li>
+      <li class="item item-avatar-left item-text-wrap chat-list">
+        <img src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg" alt=""/>
+        <div class="bubbleLeft">
+          <p>Hello</p>
+        </div>
+      </li>
+      <li class="item item-text-wrap chat-list chat-time-cell">
+        <p class="text-center">
+          <small>10.25 PM</small>
+        </p>
+      </li>
+      <li class="item item-text-wrap item-right chat-list">
+        <div class="bubbleRight">
+          <p style="color: white">Hello</p>
+        </div>
+      </li>
+    </ion-list>
+    <!--End - Chat message list view-->
+  </ion-content>
+  <!--Start - Chat message typing text field-->
+  <div class="bar bar-footer item-input-inset footer-item-input-inset">
+    <label class="item-input-wrapper">
+      <i class="icon ion-android-chat placeholder-icon"></i>
+      <input type="text" placeholder="Type your message..." required/>
+    </label>
+    <button class="button icon message-send"></button>
+  </div>
+  <!--End - Chat message typing text field-->
+</ion-view>
+<!--End - One to One chat view-->
+
