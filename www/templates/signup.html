@@ -1,14 +1,33 @@
-<ion-view view-title="Practera Chat App">
-  <div class="bar bar-subheader">
-    <h1 class="title">Sign Up</h1>
-  </div>
+<ion-view view-title="Chat App | Registration">
 
-  <ion-content class="padding has-subheader">
+  <ion-content class="padding">
+    <!--Start - Profile image add-->
     <div class="profile-image">
       <img align="center"
            src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg">
       <label class="icon ion-camera"></label>
     </div>
+    <!--End - Profile image add-->
+
+    <!--Start - Select user Type-->
+    <div class="list" style="margin-bottom: 0px !important;">
+      <div class="item" style="border: none !important;">
+        <p class="text-center">Select user registration type</p>
+        <div class="button-bar">
+          <button class="button button-calm button-clear text-center">
+            <i class="icon ion-person" style="margin-right: 3px;"></i>
+            Member
+          </button>
+          <button class="button button-dark button-clear text-center">
+            <i class="flaticon-technology" style="margin-right: 3px;"></i>
+            Helpdesk
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--End - Select user Type-->
+
+    <!--Start - Profile detail add-->
     <form>
       <div class="list practera-forms">
         <label class="item item-input">
@@ -23,9 +42,10 @@
         <label class="item item-input">
           <input type="password" placeholder="Password">
         </label>
-        <input type="submit" class="item button button-calm button-block" value="Sign Up">
+        <input type="submit" class="item button button-calm button-block" value="Registration as user">
       </div>
     </form>
+    <!--End - Profile detail add-->
   </ion-content>
 
 </ion-view>

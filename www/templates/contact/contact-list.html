@@ -1,0 +1,108 @@
+<!--Start - chat create contact list-->
+<ion-view view-title="Chat App">
+
+  <!--Start - Sub header search field-->
+  <div class="bar bar-subheader item-input-inset">
+    <label class="item-input-wrapper">
+      <i class="icon ion-ios-search placeholder-icon"></i>
+      <input type="search" placeholder="Search">
+    </label>
+  </div>
+  <!--End - Sub header search field-->
+
+  <!--Start - Navigation bar bak button-->
+  <ion-nav-buttons side="left">
+    <a ng-if="view === 'one2one' || view === 'group'" ng-click="myGoBack()"
+       class="button button-icon icon ion-ios-arrow-back"></a>
+  </ion-nav-buttons>
+  <!--End - Navigation bar bak button-->
+
+  <ion-content class="has-subheader">
+
+    <!--Start - Chat with helpdesk-->
+    <ion-list class="helpdesk">
+      <ion-item class="item-avatar item-icon-right item-text-wrap helpdesk-item"
+                href="#/chat-messages?chatId=0&type='single'">
+        <img src="http://helpdesk.mdslogistics.net/components/images/logo2.png">
+        <i class="icon ion-ios-arrow-right placeholder-icon" style="font-size: 16px"></i>
+        <div class="row hrlpdesk-remove-left-padding">
+          <div class="col col-100 col-center hrlpdesk-remove-left-padding">
+            <h2>Helpdesk</h2>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+    <!--End - Chat with helpdesk-->
+
+    <!--Start - One to one chat contact List-->
+    <ion-list ng-if="view === 'one2one'">
+      <ion-item class="item-divider">A</ion-item>
+      <ion-item class="item-avatar item-text-wrap">
+        <img src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+        <div class="row">
+          <div class="col col-100 col-center">
+            <h2 class="text-left">Adam</h2>
+          </div>
+        </div>
+      </ion-item>
+      <ion-item class="item-divider">B</ion-item>
+      <ion-item class="item-avatar item-text-wrap">
+        <img src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+        <div class="row">
+          <div class="col col-100 col-center">
+            <h2 class="text-left">Ben</h2>
+          </div>
+        </div>
+      </ion-item>
+      <ion-item class="item-avatar item-text-wrap">
+        <img src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+        <div class="row">
+          <div class="col col-100 col-center">
+            <h2 class="text-left">Bone</h2>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+    <!--End - One to one chat contact List-->
+
+    <!--Start - Group chat contact List-->
+    <ion-list ng-if="view === 'group' || view === 'groupInfo'" class="item-checkbox-right item-accordion">
+      <ion-item class="item-divider">A</ion-item>
+      <ion-checkbox class="contact-checkbox">
+        <div class="row remove-padding">
+          <div class="col col-20 col-center remove-padding">
+            <img width="40px" height="40px" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+          </div>
+          <div class="col col-80 col-center remove-padding">
+            <h2 class="text-left">Adam</h2>
+          </div>
+        </div>
+      </ion-checkbox>
+      <ion-item class="item-divider">B</ion-item>
+
+      <ion-checkbox class="contact-checkbox">
+        <div class="row remove-padding">
+          <div class="col col-20 col-center remove-padding">
+            <img width="40px" height="40px" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+          </div>
+          <div class="col col-80 col-center remove-padding">
+            <h2 class="text-left">Ben</h2>
+          </div>
+        </div>
+      </ion-checkbox>
+      <ion-checkbox class="contact-checkbox">
+        <div class="row remove-padding">
+          <div class="col col-20 col-center remove-padding">
+            <img width="40px" height="40px" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+          </div>
+          <div class="col col-80 col-center remove-padding">
+            <h2 class="text-left">Bone</h2>
+          </div>
+        </div>
+      </ion-checkbox>
+    </ion-list>
+    <!--End - Group chat contact List-->
+
+  </ion-content>
+</ion-view>
+<!--Start - chat create contact list-->

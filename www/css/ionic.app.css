@@ -141,7 +141,7 @@ $dark:                            #444 !default;
 .ion-android-restaurant:before,
 .ion-android-sad:before,
 .ion-android-search:before,
-.ion-android-send:before,
+.ion-android-send:before, .platform-android .message-send:before,
 .ion-android-settings:before,
 .ion-android-share:before,
 .ion-android-share-alt:before,
@@ -462,7 +462,7 @@ $dark:                            #444 !default;
 .ion-ios-nutrition-outline:before,
 .ion-ios-paper:before,
 .ion-ios-paper-outline:before,
-.ion-ios-paperplane:before,
+.ion-ios-paperplane:before, .platform-ios .message-send:before,
 .ion-ios-paperplane-outline:before,
 .ion-ios-partlysunny:before,
 .ion-ios-partlysunny-outline:before,
@@ -594,7 +594,7 @@ $dark:                            #444 !default;
 .ion-minus-round:before,
 .ion-model-s:before,
 .ion-monitor:before,
-.ion-more:before, .chat-option:before, .add-people:before,
+.ion-more:before, .chat-option:before,
 .ion-mouse:before,
 .ion-music-note:before,
 .ion-navicon:before,
@@ -606,11 +606,11 @@ $dark:                            #444 !default;
 .ion-outlet:before,
 .ion-paintbrush:before,
 .ion-paintbucket:before,
-.ion-paper-airplane:before,
+.ion-paper-airplane:before, .message-send:before,
 .ion-paperclip:before,
 .ion-pause:before,
 .ion-person:before,
-.ion-person-add:before,
+.ion-person-add:before, .add-people:before,
 .ion-person-stalker:before,
 .ion-pie-graph:before,
 .ion-pin:before,
@@ -1205,7 +1205,7 @@ $dark:                            #444 !default;
   content: "";
 }
 
-.ion-android-send:before {
+.ion-android-send:before, .platform-android .message-send:before {
   content: "";
 }
 
@@ -2489,7 +2489,7 @@ $dark:                            #444 !default;
   content: "";
 }
 
-.ion-ios-paperplane:before {
+.ion-ios-paperplane:before, .platform-ios .message-send:before {
   content: "";
 }
 
@@ -3017,7 +3017,7 @@ $dark:                            #444 !default;
   content: "";
 }
 
-.ion-more:before, .chat-option:before, .add-people:before {
+.ion-more:before, .chat-option:before {
   content: "";
 }
 
@@ -3065,7 +3065,7 @@ $dark:                            #444 !default;
   content: "";
 }
 
-.ion-paper-airplane:before {
+.ion-paper-airplane:before, .message-send:before {
   content: "";
 }
 
@@ -3081,7 +3081,7 @@ $dark:                            #444 !default;
   content: "";
 }
 
-.ion-person-add:before {
+.ion-person-add:before, .add-people:before {
   content: "";
 }
 
