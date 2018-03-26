@@ -15,7 +15,7 @@
   </ion-nav-buttons>
   <!--End - Navigation bar popup menu button-->
 
-  <ion-content>
+  <ion-content scrollbar-y="true">
     <!--Start - Chat message list view-->
     <ion-list class="list">
       <li class="item item-text-wrap chat-list" ng-class="messageCtrl.arrangeAvatar(message.senderId)" ng-repeat="message in messageCtrl.messages">

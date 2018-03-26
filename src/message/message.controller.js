@@ -12,15 +12,15 @@
     vm.newMessageText = '';
 
     vm.arrangeAvatar = (senderId) => {
-      return senderId !== user.id ? 'item-avatar-left' : 'item-avatar-right';
+      return senderId !== user.userId ? 'item-avatar-left' : 'item-avatar-right';
     };
 
     vm.showAvatarImage = (senderId) => {
-      return senderId !== user.id ? true : false;
+      return senderId !== user.userId ? true : false;
     }
 
     vm.arrangeBubble = (senderId) => {
-      return senderId === user.id ? 'bubbleRight' : 'bubbleLeft';
+      return senderId === user.userId ? 'bubbleRight' : 'bubbleLeft';
     };
 
     vm.sendMessage = () => {
@@ -28,42 +28,13 @@
       _messageDataService.sendMessage()
     };
 
-    let user = {
-      id: 1
-    };
-    let thread = {
-      threadId: '1_2',
-      user: '2',
-      type: 'group',
-      groupId: '-L8HJ3ldsi-SNLI7TUlM'
-    };
-    let threadId = 't_2'
     let lastMessageId;
+    let user;
     let newMessage = {};
 
-    _messageDataService.getMessages(user.id, threadId, messagesOnSuccess, messagesOnError);
-
     function loadOlderMessages() {
-      _messageDataService.getOldMessages(user.id, threadId, lastMessageId, messagesOnSuccess,
+      _messageDataService.getOldMessages(user.userId , lastMessageId, messagesOnSuccess,
         messagesOnError);
-    }
-
-    function createNewMessage() {
-      newMessage.threadId = thread.threadId;
-
-      if (thread.type === 'private') {
-        newMessage.recipent = thread.user;
-      } else {
-        let group = _messageDataService.getGroupFromId(thread.groupId);
-        
-        group.$loaded()
-          .then((group) => {
-            newMessage.recipent = Object.keys(group.members);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
     }
 
     // setTimeout(() => {
@@ -82,6 +53,9 @@
       console.error('error', error);
     }
 
-    createNewMessage();
+    user = _messageDataService.getUser();
+    console.log(user);
+    newMessage = _messageDataService.createNewMessage();
+    _messageDataService.getMessages(user.userId, messagesOnSuccess, messagesOnError);    
   }
 })();
