@@ -11,17 +11,22 @@
   function authDataService($http, backendUtilService, $state) {
 
     return {
-      signIn: signIn
+      signIn: signIn,
+      signUp: signUp
     };
 
     function signIn(credential, AuthController) {
 
       $http(createApiRequest(credential, 'POST', 'userLogin'))
         .then(function (successResponse) {
-          checkResponseStatus(successResponse, AuthController);
+          checkSignInResponseStatus(successResponse, AuthController);
         }, function (errorResponse) {
-          checkResponseStatus(errorResponse, AuthController);
+          checkSignInResponseStatus(errorResponse, AuthController);
         });
+    }
+
+    function signUp(user, onSuccessCallback, onErrorCallback) {
+
     }
 
     function createApiRequest(credential, method, type) {
@@ -41,7 +46,7 @@
 
     }
 
-    function checkResponseStatus(response, controller) {
+    function checkSignInResponseStatus(response, controller) {
       if (response.status == 400 || response.status == 500) {
         controller.signInStatus = "error";
         controller.signInMessage = "Sign in error! Please try again!";
