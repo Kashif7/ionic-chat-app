@@ -18,9 +18,9 @@
         threadsOnError);
     };
 
-    setTimeout(() => {
-      loadOlderThreads();
-    }, 5000);
+    // setTimeout(() => {
+    //   loadOlderThreads();
+    // }, 5000);
 
     function threadsOnSuccess(data) {
       console.log('data', data);

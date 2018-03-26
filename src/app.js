@@ -7,8 +7,9 @@
 
 (function () {
 
-  angular.module('practeraChat', ['ionic', 'practeraChat.chat', 'practeraChat.group'])
-
+  angular
+    .module('practeraChat',
+    ['ionic', 'practeraChat.chat', 'practeraChat.message'])
     .run(function ($ionicPlatform) {
       $ionicPlatform.ready(function () {
         if (window.cordova && window.cordova.plugins.Keyboard) {
