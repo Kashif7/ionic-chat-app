@@ -12551,3 +12551,14 @@ a.button .icon:before, a.button.icon:before, a.button.icon-left:before, a.button
   -webkit-transition-duration: 0s;
   transition-duration: 0s;
 }
+
+.bouble .time {
+  max-height: 0;
+  transition: max-height 5s ease-out;
+  overflow: hidden;
+}
+
+.bouble .time.show {
+  max-height: fit-content;
+  transition: max-height 5s ease-in;
+}
