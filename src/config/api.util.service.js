@@ -37,6 +37,16 @@
       let api = getApiUrl()['BackendUrl'];
       let endPoint = getEndPoint(type);
 
+      console.log({
+        method: method,
+        url: `${api}${endPoint}`,
+        header: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        },
+        data: credential
+      });
+
       return {
         method: method,
         url: `${api}${endPoint}`,

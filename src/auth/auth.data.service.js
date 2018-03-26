@@ -6,45 +6,53 @@
     .module('practeraChat.auth')
     .factory('authDataService', authDataService);
 
-  authDataService.$inject = ['$http', 'backendUtilService', '$state', 'cookieManagerService'];
+  authDataService.$inject = ['$http', 'backendUtilService', 'cookieManagerService'];
 
-  function authDataService($http, _backendUtilService, $state, cookieManagerService) {
+  function authDataService($http, _backendUtilService, cookieManagerService) {
 
     return {
       signIn: signIn,
       signUp: signUp
     };
 
-    function signIn(credential, AuthController) {
+    function signIn(credential, onSuccessCallback, onErrorCallback) {
 
       $http(_backendUtilService.createApiRequest(credential, 'POST', 'userLogin'))
         .then(function (successResponse) {
-          checkSignInResponseStatus(successResponse, AuthController);
+          checkSignInResponseStatus(successResponse, onSuccessCallback, onErrorCallback);
         }, function (errorResponse) {
-          checkSignInResponseStatus(errorResponse, AuthController);
+          checkSignInResponseStatus(errorResponse, onSuccessCallback, onErrorCallback);
         });
     }
 
     function signUp(user, onSuccessCallback, onErrorCallback) {
 
+      $http(_backendUtilService.createApiRequest(user, 'POST', 'userSignUp'))
+        .then(function (successResponse) {
+          checkSignUpResponseStatus(successResponse, onSuccessCallback, onErrorCallback);
+        }, function (errorResponse) {
+          checkSignUpResponseStatus(errorResponse, onSuccessCallback, onErrorCallback);
+        });
     }
 
-    function onSuccessSignIn(response, controller) {
-      cookieManagerService.setUserCookie(response.data.data);
-      controller.signInStatus = "success";
-      controller.signInMessage = "Log in Success";
-      $state.go('nav.chat');
-    }
-
-    function checkSignInResponseStatus(response, controller) {
+    function checkSignInResponseStatus(response, onSuccessCallback, onErrorCallback) {
       if (response.status == 400 || response.status == 500) {
-        controller.signInStatus = "error";
-        controller.signInMessage = "Sign in error! Please try again!";
+        onErrorCallback("Sign in error! Please try again!");
       } else if (response.status == 404) {
-        controller.signInStatus = "error";
-        controller.signInMessage = "Entered credentials not match to our records! Please try again!";
+        onErrorCallback("Entered credentials not match to our records! Please try again!");
       } else if (response.status === 200) {
-        onSuccessSignIn(response, controller);
+        cookieManagerService.setUserCookie(response.data.data);
+        onSuccessCallback("Login success!");
+      }
+    }
+
+    function checkSignUpResponseStatus(response, onSuccessCallback, onErrorCallback) {
+      if (response.status == 400 || response.status == 500) {
+        onErrorCallback("Registration fail! Please try again!");
+      } else if (response.status == 404) {
+        onErrorCallback("Registration fail! Please try again!");
+      } else if (response.status === 200) {
+        onSuccessCallback("Registration success!");
       }
     }
 

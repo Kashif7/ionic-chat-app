@@ -14,11 +14,15 @@
       <div class="item" style="border: none !important;">
         <p class="text-center">Select user registration type</p>
         <div class="button-bar">
-          <button class="button button-clear text-center" ng-class="authCtrl.signUpCredential.user_type === 'User' ? 'button-calm' : 'button-dark'">
+          <button class="button button-clear text-center"
+                  ng-click="authCtrl.selectUserType('User')"
+                  ng-class="authCtrl.signUpCredential.user_type === 'User' ? 'button-calm' : 'button-dark'">
             <i class="icon ion-person" style="margin-right: 3px;"></i>
             Member
           </button>
-          <button class="button button-clear text-center" ng-class="authCtrl.signUpCredential.user_type === 'Admin' ? 'button-calm' : 'button-dark'">
+          <button class="button button-clear text-center"
+                  ng-click="authCtrl.selectUserType('Admin')"
+                  ng-class="authCtrl.signUpCredential.user_type === 'Admin' ? 'button-calm' : 'button-dark'">
             <i class="flaticon-technology" style="margin-right: 3px;"></i>
             Helpdesk
           </button>
@@ -28,7 +32,7 @@
     <!--End - Select user Type-->
 
     <!--Start - Profile detail add-->
-    <form>
+    <form ng-submit="authCtrl.userSignUp()">
       <div class="list practera-forms">
         <label class="item item-input">
           <input type="text" ng-model="authCtrl.signUpCredential.first_name" placeholder="First Name">
