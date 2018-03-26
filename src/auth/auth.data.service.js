@@ -6,9 +6,9 @@
     .module('practeraChat.auth')
     .factory('authDataService', authDataService);
 
-  authDataService.$inject = ['$http', 'backendUtilService', '$state'];
+  authDataService.$inject = ['$http', 'backendUtilService', '$state', 'cookieManagerService'];
 
-  function authDataService($http, backendUtilService, $state) {
+  function authDataService($http, backendUtilService, $state, cookieManagerService) {
 
     return {
       signIn: signIn,
@@ -46,7 +46,14 @@
 
     }
 
-    function checkSignInResponseStatus(response, controller) {
+    function onSuccessSignIn(response, controller) {
+      cookieManagerService.setUserCookie(response.data.data);
+      controller.signInStatus = "success";
+      controller.signInMessage = "Log in Success";
+      $state.go('nav.chat');
+    }
+
+    function checkResponseStatus(response, controller) {
       if (response.status == 400 || response.status == 500) {
         controller.signInStatus = "error";
         controller.signInMessage = "Sign in error! Please try again!";
@@ -54,9 +61,7 @@
         controller.signInStatus = "error";
         controller.signInMessage = "Entered credentials not match to our records! Please try again!";
       } else if (response.status === 200) {
-        controller.signInStatus = "success";
-        controller.signInMessage = "Log in Success";
-        $state.go('nav.chat');
+        onSuccessSignIn(response, controller);
       }
     }
 
