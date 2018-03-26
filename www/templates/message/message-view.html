@@ -19,35 +19,30 @@
   <ion-content>
     <!--Start - Chat message list view-->
     <ion-list class="list">
-      <li class="item item-text-wrap chat-list chat-time-cell">
-        <p class="text-center">
+      <li class="item item-avatar-left item-text-wrap chat-list bouble">
+        <img src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg" alt=""/>
+        <p class="time" id="chat1">
           <small>10.00 PM</small>
         </p>
-      </li>
-      <li class="item item-avatar-left item-text-wrap chat-list">
-        <img src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg" alt=""/>
-        <div class="bubbleLeft">
+        <div class="bubbleLeft" onclick="messageBoubleTimeShow('chat1')">
           <p>Hello</p>
         </div>
       </li>
-      <li class="item item-text-wrap chat-list chat-time-cell">
-        <p class="text-center">
-          <small>10.20 PM</small>
-        </p>
       </li>
-      <li class="item item-avatar-left item-text-wrap chat-list">
+      <li class="item item-avatar-left item-text-wrap chat-list bouble">
         <img src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg" alt=""/>
-        <div class="bubbleLeft">
+        <p class="time" id="chat2">
+          <small>10.00 PM</small>
+        </p>
+        <div class="bubbleLeft" onclick="messageBoubleTimeShow('chat2')">
           <p>Hello</p>
         </div>
       </li>
-      <li class="item item-text-wrap chat-list chat-time-cell">
-        <p class="text-center">
-          <small>10.25 PM</small>
+      <li class="item item-text-wrap item-right chat-list bouble">
+        <p style="width: 100%;" class="text-right time" id="chat3">
+          <small>10.00 PM</small>
         </p>
-      </li>
-      <li class="item item-text-wrap item-right chat-list">
-        <div class="bubbleRight">
+        <div class="bubbleRight" onclick="messageBoubleTimeShow('chat3')">
           <p style="color: white">Hello</p>
         </div>
       </li>
