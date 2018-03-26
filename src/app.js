@@ -7,7 +7,7 @@
 
 (function () {
 
-  angular.module('practeraChat', ['ionic', 'practeraChat.chat', 'practeraChat.group', 'practeraChat.auth', 'practeraChat.config'])
+  angular.module('practeraChat', ['ionic', 'ngCookies', 'practeraChat.chat', 'practeraChat.group', 'practeraChat.auth', 'practeraChat.config'])
 
     .run(function ($ionicPlatform) {
       $ionicPlatform.ready(function () {
