@@ -19,6 +19,7 @@
     "jshint-stylish": "^2.2.1"
   },
   "dependencies": {
+    "angularfire": "^2.3.0",
     "jshint": "^2.9.5"
   }
 }
