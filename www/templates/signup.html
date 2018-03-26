@@ -14,11 +14,11 @@
       <div class="item" style="border: none !important;">
         <p class="text-center">Select user registration type</p>
         <div class="button-bar">
-          <button class="button button-calm button-clear text-center">
+          <button class="button button-clear text-center" ng-class="authCtrl.signUpCredential.user_type === 'User' ? 'button-calm' : 'button-dark'">
             <i class="icon ion-person" style="margin-right: 3px;"></i>
             Member
           </button>
-          <button class="button button-dark button-clear text-center">
+          <button class="button button-clear text-center" ng-class="authCtrl.signUpCredential.user_type === 'Admin' ? 'button-calm' : 'button-dark'">
             <i class="flaticon-technology" style="margin-right: 3px;"></i>
             Helpdesk
           </button>
@@ -31,16 +31,16 @@
     <form>
       <div class="list practera-forms">
         <label class="item item-input">
-          <input type="text" placeholder="First Name">
+          <input type="text" ng-model="authCtrl.signUpCredential.first_name" placeholder="First Name">
         </label>
         <label class="item item-input">
-          <input type="text" placeholder="Last Name">
+          <input type="text" ng-model="authCtrl.signUpCredential.last_name" placeholder="Last Name">
         </label>
         <label class="item item-input">
-          <input type="email" placeholder="Email">
+          <input type="email" ng-model="authCtrl.signUpCredential.email" placeholder="Email">
         </label>
         <label class="item item-input">
-          <input type="password" placeholder="Password">
+          <input type="password" ng-model="authCtrl.signUpCredential.password" placeholder="Password">
         </label>
         <input type="submit" class="item button button-calm button-block" value="Registration as user">
       </div>

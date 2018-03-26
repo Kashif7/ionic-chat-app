@@ -8,7 +8,7 @@
 
   authDataService.$inject = ['$http', 'backendUtilService', '$state', 'cookieManagerService'];
 
-  function authDataService($http, backendUtilService, $state, cookieManagerService) {
+  function authDataService($http, _backendUtilService, $state, cookieManagerService) {
 
     return {
       signIn: signIn,
@@ -17,7 +17,7 @@
 
     function signIn(credential, AuthController) {
 
-      $http(createApiRequest(credential, 'POST', 'userLogin'))
+      $http(_backendUtilService.createApiRequest(credential, 'POST', 'userLogin'))
         .then(function (successResponse) {
           checkSignInResponseStatus(successResponse, AuthController);
         }, function (errorResponse) {
@@ -29,23 +29,6 @@
 
     }
 
-    function createApiRequest(credential, method, type) {
-
-      let api = backendUtilService.getApiUrl()['BackendUrl'];
-      let endPoint = backendUtilService.getEndPoint(type);
-
-      return {
-        method: method,
-        url: `${api}${endPoint}`,
-        header: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        },
-        data: credential
-      };
-
-    }
-
     function onSuccessSignIn(response, controller) {
       cookieManagerService.setUserCookie(response.data.data);
       controller.signInStatus = "success";
@@ -53,7 +36,7 @@
       $state.go('nav.chat');
     }
 
-    function checkResponseStatus(response, controller) {
+    function checkSignInResponseStatus(response, controller) {
       if (response.status == 400 || response.status == 500) {
         controller.signInStatus = "error";
         controller.signInMessage = "Sign in error! Please try again!";

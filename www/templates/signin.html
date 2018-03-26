@@ -13,10 +13,10 @@
     <form ng-submit="authCtrl.userSignIn()">
       <div class="list practera-forms">
         <label class="item item-input">
-          <input type="email" required ng-model="authCtrl.credential.email" placeholder="Email">
+          <input type="email" name="email" required ng-model="authCtrl.signInCredential.email" placeholder="Email">
         </label>
         <label class="item item-input">
-          <input type="password" required ng-model="authCtrl.credential.password" placeholder="Password">
+          <input type="password" name="password" required ng-model="authCtrl.signInCredential.password" placeholder="Password">
         </label>
         <input type="submit" class="item button button-calm button-block" value="Sign In">
         <p class="text-right"><a class="dark">Forgot Password</a></p>

@@ -7,12 +7,14 @@
     .module('practeraChat.auth')
     .controller('authController', authController);
 
-  authController.$inject = ['authDataService'];
+  authController.$inject = ['authDataService', '$state', 'cookieManagerService'];
 
-  function authController(_authDataService) {
+  function authController(_authDataService, $state, cookieManagerService) {
     let vm = this;
 
-    vm.credential = {};
+    vm.signInCredential = {};
+    vm.signUpCredential = {};
+    vm.signUpCredential.user_type = "User";
     vm.signInStatus = "";
     vm.signInMessage = "";
 
@@ -20,15 +22,19 @@
     vm.userSignUp = userSignUp;
 
     function signInSuccessCallback(response) {
-
+      vm.signInStatus = "success";
+      vm.signInMessage = response;
+      cookieManagerService.setUserCookie(response.data.data);
+      $state.go('nav.chat');
     }
 
     function signInErrorCallback(error) {
-
+      vm.signInStatus = "error";
+      vm.signInMessage = error;
     }
 
     function userSignIn() {
-      _authDataService.signIn(vm.credential, this);
+      _authDataService.signIn(vm.signInCredential, this);
     }
 
     function signUpSuccessCallback(response) {
@@ -40,8 +46,10 @@
     }
 
     function userSignUp() {
-      _authDataService.signUp();
+      _authDataService.signUp(vm.signUpCredential, signUpSuccessCallback, signUpErrorCallback);
     }
+
+
 
   }
 })();

@@ -20,7 +20,8 @@
 
     return {
       getApiUrl: getApiUrl,
-      getEndPoint: getEndPoint
+      getEndPoint: getEndPoint,
+      createApiRequest: createApiRequest
     };
 
     function getApiUrl() {
@@ -30,5 +31,23 @@
     function getEndPoint(endPoint) {
       return endPoints[endPoint];
     }
+
+    function createApiRequest(credential, method, type) {
+
+      let api = getApiUrl()['BackendUrl'];
+      let endPoint = getEndPoint(type);
+
+      return {
+        method: method,
+        url: `${api}${endPoint}`,
+        header: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        },
+        data: credential
+      };
+
+    }
+
   }
 })();
