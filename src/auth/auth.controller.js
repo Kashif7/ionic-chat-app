@@ -13,17 +13,13 @@
     let vm = this;
 
     vm.credential = {};
-    vm.signInStatus = '';
-    vm.signInMessage = '';
+    vm.signInStatus = "";
+    vm.signInMessage = "";
 
     vm.userSignIn = userSignIn;
 
     function userSignIn() {
-      alert("sign in");
-      console.log(vm.credential);
-      let response = _authDataService.signIn(vm.credential);
-      vm.signInStatus = response.status;
-      vm.signInMessage = response.message;
+      _authDataService.signIn(vm.credential, this);
     }
 
   }

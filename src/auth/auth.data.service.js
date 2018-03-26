@@ -6,24 +6,21 @@
     .module('practeraChat.auth')
     .factory('authDataService', authDataService);
 
-  authDataService.$inject = ['$http', 'backendUtilService'];
+  authDataService.$inject = ['$http', 'backendUtilService', '$state'];
 
-  function authDataService($http, backendUtilService) {
+  function authDataService($http, backendUtilService, $state) {
 
     return {
       signIn: signIn
     };
 
-    function signIn(credential) {
+    function signIn(credential, AuthController) {
 
       $http(createApiRequest(credential, 'POST', 'userLogin'))
-        .then((successResponse) => {
-          return {
-            "status": "success",
-            "message": "Log in Success"
-          };
-        }, (errorResponse) => {
-          checkErrorResponseStatus(errorResponse);
+        .then(function (successResponse) {
+          checkResponseStatus(successResponse, AuthController);
+        }, function (errorResponse) {
+          checkResponseStatus(errorResponse, AuthController);
         });
     }
 
@@ -31,16 +28,6 @@
 
       let api = backendUtilService.getApiUrl()['BackendUrl'];
       let endPoint = backendUtilService.getEndPoint(type);
-
-      console.log({
-        method: method,
-        url: `${api}${endPoint}`,
-        header: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        },
-        data: credential
-      });
 
       return {
         method: method,
@@ -54,17 +41,17 @@
 
     }
 
-    function checkErrorResponseStatus(response) {
+    function checkResponseStatus(response, controller) {
       if (response.status == 400 || response.status == 500) {
-        return {
-          "status": "error",
-          "message": "Sign in error! Please try again!"
-        };
+        controller.signInStatus = "error";
+        controller.signInMessage = "Sign in error! Please try again!";
       } else if (response.status == 404) {
-        return {
-          "status": "error",
-          "message": "Entered credentials not match to our records! Please try again!"
-        };
+        controller.signInStatus = "error";
+        controller.signInMessage = "Entered credentials not match to our records! Please try again!";
+      } else if (response.status === 200) {
+        controller.signInStatus = "success";
+        controller.signInMessage = "Log in Success";
+        $state.go('nav.chat');
       }
     }
 
