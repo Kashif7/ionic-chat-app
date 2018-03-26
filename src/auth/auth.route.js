@@ -14,5 +14,11 @@
         controller: 'authController',
         controllerAs: 'authCtrl'
       })
+      .state('signup', {
+        url: '/signup',
+        templateUrl: 'templates/signup.html',
+        controller: 'authController',
+        controllerAs: 'authCtrl'
+      })
   }
 })();

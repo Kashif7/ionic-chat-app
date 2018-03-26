@@ -6,57 +6,53 @@
     .module('practeraChat.auth')
     .factory('authDataService', authDataService);
 
-  authDataService.$inject = ['$http', 'backendUtilService', '$state', 'cookieManagerService'];
+  authDataService.$inject = ['$http', 'backendUtilService', 'cookieManagerService'];
 
-  function authDataService($http, backendUtilService, $state, cookieManagerService) {
+  function authDataService($http, _backendUtilService, cookieManagerService) {
 
     return {
-      signIn: signIn
+      signIn: signIn,
+      signUp: signUp
     };
 
-    function signIn(credential, AuthController) {
+    function signIn(credential, onSuccessCallback, onErrorCallback) {
 
-      $http(createApiRequest(credential, 'POST', 'userLogin'))
+      $http(_backendUtilService.createApiRequest(credential, 'POST', 'userLogin'))
         .then(function (successResponse) {
-          checkResponseStatus(successResponse, AuthController);
+          checkSignInResponseStatus(successResponse, onSuccessCallback, onErrorCallback);
         }, function (errorResponse) {
-          checkResponseStatus(errorResponse, AuthController);
+          checkSignInResponseStatus(errorResponse, onSuccessCallback, onErrorCallback);
         });
     }
 
-    function createApiRequest(credential, method, type) {
+    function signUp(user, onSuccessCallback, onErrorCallback) {
 
-      let api = backendUtilService.getApiUrl()['BackendUrl'];
-      let endPoint = backendUtilService.getEndPoint(type);
-
-      return {
-        method: method,
-        url: `${api}${endPoint}`,
-        header: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        },
-        data: credential
-      };
-
+      $http(_backendUtilService.createApiRequest(user, 'POST', 'userSignUp'))
+        .then(function (successResponse) {
+          checkSignUpResponseStatus(successResponse, onSuccessCallback, onErrorCallback);
+        }, function (errorResponse) {
+          checkSignUpResponseStatus(errorResponse, onSuccessCallback, onErrorCallback);
+        });
     }
 
-    function onSuccessSignIn(response, controller) {
-      cookieManagerService.setUserCookie(response.data.data);
-      controller.signInStatus = "success";
-      controller.signInMessage = "Log in Success";
-      $state.go('nav.chat');
-    }
-
-    function checkResponseStatus(response, controller) {
+    function checkSignInResponseStatus(response, onSuccessCallback, onErrorCallback) {
       if (response.status == 400 || response.status == 500) {
-        controller.signInStatus = "error";
-        controller.signInMessage = "Sign in error! Please try again!";
+        onErrorCallback("Sign in error! Please try again!");
       } else if (response.status == 404) {
-        controller.signInStatus = "error";
-        controller.signInMessage = "Entered credentials not match to our records! Please try again!";
+        onErrorCallback("Entered credentials not match to our records! Please try again!");
       } else if (response.status === 200) {
-        onSuccessSignIn(response, controller);
+        cookieManagerService.setUserCookie(response.data.data);
+        onSuccessCallback("Login success!");
+      }
+    }
+
+    function checkSignUpResponseStatus(response, onSuccessCallback, onErrorCallback) {
+      if (response.status == 400 || response.status == 500) {
+        onErrorCallback("Registration fail! Please try again!");
+      } else if (response.status == 404) {
+        onErrorCallback("Registration fail! Please try again!");
+      } else if (response.status === 200) {
+        onSuccessCallback("Registration success!");
       }
     }
 

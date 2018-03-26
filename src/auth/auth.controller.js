@@ -7,19 +7,63 @@
     .module('practeraChat.auth')
     .controller('authController', authController);
 
-  authController.$inject = ['authDataService'];
+  authController.$inject = ['authDataService', '$state'];
 
-  function authController(_authDataService) {
+  function authController(_authDataService, $state) {
     let vm = this;
 
-    vm.credential = {};
+    vm.signInCredential = {};
+    vm.signUpCredential = {};
+    vm.signUpCredential.user_type = "User";
     vm.signInStatus = "";
     vm.signInMessage = "";
+    vm.signUpStatus = "";
+    vm.signUpMessage = "";
 
     vm.userSignIn = userSignIn;
+    vm.userSignUp = userSignUp;
+    vm.selectUserType = selectUserType;
+
+    function signInSuccessCallback(response) {
+      vm.signInStatus = "success";
+      vm.signInMessage = response;
+      $state.go('nav.chat');
+    }
+
+    function signInErrorCallback(error) {
+      vm.signInStatus = "error";
+      vm.signInMessage = error;
+    }
 
     function userSignIn() {
-      _authDataService.signIn(vm.credential, this);
+      _authDataService.signIn(vm.signInCredential, signInSuccessCallback, signInErrorCallback);
+    }
+
+    function signInAfterSignUpSuccessCallback(response) {
+      vm.signUpStatus = "success";
+      vm.signUpMessage = response;
+      $state.go('nav.chat');
+    }
+
+    function signUpSuccessCallback(response) {
+      let credential = {
+        email: vm.signUpCredential.email,
+        password: vm.signUpCredential.password
+      };
+      _authDataService.signIn(credential, signInAfterSignUpSuccessCallback, signUpErrorCallback );
+    }
+
+    function signUpErrorCallback(error) {
+      vm.signUpStatus = "error";
+      vm.signUpMessage = error;
+    }
+
+    function userSignUp() {
+      _authDataService.signUp(vm.signUpCredential, signUpSuccessCallback, signUpErrorCallback);
+    }
+
+    function selectUserType(type) {
+      vm.signUpCredential.user_type = type;
     }
 
   }
