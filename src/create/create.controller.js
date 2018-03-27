@@ -6,19 +6,41 @@
     .module('practeraChat.createChat')
     .controller('chatCreateController', chatCreateController);
 
-  chatCreateController.$inject = ['$stateParams', '$window', 'authDataService', 'chatCreateService', 'messageDataService', 'cookieManagerService'];
+  chatCreateController.$inject = ['$stateParams', '$ionicHistory', '$window', 'authDataService', 'chatCreateService', 'messageDataService', 'cookieManagerService'];
 
-  function chatCreateController($stateParams, $window, _authDataService, _chatCreateService , _messageDataService, _cookieManagerService) {
+  function chatCreateController($stateParams, $ionicHistory, $window, _authDataService, _chatCreateService , _messageDataService, _cookieManagerService) {
     let vm = this;
     vm.view = $stateParams.viewName;
     vm.contactList = [];
 
     vm.createNormalChat = createNormalChat;
+    vm.selectOrUnselectUser = selectOrUnSelectUser;
+    vm.checkHasMembers = checkHasMembers;
+    vm.createGroupChat = createGroupChat;
+    vm.goToBackView = goToBackView;
 
     if (vm.view === 'one2one' || vm.view === 'group') {
       activate();
     } else {
       // add users to existing group
+    }
+
+    let chatMembers = {};
+
+    function selectOrUnSelectUser(index) {
+      if (chatMembers.hasOwnProperty(vm.contactList[index].id)) {
+        delete chatMembers[vm.contactList[index].id];
+      } else {
+        chatMembers[vm.contactList[index].id] = "member";
+      }
+    }
+
+    function goToBackView() {
+      $ionicHistory.goBack();
+    }
+
+    function checkHasMembers() {
+      return angular.equals(chatMembers, {});
     }
 
     function userListOnSuccessCallback(response) {
@@ -51,11 +73,26 @@
     }
 
     function createNormalChat(id) {
-      alert("create chat");
       let chatdata = {
         user_id: id
       };
       _chatCreateService.createNormalChat(chatdata, normalChatCreateSuccessCallback, normalChatCreateErrorCallback);
+    }
+
+    function groupChatCreateSuccessCallback(response) {
+      console.log(response.data);
+      console.log(response);
+    }
+
+    function groupChatCreateErrorCallback(error) {
+
+    }
+
+    function createGroupChat() {
+      let chatData = {
+        members: chatMembers
+      };
+      _chatCreateService.createGroupChat(chatData, groupChatCreateSuccessCallback, groupChatCreateErrorCallback);
     }
 
   }

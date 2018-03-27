@@ -12,15 +12,21 @@
 
   <!--Start - Navigation bar bak button-->
   <ion-nav-buttons side="left">
-    <a ng-if="contactCtrl.view === 'one2one' || contactCtrl.view === 'group'" ng-click="myGoBack()"
+    <a ng-if="contactCtrl.view === 'one2one' || contactCtrl.view === 'group'" ng-click="goToBackView()"
        class="button button-icon icon ion-ios-arrow-back"></a>
   </ion-nav-buttons>
   <!--End - Navigation bar bak button-->
 
+  <!--Start - Navigation bar create group button-->
+  <ion-nav-buttons side="secondary">
+    <button ng-if="!contactCtrl.checkHasMembers()" class="button button-clear button-small calm" ng-click="contactCtrl.createGroupChat()">Done</button>
+  </ion-nav-buttons>
+  <!--End - Navigation bar create group button-->
+
   <ion-content class="has-subheader">
 
     <!--Start - Chat with helpdesk-->
-    <ion-list class="helpdesk">
+    <ion-list class="helpdesk" ng-if="contactCtrl.view === 'one2one'">
       <ion-item class="item-avatar item-icon-right item-text-wrap helpdesk-item"
                 href="#/chat-messages?chatId=0&type='single'">
         <img src="http://helpdesk.mdslogistics.net/components/images/logo2.png">
@@ -53,36 +59,15 @@
 
     <!--Start - Group chat contact List-->
     <ion-list ng-if="contactCtrl.view === 'group' || contactCtrl.view === 'groupInfo'" class="item-checkbox-right item-accordion">
-      <ion-item class="item-divider">A</ion-item>
-      <ion-checkbox class="contact-checkbox">
+      <ion-checkbox class="contact-checkbox" ng-repeat="contact in contactCtrl.contactList track by $index"
+                    auto-list-divider auto-list-divider-value="{{contact.first_name}}"
+                    ng-click="contactCtrl.selectOrUnselectUser($index)">
         <div class="row remove-padding">
           <div class="col col-20 col-center remove-padding">
-            <img width="40px" height="40px" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+            <img ng-src="{{contact.image_url}}" width="40px" height="40px" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
           </div>
           <div class="col col-80 col-center remove-padding">
-            <h2 class="text-left">Adam</h2>
-          </div>
-        </div>
-      </ion-checkbox>
-      <ion-item class="item-divider">B</ion-item>
-
-      <ion-checkbox class="contact-checkbox">
-        <div class="row remove-padding">
-          <div class="col col-20 col-center remove-padding">
-            <img width="40px" height="40px" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
-          </div>
-          <div class="col col-80 col-center remove-padding">
-            <h2 class="text-left">Ben</h2>
-          </div>
-        </div>
-      </ion-checkbox>
-      <ion-checkbox class="contact-checkbox">
-        <div class="row remove-padding">
-          <div class="col col-20 col-center remove-padding">
-            <img width="40px" height="40px" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
-          </div>
-          <div class="col col-80 col-center remove-padding">
-            <h2 class="text-left">Bone</h2>
+            <h2 class="text-left">{{contact.first_name}} {{contact.last_name}}</h2>
           </div>
         </div>
       </ion-checkbox>
