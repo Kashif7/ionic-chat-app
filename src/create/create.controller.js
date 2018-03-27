@@ -6,9 +6,9 @@
     .module('practeraChat.createChat')
     .controller('chatCreateController', chatCreateController);
 
-  chatCreateController.$inject = ['$stateParams', 'authDataService', 'chatCreateService'];
+  chatCreateController.$inject = ['$stateParams', '$window', 'authDataService', 'chatCreateService', 'messageDataService', 'cookieManagerService'];
 
-  function chatCreateController($stateParams, _authDataService, _chatCreateService) {
+  function chatCreateController($stateParams, $window, _authDataService, _chatCreateService , _messageDataService, _cookieManagerService) {
     let vm = this;
     vm.view = $stateParams.viewName;
     vm.contactList = [];
@@ -35,7 +35,15 @@
     }
 
     function normalChatCreateSuccessCallback(response) {
-
+      let loginUserId = _cookieManagerService.getLoginUserId();
+      let newChatData;
+      for (var key in response.data[loginUserId]) {
+        if (response.data[loginUserId].hasOwnProperty(key)) {
+          newChatData = response.data[loginUserId][key];
+        }
+      }
+      _messageDataService.setThread(newChatData);
+      $window.location.href = ('#/chat-messages?type=' + newChatData.type);
     }
 
     function normalChatCreateErrorCallback(error) {
@@ -47,7 +55,6 @@
       let chatdata = {
         user_id: id
       };
-
       _chatCreateService.createNormalChat(chatdata, normalChatCreateSuccessCallback, normalChatCreateErrorCallback);
     }
 

@@ -3,11 +3,12 @@
     .module('practeraChat.message')
     .controller('messageController', messageController);
 
-  messageController.$inject = ['messageDataService', '$ionicScrollDelegate', '$scope'];
+  messageController.$inject = ['messageDataService', '$ionicScrollDelegate', '$scope', '$location', '$ionicHistory'];
 
-  function messageController(_messageDataService, $ionicScrollDelegate, $scope) {
+  function messageController(_messageDataService, $ionicScrollDelegate, $scope, $location, $ionicHistory) {
     let vm = this;
 
+    vm.chatType = $location.search()['type'];
     vm.messages = [];
     vm.newMessageText = '';
 
@@ -17,11 +18,16 @@
     vm.sendMessage = sendMessage;
     vm.loadOldMessages = loadOlderMessages;
     vm.listenForEnter = listenForEnter;
+    vm.goToBackView = goToBackView;
 
     let lastMessageId;
     let user;
     let newMessage = {};
     let isLoaded;
+
+    function goToBackView() {
+      $ionicHistory.goBack();
+    }
 
     function arrangeAvatar(senderId) {
       return senderId != user.userId ? 'item-avatar-left' : 'item-avatar-right';
@@ -58,12 +64,17 @@
     }
 
     function messagesOnSuccess(messages) {
-      if (!vm.messages) {
-        vm.messages = messages;
+
+      if (messages.length > 0) {
+        if (!vm.messages) {
+          vm.messages = messages;
+        } else {
+          vm.messages = messages.concat(vm.messages.slice(1, vm.messages.length));
+        }
+        lastMessageId = vm.messages[0].$id;
       } else {
-        vm.messages = messages.concat(vm.messages.slice(1, vm.messages.length));
+        newMessage = _messageDataService.createNewMessage();
       }
-      lastMessageId = vm.messages[0].$id;
 
       if (isLoaded) {
         isLoaded = false;

@@ -20,8 +20,10 @@
       $http(_backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'normalChatCreate'))
         .then(function (successResponse) {
           console.log("data service success", successResponse);
+          onSuccessCallback(successResponse);
           // checkSignInResponseStatus(successResponse, onSuccessCallback, onErrorCallback);
         }, function (errorResponse) {
+          onErrorCallback(errorResponse);
           console.log("data service error", errorResponse);
           // checkSignInResponseStatus(errorResponse, onSuccessCallback, onErrorCallback);
         });

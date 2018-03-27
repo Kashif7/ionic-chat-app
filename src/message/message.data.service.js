@@ -28,7 +28,7 @@
 
     function getUser() {
       user = {
-        userId: 1
+        userId: _cookieManagerService.getLoginUserId()
       };
 
       return user;

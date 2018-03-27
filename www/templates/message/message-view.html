@@ -3,13 +3,13 @@
 
   <!--Start - Navigation bar back button-->
   <ion-nav-buttons side="left">
-    <a ng-click="messageCtrl.goBack()" class="button button-icon icon ion-ios-arrow-back"></a>
+    <a ng-click="messageCtrl.goToBackView()" class="button button-icon icon ion-ios-arrow-back"></a>
   </ion-nav-buttons>
   <!--End - Navigation bar back button-->
 
   <!--Start - Navigation bar popup menu button-->
   <ion-nav-buttons side="secondary">
-    <button ng-if="messageCtrl.chatType === 'single'" class="button button-icon button-clear icon chat-option button-small" ng-click="messageCtrl.openPopover($event)"></button>
+    <button ng-if="messageCtrl.chatType === 'Private'" class="button button-icon button-clear icon chat-option button-small" ng-click="messageCtrl.openPopover($event)"></button>
     <a ng-if="messageCtrl.chatType === 'group'" class="button button-icon button-clear icon ion-information-circled button-small"
       href="#/group-chat-info"></a>
   </ion-nav-buttons>
@@ -34,7 +34,7 @@
   <div class="bar bar-footer item-input-inset footer-item-input-inset">
     <label class="item-input-wrapper">
       <i class="icon ion-android-chat placeholder-icon"></i>
-      <input type="text" placeholder="Type your message..." 
+      <input type="text" placeholder="Type your message..."
       name="newMessage" ng-model="messageCtrl.newMessageText" ng-keypress="messageCtrl.listenForEnter($event)" required/>
     </label>
     <button class="button icon message-send" ng-click="messageCtrl.sendMessage()"></button>
