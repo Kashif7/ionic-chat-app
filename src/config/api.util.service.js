@@ -6,22 +6,26 @@
     .module('practeraChat.config', [])
     .factory('backendUtilService', backendUtilService);
 
-  function backendUtilService() {
+  backendUtilService.$inject = ['cookieManagerService'];
+
+  function backendUtilService(cookieManagerService) {
 
     let api = {
-      "BackendUrl": "http://localhost:8000/",
+      "BackendUrl": "http://ec2-54-84-172-12.compute-1.amazonaws.com:8000/",
       "BackendType": "dev"
     };
 
     let endPoints = {
       "userLogin": "users/login",
-      "userSignUp": "users"
+      "userSignUp": "users",
+      "userList": "users"
     };
 
     return {
       getApiUrl: getApiUrl,
       getEndPoint: getEndPoint,
-      createApiRequest: createApiRequest
+      createApiRequest: createApiRequest,
+      createAuthenticateApiGetRequest: createAuthenticateApiGetRequest
     };
 
     function getApiUrl() {
@@ -37,16 +41,6 @@
       let api = getApiUrl()['BackendUrl'];
       let endPoint = getEndPoint(type);
 
-      console.log({
-        method: method,
-        url: `${api}${endPoint}`,
-        header: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*'
-        },
-        data: credential
-      });
-
       return {
         method: method,
         url: `${api}${endPoint}`,
@@ -55,6 +49,35 @@
           'Access-Control-Allow-Origin': '*'
         },
         data: credential
+      };
+
+    }
+
+    function createAuthenticateApiGetRequest(type) {
+
+      let api = getApiUrl()['BackendUrl'];
+      let endPoint = getEndPoint(type);
+      let token = cookieManagerService.getUserCookie()['auth_token'];
+      console.log("util service", token);
+
+      console.log({
+        method: 'GET',
+        url: `${api}${endPoint}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'X-AUTH-TOKEN': token
+        }
+      });
+
+      return {
+        method: 'GET',
+        url: `${api}${endPoint}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'X-AUTH-TOKEN': token
+        }
       };
 
     }
