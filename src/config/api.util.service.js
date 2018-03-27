@@ -18,14 +18,17 @@
     let endPoints = {
       "userLogin": "users/login",
       "userSignUp": "users",
-      "userList": "users"
+      "userList": "users",
+      "normalChatCreate": "users/create",
+      "groupChatCreate": "/users/group"
     };
 
     return {
       getApiUrl: getApiUrl,
       getEndPoint: getEndPoint,
       createApiRequest: createApiRequest,
-      createAuthenticateApiGetRequest: createAuthenticateApiGetRequest
+      createAuthenticateApiGetRequest: createAuthenticateApiGetRequest,
+      createAuthenticatedApiRequestWithData : createAuthenticatedApiRequestWithRequestData
     };
 
     function getApiUrl() {
@@ -36,7 +39,7 @@
       return endPoints[endPoint];
     }
 
-    function createApiRequest(credential, method, type) {
+    function createApiRequest(data, method, type) {
 
       let api = getApiUrl()['BackendUrl'];
       let endPoint = getEndPoint(type);
@@ -48,7 +51,7 @@
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         },
-        data: credential
+        data: data
       };
 
     }
@@ -65,6 +68,24 @@
         headers: {
           'X-AUTH-TOKEN': token
         }
+      };
+
+    }
+
+    function createAuthenticatedApiRequestWithRequestData(data, method, type) {
+
+      let api = getApiUrl()['BackendUrl'];
+      let endPoint = getEndPoint(type);
+      let token = cookieManagerService.getUserCookie()['auth_token'];
+
+      return {
+        method: method,
+        url: `${api}${endPoint}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-AUTH-TOKEN': token
+        },
+        data: data
       };
 
     }
