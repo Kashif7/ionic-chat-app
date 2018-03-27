@@ -7,9 +7,8 @@
 
 (function () {
 
-  angular
-    .module('practeraChat',
-    ['ionic', 'practeraChat.chat', 'practeraChat.message'])
+  angular.module('practeraChat', ['ionic', 'ngCookies', 'practeraChat.chat', 'practeraChat.group', 'practeraChat.message', 'practeraChat.auth', 'practeraChat.config'])
+
     .run(function ($ionicPlatform) {
       $ionicPlatform.ready(function () {
         if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -27,7 +26,12 @@
         }
       });
     })
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+
+      $httpProvider.defaults.headers.common = {};
+      $httpProvider.defaults.headers.post = {};
+      $httpProvider.defaults.headers.put = {};
+      $httpProvider.defaults.headers.patch = {};
 
       // Ionic uses AngularUI Router which uses the concept of states
       // Learn more here: https://github.com/angular-ui/ui-router
@@ -43,7 +47,7 @@
         });
 
       // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/nav/chat');
+      $urlRouterProvider.otherwise('/login');
 
     });
 })();

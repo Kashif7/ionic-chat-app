@@ -15,9 +15,12 @@
   </ion-nav-buttons>
   <!--End - Navigation bar popup menu button-->
 
-  <ion-content scrollbar-y="true">
+  <ion-content class="has-footer">
     <!--Start - Chat message list view-->
     <ion-list class="list">
+      <li class="item item-text-wrap">
+        <button style="width:100%" class="text-center button button-dark button-clear" ng-click="messageCtrl.loadOldMessages()">load more</button>
+      </li>
       <li class="item item-text-wrap chat-list" ng-class="messageCtrl.arrangeAvatar(message.senderId)" ng-repeat="message in messageCtrl.messages">
         <img   ng-if="messageCtrl.showAvatarImage(message.senderId)" src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg" alt="" />
         <div ng-class="messageCtrl.arrangeBubble(message.senderId)">
@@ -32,7 +35,7 @@
     <label class="item-input-wrapper">
       <i class="icon ion-android-chat placeholder-icon"></i>
       <input type="text" placeholder="Type your message..." 
-      name="newMessage" ng-model="messageCtrl.newMessageText" required/>
+      name="newMessage" ng-model="messageCtrl.newMessageText" ng-keypress="messageCtrl.listenForEnter($event)" required/>
     </label>
     <button class="button icon message-send" ng-click="messageCtrl.sendMessage()"></button>
   </div>

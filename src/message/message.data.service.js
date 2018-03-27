@@ -3,10 +3,10 @@
         .module('practeraChat.message')
         .factory('messageDataService', messageDataService);
 
-    messageDataService.$inject = ['$firebaseObject', '$firebaseArray', '$http'];
+    messageDataService.$inject = ['$firebaseObject', '$firebaseArray', '$http', 'cookieManagerService'];
 
-    function messageDataService($firebaseObject, $firebaseArray, $http) {
-        const noOfMessages = 20;
+    function messageDataService($firebaseObject, $firebaseArray, $http, _cookieManagerService) {
+        const noOfMessages = 9;
         let messages;
         let thread;
         let user;
@@ -17,6 +17,7 @@
             createNewMessage: createNewMessage,
             getMessages: getMessages,
             getOldMessages: getOldMessages,
+            getNewMessage: getNewMessage,
             getGroupFromId: getGroupFromId,
             sendMessage: sendMessage
         };
@@ -62,8 +63,8 @@
 
             let ref = firebase.database()
                 .ref(refString)
-                .orderByChild('timeStamp')
-                .limitToFirst(noOfMessages);
+                .orderByKey()
+                .limitToLast(noOfMessages);
 
             $firebaseArray(ref)
                 .$loaded()
@@ -77,7 +78,7 @@
             let ref = firebase.database()
                 .ref(refString)
                 .endAt(lastMessageId)
-                .orderByChild('timeStamp')
+                .orderByKey()
                 .limitToLast(noOfMessages);
 
             $firebaseArray(ref)
@@ -86,6 +87,14 @@
                 .catch(errorCallback);
         }
 
+        function getNewMessage(userId, successCallback) {
+            let refString = `/messages/${userId}/${thread.threadId}`;
+
+            firebase.database().ref(refString)
+                .orderByChild('timeStamp')
+                .limitToLast(1)
+                .on('value', successCallback);
+        }
         function getGroupFromId(groupId) {
             let refString = `groups/${groupId}`;
             let ref = firebase.database()
@@ -95,15 +104,36 @@
         }
 
         function sendMessage(newMessage) {
+            let array = [];
             let postBody = {
                 text: newMessage.text,
                 thread_id: newMessage.threadId,
-                recipent: newMessage.recipent
+                recipent: array.push(newMessage.recipent)
             };
 
-            $http.post('url', postBody)
-                .then(successCallback)
-                .catch(errorCallback);
+            let userCookie = _cookieManagerService.getUserCookie();
+
+            console.log(userCookie);
+
+            let json = {
+                method: 'POST',
+                url: 'http://ec2-54-84-172-12.compute-1.amazonaws.com:8000/users/message',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-AUTH-TOKEN': userCookie.auth_token
+                },
+                data: postBody
+            };
+            console.log(json);
+            $http(json).then(success => {
+                console.log(success);
+            }).catch(error => {
+                console.log(error);
+            });
+
+            // $http.post('url', postBody)
+            //     .then(successCallback)
+            //     .catch(errorCallback);
         }
     }
 })();
