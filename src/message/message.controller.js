@@ -52,7 +52,7 @@
       if (event.keyCode === 10 || event.keyCode === 13) {
         if (!event.shiftKey) {
           event.preventDefault();
-          $scope.sendMessage();
+          sendMessage();
         }
       }
     }
