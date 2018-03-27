@@ -17,16 +17,9 @@
     };
 
     function userList(onSuccessCallback, onErrorCallback) {
-      // console.log(cookieManagerService.getUserCookie());
-      // console.log(cookieManagerService.getUserCookie()['auth_token']);
-      // console.log(_backendUtilService.createAuthenticateApiGetRequest('userList', cookieManagerService.getUserCookie()['auth_token']));
       $http(_backendUtilService.createAuthenticateApiGetRequest('userList'))
         .then(function (successResponse) {
-
-          console.log("user list auth data", successResponse);
-
-          // onSuccessCallback(successResponse);
-          // checkSignInResponseStatus(successResponse, onSuccessCallback, onErrorCallback);
+          onSuccessCallback(successResponse);
         }, function (errorResponse) {
           console.log("user list error", errorResponse);
           // checkSignInResponseStatus(errorResponse, onSuccessCallback, onErrorCallback);

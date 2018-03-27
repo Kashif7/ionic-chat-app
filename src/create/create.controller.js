@@ -16,7 +16,7 @@
 
     function userListOnSuccessCallback(response) {
       vm.contactList = response.data.data;
-      console.log(vm.contactList);
+      console.log(vm.contactList[0].User);
     }
 
     function userListOnErrorCallback(error) {

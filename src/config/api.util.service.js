@@ -58,24 +58,11 @@
       let api = getApiUrl()['BackendUrl'];
       let endPoint = getEndPoint(type);
       let token = cookieManagerService.getUserCookie()['auth_token'];
-      console.log("util service", token);
-
-      console.log({
-        method: 'GET',
-        url: `${api}${endPoint}`,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'X-AUTH-TOKEN': token
-        }
-      });
 
       return {
         method: 'GET',
         url: `${api}${endPoint}`,
         headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
           'X-AUTH-TOKEN': token
         }
       };
