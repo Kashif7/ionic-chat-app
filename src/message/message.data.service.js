@@ -38,7 +38,7 @@
             let newMessage = {};
             newMessage.threadId = thread.threadId;
 
-            if (thread.type === 'private') {
+            if (thread.type === 'Private') {
                 newMessage.recipent = thread.user;
 
                 return newMessage;

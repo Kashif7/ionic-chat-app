@@ -22,14 +22,10 @@
         threadsOnError);
     };
 
-    setTimeout(() => {
-      loadOlderThreads();
-    }, 5000);
-
     function threadsOnSuccess(data) {
       console.log('data', data);
       vm.threads = data;
-      lastThreadId = data[2].$id;
+      lastThreadId = data[data.length-1].$id;
       console.log('lastThreadId',lastThreadId);
     }
 
