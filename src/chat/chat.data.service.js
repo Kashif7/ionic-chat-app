@@ -17,8 +17,8 @@
         function getThreads(userId, successCallback, errorCallback) {
             let ref = firebase.database()
                 .ref(`/threads/${userId}`)
-                .orderByChild('timeStamp')
-                .limitToFirst(noOfThreads);
+                .orderByChild('timeStamp');
+               // .limitToFirst(noOfThreads);
 
             $firebaseArray(ref)
                 .$loaded()
