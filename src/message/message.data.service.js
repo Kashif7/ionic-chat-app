@@ -37,10 +37,13 @@
         function createNewMessage() {
             let newMessage = {};
             newMessage.threadId = thread.threadId;
+          let array = [];
 
             if (thread.type === 'Private') {
-                newMessage.recipent = thread.user;
-
+              array[0] = thread.user;
+                newMessage.recipent = array;
+              console.log("new message", newMessage);
+              console.log("array", array);
                 return newMessage;
             } else {
                 let group = getGroupFromId(thread.groupId);
@@ -104,11 +107,10 @@
         }
 
         function sendMessage(newMessage) {
-            let array = [];
             let postBody = {
                 text: newMessage.text,
                 thread_id: newMessage.threadId,
-                recipent: array.push(newMessage.recipent)
+                recipent: newMessage.recipent
             };
 
             let userCookie = _cookieManagerService.getUserCookie();
