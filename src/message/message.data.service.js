@@ -41,7 +41,7 @@
 
       if (thread.type === 'Private') {
         array[0] = parseInt(thread.user);
-        newMessage.recipent = array;
+        newMessage.recipient = array;
         console.log("new message", newMessage);
         console.log("array", array);
         return newMessage;
@@ -50,7 +50,7 @@
 
         group.$loaded()
           .then((group) => {
-            newMessage.recipent = Object.keys(group.members);
+            newMessage.recipient = Object.keys(group.members);
 
             return newMessage;
           })
@@ -111,7 +111,7 @@
       let postBody = {
         text: newMessage.text,
         thread_id: newMessage.threadId,
-        recipent: newMessage.recipent
+        recipient: newMessage.recipient
       };
 
       let userCookie = _cookieManagerService.getUserCookie();

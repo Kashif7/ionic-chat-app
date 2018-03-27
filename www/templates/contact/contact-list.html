@@ -37,7 +37,9 @@
     <!--Start - One to one chat contact List-->
     <ion-list ng-if="contactCtrl.view === 'one2one'">
       <!--<ion-item class="item-divider">A</ion-item>-->
-      <ion-item class="item-avatar item-icon-right item-text-wrap" ng-repeat="contact in contactCtrl.contactList" ng-click="contactCtrl.createNormalChat(contact.id)">
+      <ion-item class="item-avatar item-icon-right item-text-wrap" ng-repeat="contact in contactCtrl.contactList"
+                auto-list-divider auto-list-divider-value="{{contact.first_name}}"
+                ng-click="contactCtrl.createNormalChat(contact.id)">
         <img ng-src="{{contact.image_url}}" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
         <i class="icon ion-ios-arrow-right placeholder-icon" style="font-size: 16px"></i>
         <div class="row">
