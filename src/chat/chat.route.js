@@ -11,7 +11,7 @@
                     'tab-chat': {
                         templateUrl: 'templates/chat/chat-list.html',
                         controller: 'chatController',
-                        controllerAs: 'chat'
+                        controllerAs: 'chatCtrl'
                     }
                 }
             });
