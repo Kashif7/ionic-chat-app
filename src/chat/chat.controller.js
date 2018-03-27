@@ -3,9 +3,9 @@
     .module('practeraChat.chat')
     .controller('chatController', chatController);
 
-  chatController.$inject = ['chatDataService'];
+  chatController.$inject = ['chatDataService', 'messageDataService'];
 
-  function chatController(_chatDataService) {
+  function chatController(_chatDataService, _messageDataService) {
     let vm = this;
     vm.threads = [];
     let userId = 1;
@@ -13,19 +13,19 @@
 
     vm.threads = _chatDataService.getThreads(1, threadsOnSuccess, threadsOnError);
 
+    vm.setThread = (thread) => {
+      _messageDataService.setThread(thread);
+    };
+
     function loadOlderThreads() {
       vm.threads = _chatDataService.getOldThreads(1, lastThreadId, threadsOnSuccess,
         threadsOnError);
     };
 
-    setTimeout(() => {
-      loadOlderThreads();
-    }, 5000);
-
     function threadsOnSuccess(data) {
       console.log('data', data);
       vm.threads = data;
-      lastThreadId = data[2].$id;
+      lastThreadId = data[data.length-1].$id;
       console.log('lastThreadId',lastThreadId);
     }
 

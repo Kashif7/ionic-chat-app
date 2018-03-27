@@ -3,47 +3,28 @@
 
   <!--Start - Navigation bar back button-->
   <ion-nav-buttons side="left">
-    <a ng-click="myGoBack()" class="button button-icon icon ion-ios-arrow-back"></a>
+    <a ng-click="messageCtrl.goBack()" class="button button-icon icon ion-ios-arrow-back"></a>
   </ion-nav-buttons>
   <!--End - Navigation bar back button-->
 
   <!--Start - Navigation bar popup menu button-->
   <ion-nav-buttons side="secondary">
-    <button ng-if="chatType === 'single'" class="button button-icon button-clear icon chat-option button-small"
-            ng-click="openPopover($event)"></button>
-    <a ng-if="chatType === 'group'" class="button button-icon button-clear icon ion-information-circled button-small"
-       href="#/group-chat-info"></a>
+    <button ng-if="messageCtrl.chatType === 'single'" class="button button-icon button-clear icon chat-option button-small" ng-click="messageCtrl.openPopover($event)"></button>
+    <a ng-if="messageCtrl.chatType === 'group'" class="button button-icon button-clear icon ion-information-circled button-small"
+      href="#/group-chat-info"></a>
   </ion-nav-buttons>
   <!--End - Navigation bar popup menu button-->
 
   <ion-content class="has-footer">
     <!--Start - Chat message list view-->
     <ion-list class="list">
-      <li class="item item-avatar-left item-text-wrap chat-list bouble">
-        <img src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg" alt=""/>
-        <p class="time" id="chat1">
-          <small>10.00 PM</small>
-        </p>
-        <div class="bubbleLeft" onclick="messageBoubleTimeShow('chat1')">
-          <p>Hello</p>
-        </div>
+      <li class="item item-text-wrap">
+        <button style="width:100%" class="text-center button button-dark button-clear" ng-click="messageCtrl.loadOldMessages()">load more</button>
       </li>
-      </li>
-      <li class="item item-avatar-left item-text-wrap chat-list bouble">
-        <img src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg" alt=""/>
-        <p class="time" id="chat2">
-          <small>10.00 PM</small>
-        </p>
-        <div class="bubbleLeft" onclick="messageBoubleTimeShow('chat2')">
-          <p>Hello</p>
-        </div>
-      </li>
-      <li class="item item-text-wrap item-right chat-list bouble">
-        <p style="width: 100%;" class="text-right time" id="chat3">
-          <small>10.00 PM</small>
-        </p>
-        <div class="bubbleRight" onclick="messageBoubleTimeShow('chat3')">
-          <p style="color: white">Hello</p>
+      <li class="item item-text-wrap chat-list" ng-class="messageCtrl.arrangeAvatar(message.senderId)" ng-repeat="message in messageCtrl.messages">
+        <img   ng-if="messageCtrl.showAvatarImage(message.senderId)" src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg" alt="" />
+        <div ng-class="messageCtrl.arrangeBubble(message.senderId)">
+          <p>{{message.text}}</p>
         </div>
       </li>
     </ion-list>
@@ -53,11 +34,11 @@
   <div class="bar bar-footer item-input-inset footer-item-input-inset">
     <label class="item-input-wrapper">
       <i class="icon ion-android-chat placeholder-icon"></i>
-      <input type="text" placeholder="Type your message..." required/>
+      <input type="text" placeholder="Type your message..." 
+      name="newMessage" ng-model="messageCtrl.newMessageText" ng-keypress="messageCtrl.listenForEnter($event)" required/>
     </label>
-    <button class="button icon message-send"></button>
+    <button class="button icon message-send" ng-click="messageCtrl.sendMessage()"></button>
   </div>
   <!--End - Chat message typing text field-->
 </ion-view>
 <!--End - One to One chat view-->
-

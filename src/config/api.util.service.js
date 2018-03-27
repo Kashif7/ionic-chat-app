@@ -9,7 +9,7 @@
   function backendUtilService() {
 
     let api = {
-      "BackendUrl": "http://localhost:8000/",
+      "BackendUrl": "http://ec2-54-84-172-12.compute-1.amazonaws.com:8000/",
       "BackendType": "dev"
     };
 
