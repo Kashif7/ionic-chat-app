@@ -6,9 +6,9 @@
     .module('practeraChat.createChat')
     .controller('chatCreateController', chatCreateController);
 
-  chatCreateController.$inject = ['$stateParams', '$ionicHistory', '$window', 'authDataService', 'chatCreateService', 'messageDataService', 'cookieManagerService'];
+  chatCreateController.$inject = ['$stateParams', '$scope', '$ionicHistory', '$ionicPopup', '$window', 'authDataService', 'chatCreateService', 'messageDataService', 'cookieManagerService'];
 
-  function chatCreateController($stateParams, $ionicHistory, $window, _authDataService, _chatCreateService , _messageDataService, _cookieManagerService) {
+  function chatCreateController($stateParams, $scope, $ionicHistory, $ionicPopup, $window, _authDataService, _chatCreateService , _messageDataService, _cookieManagerService) {
     let vm = this;
     vm.view = $stateParams.viewName;
     vm.contactList = [];
@@ -26,6 +26,7 @@
     }
 
     let chatMembers = {};
+    let loginUserId = _cookieManagerService.getLoginUserId();
 
     function selectOrUnSelectUser(index) {
       if (chatMembers.hasOwnProperty(vm.contactList[index].id)) {
@@ -57,7 +58,6 @@
     }
 
     function normalChatCreateSuccessCallback(response) {
-      let loginUserId = _cookieManagerService.getLoginUserId();
       let newChatData;
       for (var key in response.data[loginUserId]) {
         if (response.data[loginUserId].hasOwnProperty(key)) {
@@ -80,8 +80,14 @@
     }
 
     function groupChatCreateSuccessCallback(response) {
-      console.log(response.data);
-      console.log(response);
+      let newChatData;
+      for (var key in response.data['threads'][loginUserId]) {
+        if (response.data['threads'][loginUserId].hasOwnProperty(key)) {
+          newChatData = response.data['threads'][loginUserId][key];
+        }
+      }
+      _messageDataService.setThread(newChatData);
+      $window.location.href = ('#/chat-messages?type=' + newChatData.type);
     }
 
     function groupChatCreateErrorCallback(error) {
@@ -89,10 +95,39 @@
     }
 
     function createGroupChat() {
-      let chatData = {
-        members: chatMembers
-      };
-      _chatCreateService.createGroupChat(chatData, groupChatCreateSuccessCallback, groupChatCreateErrorCallback);
+
+      $scope.groupInfo = {};
+
+      let groupNamePopup = $ionicPopup.show({
+        template: '<input type="text" required ng-model="groupInfo.name">',
+        title: 'Enter Group Name',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancel' },
+          {
+            text: 'Save',
+            type: 'button-clear button-calm',
+            onTap: function(e) {
+              if (!$scope.groupInfo.name) {
+                e.preventDefault();
+              } else {
+                return $scope.groupInfo.name;
+              }
+            }
+          }
+        ]
+      });
+
+      groupNamePopup.then(function(res) {
+        if (res) {
+          chatMembers[loginUserId] = "admin";
+          let chatData = {
+            members: chatMembers,
+            name: res
+          };
+          _chatCreateService.createGroupChat(chatData, groupChatCreateSuccessCallback, groupChatCreateErrorCallback);
+        }
+      });
     }
 
   }
