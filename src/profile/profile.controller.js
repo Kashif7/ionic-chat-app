@@ -6,9 +6,9 @@
     .module('practeraChat.profile')
     .controller('profileController', profileController);
 
-  profileController.$inject = ['authDataService', '$state', 'cookieManagerService', '$ionicHistory'];
+  profileController.$inject = ['authDataService', '$state', 'cookieManagerService', '$ionicHistory', 'profileService'];
 
-  function profileController(_authDataService, $state, _cookieManagerService, $ionicHistory) {
+  function profileController(_authDataService, $state, _cookieManagerService, $ionicHistory, _profileService) {
     let vm = this;
 
     vm.user = _cookieManagerService.getUserCookie();

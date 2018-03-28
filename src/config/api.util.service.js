@@ -20,7 +20,9 @@
       "userSignUp": "users",
       "userList": "users",
       "normalChatCreate": "users/create",
-      "groupChatCreate": "/users/group"
+      "groupChatCreate": "users/group",
+      "myProfile": "users/self",
+      "profileUpdate": "users"
     };
 
     return {
@@ -28,7 +30,8 @@
       getEndPoint: getEndPoint,
       createApiRequest: createApiRequest,
       createAuthenticateApiGetRequest: createAuthenticateApiGetRequest,
-      createAuthenticatedApiRequestWithData : createAuthenticatedApiRequestWithRequestData
+      createAuthenticatedApiRequestWithData : createAuthenticatedApiRequestWithRequestData,
+      createAuthenticatedApiProfileUpdatedRequest : createAuthenticatedApiProfileUpdatedRequest
     };
 
     function getApiUrl() {
@@ -81,6 +84,24 @@
       return {
         method: method,
         url: `${api}${endPoint}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-AUTH-TOKEN': token
+        },
+        data: data
+      };
+
+    }
+
+    function createAuthenticatedApiProfileUpdatedRequest(data, id, method, type) {
+
+      let api = getApiUrl()['BackendUrl'];
+      let endPoint = getEndPoint(type);
+      let token = cookieManagerService.getUserCookie()['auth_token'];
+
+      return {
+        method: method,
+        url: `${api}${endPoint}/${id}`,
         headers: {
           'Content-Type': 'application/json',
           'X-AUTH-TOKEN': token
