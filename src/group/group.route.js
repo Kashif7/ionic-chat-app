@@ -16,5 +16,12 @@
           }
         }
       })
+      .state('group-info-view', {
+        cache: false,
+        url: '/group-chat-info',
+        templateUrl: 'templates/group/info-view.html',
+        controller: 'groupController',
+        controllerAs: 'groupCtrl'
+      })
   }
 })();
