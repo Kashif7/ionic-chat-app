@@ -50,8 +50,8 @@
 
     <!--Start - One to one chat List-->
     <ion-list class="">
-      <ion-item class="item-avatar" ng-repeat="thread in chatCtrl.threads" ng-click="chatCtrl.setThread(thread)" ng-href="#/chat-messages?threadId={{thread.threadId}}&type=single">
-        <img ng-src="{{item.image}}" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+      <ion-item class="item-avatar" ng-repeat="thread in chatCtrl.threads" ng-click="chatCtrl.setThread(thread)" ng-href="#/chat-messages?threadId={{thread.threadId}}&type={{thread.type}}">
+        <img ng-src="{{thread.image}}" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
         <h2>{{thread.displayName}}</h2>
         <span class="item-note">10.20 PM</span>
         <p>{{thread.lastMessage}}</p>
