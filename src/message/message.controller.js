@@ -3,9 +3,9 @@
     .module('practeraChat.message')
     .controller('messageController', messageController);
 
-  messageController.$inject = ['messageDataService', '$ionicScrollDelegate', '$scope', '$location', '$ionicHistory'];
+  messageController.$inject = ['messageDataService', '$state', '$ionicScrollDelegate', '$scope', '$location', '$ionicHistory'];
 
-  function messageController(_messageDataService, $ionicScrollDelegate, $scope, $location, $ionicHistory) {
+  function messageController(_messageDataService, $state, $ionicScrollDelegate, $scope, $location, $ionicHistory) {
     let vm = this;
 
     vm.chatType = $location.search()['type'];
@@ -27,7 +27,7 @@
     let thread;
 
     function goToBackView() {
-      $ionicHistory.goBack();
+      $state.go('nav.chat');
     }
 
     function arrangeAvatar(senderId) {
