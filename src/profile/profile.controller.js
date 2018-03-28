@@ -13,12 +13,17 @@
 
     vm.user = _cookieManagerService.getUserCookie();
     vm.userForEdit = {};
+    vm.disableEditButton = true;
 
     vm.goToBackView = goToBackView;
     vm.imageSelecter = imageSelecter;
+    vm.checkValueChange = checkValueChange;
+    vm.updateSelfProfile = updateSelfProfile;
 
     if ($location.search()['type']) {
-      vm.userForEdit = vm.user;
+      vm.userForEdit = angular.copy(vm.user);
+      console.log("user", vm.user);
+      console.log("userForEdit", vm.userForEdit);
     } else {
       activate();
     }
@@ -41,8 +46,33 @@
     }
 
     function imageSelecter(id) {
-      alert("iydgsfh");
       document.getElementById(id).click();
+    }
+
+    function checkValueChange(e) {
+      var charCode = (e.which) ? e.which : e.keyCode;
+      if(angular.equals(vm.user, vm.userForEdit)) {
+        vm.disableEditButton = true;
+      } else {        
+        vm.disableEditButton = false;
+      }
+    }
+
+    function profileUpdateSuccessCallback(response) {
+      console.log(response);
+    }
+
+    function profileUpdateErrorCallback(error) {
+      console.log(error);
+    }
+
+    function updateSelfProfile() {
+      let updateUser = {}
+      updateUser.email = vm.userForEdit.email;
+      updateUser.last_name = vm.userForEdit.last_name;
+      updateUser.first_name = vm.userForEdit.first_name;
+      updateUser.image_url = vm.userForEdit.image_url;
+      _profileService.updateUserProfile(updateUser, vm.userForEdit.id, profileUpdateSuccessCallback, profileUpdateErrorCallback);
     }
 
   }

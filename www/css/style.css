@@ -240,3 +240,8 @@ ion-popover-view.fit ion-content {
 .hrlpdesk-remove-left-padding {
   padding-left: 0px !important;
 }
+
+.disable-button {
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+}

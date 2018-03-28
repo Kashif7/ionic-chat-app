@@ -15,7 +15,8 @@
     return {
       getMyProfile: getMyProfile,
       setUserProfile: setUserProfile,
-      getUserProfile: getUserProfile
+      getUserProfile: getUserProfile,
+      updateUserProfile: updateUserProfile
     };
 
     function setUserProfile(profile) {
@@ -36,6 +37,17 @@
           onErrorCallback(errorResponse);
           console.log("data service error", errorResponse);
         });
+    }
+
+    function updateUserProfile(data, id, onSuccessCallback, onErrorCallback) {
+      $http(_backendUtilService.createAuthenticatedApiProfileUpdatedRequest(data, id, 'PUT', 'profileUpdate'))
+      .then(function (successResponse) {
+        console.log("data service success", successResponse);
+        onSuccessCallback(successResponse);
+      }, function (errorResponse) {
+        onErrorCallback(errorResponse);
+        console.log("data service error", errorResponse);
+      });
     }
 
   }
