@@ -11,8 +11,10 @@
     <!--Start - Profile image edit-->
     <div class="edit-profile">
       <img align="center"
+           ng-src="{{profileCtrl.userForEdit.image_url}}"
            src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg">
-      <a class="profile-button button icon ion-camera button-calm"></a>
+      <label for="select_profile_image" ng-click="profileCtrl.imageSelecter('select_profile_image')" class="profile-button icon ion-camera button-calm"></label>
+      <input id="select_profile_image" type="file" name="selectedProfileImage" style="display: none; line-height: 0;">
     </div>
     <!--End - Profile image edit-->
     <!--Start - Profile details edit-->
@@ -20,15 +22,15 @@
 
       <label class="item item-input item-stacked-label">
         <span class="input-label">First Name</span>
-        <input type="text" placeholder="John">
+        <input type="text" ng-model="profileCtrl.userForEdit.first_name">
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">Last Name</span>
-        <input type="text" placeholder="Suhr">
+        <input type="text" ng-model="profileCtrl.userForEdit.last_name">
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">Email</span>
-        <input type="text" placeholder="john@suhr.com">
+        <input type="text" ng-model="profileCtrl.userForEdit.email">
       </label>
     </div>
     <!--Start - Profile details edit-->
