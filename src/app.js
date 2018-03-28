@@ -41,6 +41,7 @@
 
         // setup an abstract state for the tabs directive
         .state('nav', {
+          cache: false,
           url: '/nav',
           abstract: true,
           templateUrl: 'templates/navigation.html'
