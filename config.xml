@@ -82,5 +82,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-fcm" spec="https://github.com/Kashif7/cordova-plugin-fcm.git" />
-    <engine name="android" spec="^6.2.3" />
+    <engine name="android" spec="~7.0.0" />
 </widget>
