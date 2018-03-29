@@ -6,9 +6,9 @@
     .module('practeraChat.profile')
     .controller('profileController', profileController);
 
-  profileController.$inject = ['$ionicModal', '$scope', '$location', 'cookieManagerService', '$ionicHistory', 'profileService'];
+  profileController.$inject = ['$ionicModal', '$state', '$scope', '$location', 'cookieManagerService', '$ionicHistory', 'profileService', 'authDataService'];
 
-  function profileController($ionicModal, $scope, $location, _cookieManagerService, $ionicHistory, _profileService) {
+  function profileController($ionicModal, $state, $scope, $location, _cookieManagerService, $ionicHistory, _profileService, _authDataService) {
     let vm = this;
 
     vm.user = _cookieManagerService.getUserCookie();
@@ -27,6 +27,7 @@
     vm.openChangePasswordModal = openChangePasswordModal;
     vm.closeChangePasswordModal = closeChangePasswordModal;
     vm.changeUserPassword = changeUserPassword;
+    vm.userLogOut = userLogOut;
 
     $ionicModal.fromTemplateUrl('templates/profile/change-password.html', {
       controller: 'profileController',
@@ -129,6 +130,20 @@
         _profileService.updateUserProfile(passwordObject, changeUserPasswordOnSuccessCallback, changeUserPasswordOnErrorCallback);
       }
 
+    }
+
+    function userLogOutOnSuccessCallback(response) {
+      console.log(response);
+      _cookieManagerService.deleteUserCookie();
+      $state.go('login');
+    }
+
+    function userLogOutOnErrorCallback(error) {
+      console.log(error);
+    }
+
+    function userLogOut() {
+      _authDataService.signOut(userLogOutOnSuccessCallback, userLogOutOnErrorCallback);
     }
 
   }

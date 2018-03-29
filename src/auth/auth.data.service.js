@@ -18,7 +18,7 @@
     };
 
     function signOut(onSuccessCallback, onErrorCallback) {
-      $http(_backendUtilService.createApiRequest({}, 'POST', 'logout'))
+      $http(_backendUtilService.createAuthenticatedApiRequestWithData({}, 'POST', 'logout'))
         .then(function (successResponse) {
           onSuccessCallback(successResponse);
         }, function (errorResponse) {

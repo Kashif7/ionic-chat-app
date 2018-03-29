@@ -13,7 +13,8 @@
     return {
       setUserCookie: setUserCookie,
       getUserCookie: getUserCookie,
-      getLoginUserId: getLoginUserId
+      getLoginUserId: getLoginUserId,
+      deleteUserCookie : deleteUserCookie
     };
 
     function setUserCookie(user) {
@@ -26,6 +27,10 @@
 
     function getLoginUserId() {
       return $cookies.getObject("user_").id;
+    }
+
+    function deleteUserCookie() {
+      $cookies.remove("user_");
     }
 
   }
