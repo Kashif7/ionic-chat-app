@@ -20,7 +20,8 @@
       "userSignUp": "users",
       "userList": "users",
       "normalChatCreate": "users/create",
-      "groupChatCreate": "/users/group"
+      "groupChatCreate": "users/group",
+      "logout": "users/logout"
     };
 
     return {
