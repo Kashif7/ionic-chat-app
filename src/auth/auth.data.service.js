@@ -13,8 +13,19 @@
     return {
       signIn: signIn,
       signUp: signUp,
-      getUserList: userList
+      getUserList: userList,
+      signOut: signOut
     };
+
+    function signOut(onSuccessCallback, onErrorCallback) {
+      $http(_backendUtilService.createAuthenticatedApiRequestWithData({}, 'POST', 'logout'))
+        .then(function (successResponse) {
+          onSuccessCallback(successResponse);
+        }, function (errorResponse) {
+          console.log("user list error", errorResponse);
+          onErrorCallback(errorResponse);
+        });
+    }
 
     function userList(onSuccessCallback, onErrorCallback) {
       $http(_backendUtilService.createAuthenticateApiGetRequest('userList'))

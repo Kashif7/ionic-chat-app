@@ -25,8 +25,6 @@
     vm.selectUserType = selectUserType;
 
     function signInSuccessCallback(response) {
-      vm.signInStatus = "success";
-      vm.signInMessage = response;
       $state.go('nav.chat');
     }
 
@@ -40,8 +38,6 @@
     }
 
     function signInAfterSignUpSuccessCallback(response) {
-      vm.signUpStatus = "success";
-      vm.signUpMessage = response;
       $state.go('nav.chat');
     }
 

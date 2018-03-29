@@ -24,7 +24,8 @@
       "groupEdit": "users/group/edit",
       "groupUsers": "users/list",
       "myProfile": "users/self",
-      "profileUpdate": "users/update"
+      "profileUpdate": "users/update",
+      "logout": "users/logout"
     };
 
     return {
