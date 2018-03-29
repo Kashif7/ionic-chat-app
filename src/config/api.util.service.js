@@ -22,7 +22,7 @@
       "normalChatCreate": "users/create",
       "groupChatCreate": "users/group",
       "myProfile": "users/self",
-      "profileUpdate": "users"
+      "profileUpdate": "users/update"
     };
 
     return {
@@ -93,7 +93,7 @@
 
     }
 
-    function createAuthenticatedApiProfileUpdatedRequest(data, id, method, type) {
+    function createAuthenticatedApiProfileUpdatedRequest(data, method, type) {
 
       let api = getApiUrl()['BackendUrl'];
       let endPoint = getEndPoint(type);
@@ -101,7 +101,7 @@
 
       return {
         method: method,
-        url: `${api}${endPoint}/${id}`,
+        url: `${api}${endPoint}`,
         headers: {
           'Content-Type': 'application/json',
           'X-AUTH-TOKEN': token

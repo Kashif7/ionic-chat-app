@@ -39,8 +39,8 @@
         });
     }
 
-    function updateUserProfile(data, id, onSuccessCallback, onErrorCallback) {
-      $http(_backendUtilService.createAuthenticatedApiProfileUpdatedRequest(data, id, 'PUT', 'profileUpdate'))
+    function updateUserProfile(data, onSuccessCallback, onErrorCallback) {
+      $http(_backendUtilService.createAuthenticatedApiProfileUpdatedRequest(data, 'POST', 'profileUpdate'))
       .then(function (successResponse) {
         console.log("data service success", successResponse);
         onSuccessCallback(successResponse);
