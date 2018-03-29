@@ -19,7 +19,7 @@
             let ref = firebase.database()
                 .ref(`/threads/${userId}`)
                 .orderByChild('type')
-                .equalTo('group');
+                .equalTo('Group');
 
             $firebaseArray(ref)
                 .$loaded()
@@ -32,7 +32,7 @@
             .ref(`/threads/${userId}`)
             .endAt(lastGroupId)
             .orderByChild('type')
-            .equalTo('group');
+            .equalTo('Group');
 
         $firebaseArray(ref)
             .$loaded()
