@@ -13,8 +13,10 @@
 
     return {
       setThread: setThread,
+      getThread: getThread,
       getUser: getUser,
-      createNewMessage: createNewMessage,
+      createNewPrivateMessage: createNewPrivateMessage,
+      createNewGroupMessage: createNewGroupMessage,
       getMessages: getMessages,
       getOldMessages: getOldMessages,
       getNewMessage: getNewMessage,
@@ -26,12 +28,46 @@
       thread = selectedThread;
     }
 
+    function getThread() {
+      return thread;
+    }
+
+
     function getUser() {
       user = {
         userId: _cookieManagerService.getLoginUserId()
       };
 
       return user;
+    }
+
+    function createNewPrivateMessage() {
+      let newMessage = {};
+      newMessage.threadId = thread.threadId;
+      let array = [];
+
+      array[0] = parseInt(thread.user);
+      newMessage.recipient = array;
+      console.log("new message", newMessage);
+      console.log("array", array);
+      return newMessage;
+    }
+
+    function createNewGroupMessage(onSuccessCallback, onErrorCallback) {
+      let newMessage = {};
+      newMessage.threadId = thread.threadId;
+      let array = [];
+      let group = getGroupFromId(thread.groupId);
+
+      group.$loaded()
+        .then((group) => {
+          newMessage.recipient = Object.keys(group.members);
+          onSuccessCallback(newMessage);
+        })
+        .catch((error) => {
+          onErrorCallback(error);
+          console.log(error);
+        });
     }
 
     function createNewMessage() {
@@ -51,6 +87,8 @@
         group.$loaded()
           .then((group) => {
             newMessage.recipient = Object.keys(group.members);
+
+            console.log("new message data service", newMessage);
 
             return newMessage;
           })

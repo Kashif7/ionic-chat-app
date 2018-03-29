@@ -3,9 +3,9 @@
     .module('practeraChat.message')
     .controller('messageController', messageController);
 
-  messageController.$inject = ['messageDataService', '$ionicScrollDelegate', '$scope', '$location', '$ionicHistory'];
+  messageController.$inject = ['messageDataService', '$state', '$ionicScrollDelegate', '$scope', '$location', '$ionicHistory'];
 
-  function messageController(_messageDataService, $ionicScrollDelegate, $scope, $location, $ionicHistory) {
+  function messageController(_messageDataService, $state, $ionicScrollDelegate, $scope, $location, $ionicHistory) {
     let vm = this;
 
     vm.chatType = $location.search()['type'];
@@ -24,9 +24,10 @@
     let user;
     let newMessage = {};
     let isLoaded;
+    let thread;
 
     function goToBackView() {
-      $ionicHistory.goBack();
+      $state.go('nav.chat');
     }
 
     function arrangeAvatar(senderId) {
@@ -73,7 +74,8 @@
         }
         lastMessageId = vm.messages[0].$id;
       } else {
-        newMessage = _messageDataService.createNewMessage();
+        // newMessage = _messageDataService.createNewMessage();
+        // console.log(newMessage, "messagesOnSuccess");
       }
 
       if (isLoaded) {
@@ -104,8 +106,25 @@
       });
     }
 
+    function createNewGroupMessageOnSuccess(message) {
+      console.log(message, "message");
+      newMessage = message;
+    }
+
+    function createNewGroupMessageOnError(error) {
+
+    }
+
     user = _messageDataService.getUser();
-    newMessage = _messageDataService.createNewMessage();
+    thread = _messageDataService.getThread();
+
+    if (thread.type === 'Private') {
+      newMessage = _messageDataService.createNewPrivateMessage();
+    } else {
+      _messageDataService.createNewGroupMessage(createNewGroupMessageOnSuccess, createNewGroupMessageOnError);
+    }
+
+    console.log(newMessage, "messagesOnSuccess");
     _messageDataService.getMessages(user.userId, messagesOnSuccess, messagesOnError);
     _messageDataService.getNewMessage(user.userId, onNewMessageSuccess);
   }
