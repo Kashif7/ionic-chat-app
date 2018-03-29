@@ -43,7 +43,7 @@
     }
 
     function getProfileOnSuccessCallback(response) {
-      vm.user = response.data.data['User'];
+      vm.user = response.data.data;
       _profileService.setUserProfile(vm.user);
     }
 
