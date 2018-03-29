@@ -77,6 +77,12 @@
   transform: translate(-50%, -50%);
 }
 
+.practera-forms-group input{
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
 .practera-forms .item {
   margin: 0;
   border: none;
