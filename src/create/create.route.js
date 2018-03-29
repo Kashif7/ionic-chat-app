@@ -9,6 +9,7 @@
   function config($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('contact-list', {
+        cache: false,
         url: '/contact-list/:viewName',
         templateUrl: 'templates/contact/contact-list.html',
         controller: 'chatCreateController',

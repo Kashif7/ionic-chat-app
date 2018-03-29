@@ -3,7 +3,7 @@
 
   <!--Start - Navigation back button-->
   <ion-nav-buttons side="left">
-    <a ng-click="myGoBack()" class="button button-icon icon ion-ios-arrow-back"></a>
+    <a ng-click="groupCtrl.goToBackView()" class="button button-icon icon ion-ios-arrow-back"></a>
   </ion-nav-buttons>
   <!--End - Navigation back button-->
 
@@ -23,7 +23,7 @@
           <button class="button button-calm" ng-click="editGroupPhoto()">
             <i class="icon ion-camera"></i>
           </button>
-          <button class="button button-calm" ng-click="editGroupName()">
+          <button class="button button-calm" ng-click="groupCtrl.editGroupNamePopup()">
             <i class="icon ion-edit"></i>
           </button>
         </div>
@@ -37,7 +37,7 @@
       <!--Start - Group member card header-->
       <div class="item item-divider item-button-right">
         <p style="color: #6ebdd3">Group Members</p>
-        <a class="button button-clear button-small button-calm group-see-all">See All</a>
+        <!--<a class="button button-clear button-small button-calm group-see-all">See All</a>-->
       </div>
       <!--End - Group member card header-->
       <ion-list>
@@ -51,31 +51,11 @@
           </div>
         </ion-item>
         <!--End - Group member card Add member section-->
-        <ion-item class="item-avatar item-text-wrap item-icon-right">
-          <img src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+        <ion-item class="item-avatar item-text-wrap item-icon-right" ng-repeat="member in groupCtrl.groupMembersProfiles">
+          <img ng-src="{{member.image_url}}" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
           <div class="row row-center">
             <div class="col col-100 col-center">
-              <h2>User Name</h2>
-            </div>
-          </div>
-          <button class="button button-icon icon ion-close-circled button-clear button-stable group-remove-user"
-                  style="top: 20%"></button>
-        </ion-item>
-        <ion-item class="item-avatar item-text-wrap item-icon-right">
-          <img src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
-          <div class="row">
-            <div class="col col-80 col-center">
-              <h2>User Name</h2>
-            </div>
-          </div>
-          <button class="button button-icon icon ion-close-circled button-clear button-stable group-remove-user"
-                  style="top: 20%"></button>
-        </ion-item>
-        <ion-item class="item-avatar item-text-wrap item-icon-right">
-          <img src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
-          <div class="row">
-            <div class="col col-80 col-center">
-              <h2>User Name</h2>
+              <h2>{{member.first_name}} {{member.last_name}}</h2>
             </div>
           </div>
           <button class="button button-icon icon ion-close-circled button-clear button-stable group-remove-user"

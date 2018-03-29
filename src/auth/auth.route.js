@@ -9,12 +9,14 @@
   function config($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('login', {
+        cache: false,
         url: '/login',
         templateUrl: 'templates/signin.html',
         controller: 'authController',
         controllerAs: 'authCtrl'
       })
       .state('signup', {
+        cache: false,
         url: '/signup',
         templateUrl: 'templates/signup.html',
         controller: 'authController',

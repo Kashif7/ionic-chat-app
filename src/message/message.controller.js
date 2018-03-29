@@ -3,14 +3,15 @@
     .module('practeraChat.message')
     .controller('messageController', messageController);
 
-  messageController.$inject = ['messageDataService', '$state', '$ionicScrollDelegate', '$scope', '$location', '$ionicHistory'];
+  messageController.$inject = ['messageDataService', '$state', '$ionicPopover', '$ionicScrollDelegate', '$scope', '$location', '$ionicHistory'];
 
-  function messageController(_messageDataService, $state, $ionicScrollDelegate, $scope, $location, $ionicHistory) {
+  function messageController(_messageDataService, $state, $ionicPopover, $ionicScrollDelegate, $scope, $location, $ionicHistory) {
     let vm = this;
 
     vm.chatType = $location.search()['type'];
     vm.messages = [];
     vm.newMessageText = '';
+    vm.chatName = '';
 
     vm.arrangeAvatar = arrangeAvatar;
     vm.showAvatarImage = showAvatarImage;
@@ -92,12 +93,16 @@
     function onNewMessageSuccess(snapshot) {
       snapshot.forEach((childSnapShot) => {
         $scope.$apply(() => {
-          if (findDuplicate(childSnapShot.key) === -1) {
-            vm.messages.push(childSnapShot.val());
-          }
+          pushNewMessage(childSnapShot);
         });
         $ionicScrollDelegate.scrollBottom();
       });
+    }
+
+    function pushNewMessage(childSnapShot) {
+      if (findDuplicate(childSnapShot.key) === -1) {
+        vm.messages.push(childSnapShot.val());
+      }
     }
 
     function findDuplicate(key) {
@@ -105,6 +110,31 @@
         return element.$id == key;
       });
     }
+
+    $ionicPopover.fromTemplateUrl('templates/chat/popover.html', {
+      scope: $scope
+    }).then(function (popover) {
+      $scope.popover = popover;
+    });
+
+    vm.openPopover = function ($event) {
+      $scope.popover.show($event);
+    };
+    vm.closePopover = function () {
+      $scope.popover.hide();
+    };
+    //Cleanup the popover when we're done with it!
+    $scope.$on('$destroy', function () {
+      $scope.popover.remove();
+    });
+    // Execute action on hidden popover
+    $scope.$on('popover.hidden', function () {
+      // Execute action
+    });
+    // Execute action on remove popover
+    $scope.$on('popover.removed', function () {
+      // Execute action
+    });
 
     function createNewGroupMessageOnSuccess(message) {
       console.log(message, "message");
@@ -117,6 +147,7 @@
 
     user = _messageDataService.getUser();
     thread = _messageDataService.getThread();
+    vm.chatName = thread.displayName;
 
     if (thread.type === 'Private') {
       newMessage = _messageDataService.createNewPrivateMessage();
