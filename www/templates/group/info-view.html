@@ -12,10 +12,10 @@
     <!--Start - Group name and image card-->
     <ion-list>
       <ion-item class="info-icons item-avatar item-button-right">
-        <img src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+        <img ng-src="{{groupCtrl.currentGroup.icon}}" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
         <div class="row row-center">
           <div class="col col-90 col-center">
-            <h2>Group Name</h2>
+            <h2>{{groupCtrl.currentGroup.name}}</h2>
           </div>
         </div>
         <!--Start - Group name and image edit buttons-->
@@ -55,10 +55,10 @@
           <img ng-src="{{member.image_url}}" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
           <div class="row row-center">
             <div class="col col-100 col-center">
-              <h2>{{member.first_name}} {{member.last_name}}</h2>
+              <h2>{{member.first_name}} {{member.last_name}}<span style="font-size: 14px" ng-show="groupCtrl.checkMyProfile(member.id)"> (You)</span></h2>
             </div>
           </div>
-          <button class="button button-icon icon ion-close-circled button-clear button-stable group-remove-user"
+          <button ng-hide="groupCtrl.checkMyProfile(member.id)" ng-click="groupCtrl.removeMemberFromGroup(member.id)" class="button button-icon icon ion-close-circled button-clear button-stable group-remove-user"
                   style="top: 20%"></button>
         </ion-item>
       </ion-list>
@@ -68,7 +68,7 @@
   </ion-content>
 
   <!--Start - Leave Group section-->
-  <div class="bar bar-footer item-icon-right assertive">
+  <div class="bar bar-footer item-icon-right assertive" style="cursor: pointer" ng-click="groupCtrl.leaveGroup()">
     <i class="icon ion-ios-arrow-right placeholder-icon" style="font-size: 16px"></i>
     <div class="row">
       <div class="col col-100 col-center">

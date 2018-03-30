@@ -6,12 +6,13 @@
     .module('practeraChat.createChat')
     .controller('chatCreateController', chatCreateController);
 
-  chatCreateController.$inject = ['$stateParams', '$scope', '$ionicHistory', '$ionicPopup', '$window', 'authDataService', 'chatCreateService', 'messageDataService', 'cookieManagerService'];
+  chatCreateController.$inject = ['$stateParams', '$scope', '$ionicHistory', '$ionicPopup', '$window', 'authDataService', 'chatCreateService', 'messageDataService', 'cookieManagerService', 'groupDataService'];
 
-  function chatCreateController($stateParams, $scope, $ionicHistory, $ionicPopup, $window, _authDataService, _chatCreateService , _messageDataService, _cookieManagerService) {
+  function chatCreateController($stateParams, $scope, $ionicHistory, $ionicPopup, $window, _authDataService, _chatCreateService , _messageDataService, _cookieManagerService, _groupDataService) {
     let vm = this;
     vm.view = $stateParams.viewName;
     vm.contactList = [];
+    vm.saveButtonText = 'Done';
 
     vm.createNormalChat = createNormalChat;
     vm.selectOrUnselectUser = selectOrUnSelectUser;
@@ -19,20 +20,45 @@
     vm.createGroupChat = createGroupChat;
     vm.goToBackView = goToBackView;
 
-    if (vm.view === 'one2one' || vm.view === 'group') {
-      activate();
-    } else {
-      // add users to existing group
-    }
-
     let chatMembers = {};
     let loginUserId = _cookieManagerService.getLoginUserId();
+    let groupData = {};
+    let groupMembersId;
+
+    if (vm.view === 'one2one' || vm.view === 'group') {
+      activate();
+      vm.saveButtonText = 'Done';
+    } else {
+      // add users to existing group
+      vm.saveButtonText = 'Add';
+      groupData = _chatCreateService.getGroupData();
+      groupMembersId = Object.keys(groupData.members).map(Number);
+      activateMemberAdd(groupMembersId);
+    }
+
+    function activateMemberAddOnSuccess(response) {
+      vm.contactList = response;
+      console.log("response", response);
+    }
+
+    function activateMemberAddOnError(error) {
+      console.log(error);
+    }
+
+    function activateMemberAdd(groupMembers) {
+      let requestData = {
+        ids: groupMembers
+      };
+      _authDataService.userListForAddMemberToGroup(requestData, activateMemberAddOnSuccess, activateMemberAddOnError);
+    }
 
     function selectOrUnSelectUser(index) {
       if (chatMembers.hasOwnProperty(vm.contactList[index].id)) {
         delete chatMembers[vm.contactList[index].id];
+        vm.contactList[index].active = false;
       } else {
         chatMembers[vm.contactList[index].id] = "member";
+        vm.contactList[index].active = true;
       }
     }
 
@@ -45,8 +71,8 @@
     }
 
     function userListOnSuccessCallback(response) {
-      vm.contactList = response.data.data;
-      console.log(vm.contactList);
+      vm.contactList = response;
+      console.log("response", response);
     }
 
     function userListOnErrorCallback(error) {
@@ -91,43 +117,67 @@
     }
 
     function groupChatCreateErrorCallback(error) {
+      console.log(error);
+    }
 
+    function addGroupMembersOnSuccess(response) {
+      $ionicHistory.goBack();
+    }
+
+    function addGroupMembersOnError(error) {
+      console.log(error);
     }
 
     function createGroupChat() {
 
-      $scope.groupInfo = {};
+      if (vm.view !== 'groupInfo') {
+        $scope.groupInfo = {};
 
-      let groupNamePopup = $ionicPopup.show({
-        template: '<input type="text" required ng-model="groupInfo.name">',
-        title: 'Enter Group Name',
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: 'Save',
-            type: 'button-clear button-calm',
-            onTap: function(e) {
-              if (!$scope.groupInfo.name) {
-                e.preventDefault();
-              } else {
-                return $scope.groupInfo.name;
+        let groupNamePopup = $ionicPopup.show({
+          template: '<input type="text" required ng-model="groupInfo.name">',
+          title: 'Enter Group Name',
+          scope: $scope,
+          buttons: [
+            { text: 'Cancel' },
+            {
+              text: 'Save',
+              type: 'button-clear button-calm',
+              onTap: function(e) {
+                if (!$scope.groupInfo.name) {
+                  e.preventDefault();
+                } else {
+                  return $scope.groupInfo.name;
+                }
               }
             }
-          }
-        ]
-      });
+          ]
+        });
 
-      groupNamePopup.then(function(res) {
-        if (res) {
-          chatMembers[loginUserId] = "admin";
-          let chatData = {
-            members: chatMembers,
-            name: res
-          };
-          _chatCreateService.createGroupChat(chatData, groupChatCreateSuccessCallback, groupChatCreateErrorCallback);
-        }
-      });
+        groupNamePopup.then(function(res) {
+          if (res) {
+            chatMembers[loginUserId] = "admin";
+            let chatData = {
+              members: chatMembers,
+              name: res
+            };
+            _chatCreateService.createGroupChat(chatData, groupChatCreateSuccessCallback, groupChatCreateErrorCallback);
+          }
+        });
+      } else {
+        let allMembers  = angular.extend({}, chatMembers, groupData.members);
+        console.log("groupData", groupData);
+        let tempGroupInfo = {
+          thread_id: groupData.groupId,
+          name: groupData.name,
+          user_ids: Object.keys(chatMembers).map(Number),
+          members: allMembers
+        };
+
+        console.log("tempGroupInfo", tempGroupInfo);
+
+        _groupDataService.addGroupMembers(tempGroupInfo, addGroupMembersOnSuccess, addGroupMembersOnError);
+
+      }
     }
 
   }

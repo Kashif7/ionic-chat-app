@@ -37,7 +37,7 @@
         <img ng-src="{{group.image}}" src="https://cdn.pixabay.com/photo/2016/04/15/18/05/computer-1331579_960_720.png">
         <h2>{{group.displayName}}</h2>
         <p>{{group.lastMessage}}</p>
-        <span class="badge badge-calm">{{group.unseenCount}}</span>
+        <span class="badge badge-calm" ng-hide="group.unseenCount === '0'">{{group.unseenCount}}</span>
       </ion-item>
     </ion-list>
     <!--End - Group chat list-->

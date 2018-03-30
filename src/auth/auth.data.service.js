@@ -14,7 +14,8 @@
       signIn: signIn,
       signUp: signUp,
       getUserList: userList,
-      signOut: signOut
+      signOut: signOut,
+      userListForAddMemberToGroup: userListForAddMemberToGroup
     };
 
     function signOut(onSuccessCallback, onErrorCallback) {
@@ -30,8 +31,45 @@
     function userList(onSuccessCallback, onErrorCallback) {
       $http(_backendUtilService.createAuthenticateApiGetRequest('userList'))
         .then(function (successResponse) {
-          onSuccessCallback(successResponse);
+          let tempResponse = successResponse.data.data;
+          let finalResponse = [];
+          let newUserListData;
+          for (var key in tempResponse) {
+            if (tempResponse.hasOwnProperty(key)) {
+              newUserListData = tempResponse[key];
+              newUserListData.active = false;
+              finalResponse.push(newUserListData);
+            }
+          }
+
+          if (tempResponse.length === finalResponse.length) {
+            onSuccessCallback(finalResponse);
+          }
         }, function (errorResponse) {
+          console.log("user list error", errorResponse);
+          // checkSignInResponseStatus(errorResponse, onSuccessCallback, onErrorCallback);
+        });
+    }
+
+    function userListForAddMemberToGroup(data, onSuccessCallback, onErrorCallback) {
+      $http(_backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'addUserList'))
+        .then(function (successResponse) {
+          let tempResponse = successResponse.data.data;
+          let finalResponse = [];
+          let newUserListData;
+          for (var key in tempResponse) {
+            if (tempResponse.hasOwnProperty(key)) {
+              newUserListData = tempResponse[key];
+              newUserListData.active = false;
+              finalResponse.push(newUserListData);
+            }
+          }
+
+          if (tempResponse.length === finalResponse.length) {
+            onSuccessCallback(finalResponse);
+          }
+        }, function (errorResponse) {
+          onErrorCallback(errorResponse);
           console.log("user list error", errorResponse);
           // checkSignInResponseStatus(errorResponse, onSuccessCallback, onErrorCallback);
         });

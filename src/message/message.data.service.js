@@ -21,7 +21,8 @@
       getOldMessages: getOldMessages,
       getNewMessage: getNewMessage,
       getGroupFromId: getGroupFromId,
-      sendMessage: sendMessage
+      sendMessage: sendMessage,
+      getGroupFromIdForGroup: getGroupFromIdForGroup
     };
 
     function setThread(selectedThread) {
@@ -143,6 +144,12 @@
         .ref(refString);
 
       return $firebaseObject(ref);
+    }
+
+    function getGroupFromIdForGroup(groupId, successCallback) {
+      let refString = `groups/${groupId}`;
+      firebase.database().ref(refString)
+        .on('value', successCallback);
     }
 
     function sendMessage(newMessage) {

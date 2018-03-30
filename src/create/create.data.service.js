@@ -11,10 +11,22 @@
 
   function chatCreateService($http, _backendUtilService, cookieManagerService) {
 
+    let groupInfo = {};
+
     return {
       createNormalChat: createOne2OneChat,
-      createGroupChat: createGroupChat
+      createGroupChat: createGroupChat,
+      setGroupData: setGroupData,
+      getGroupData: getGroupData
     };
+
+    function setGroupData(group) {
+      groupInfo = group;
+    }
+
+    function getGroupData() {
+      return groupInfo;
+    }
 
     function createOne2OneChat(data, onSuccessCallback, onErrorCallback) {
 
