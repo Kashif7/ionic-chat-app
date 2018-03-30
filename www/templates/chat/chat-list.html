@@ -53,7 +53,7 @@
       <ion-item class="item-avatar" ng-repeat="thread in chatCtrl.threads" ng-click="chatCtrl.setThread(thread)" ng-href="#/chat-messages?threadId={{thread.threadId}}&type={{thread.type}}">
         <img ng-src="{{thread.image}}" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
         <h2>{{thread.displayName}}</h2>
-        <span class="item-note" am-time-ago="chatCtrl.getMessageTime(thread.timeStamp) | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'"></span>
+        <span class="item-note" am-time-ago="thread.timeStamp * 1000 | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'"></span>
         <p>{{thread.lastMessage}}</p>
         <!--<span an-time-ago="announcement.createTimestamp | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'"></span>-->
         <span class="badge badge-calm" ng-hide="thread.unseenCount === '0'">{{thread.unseenCount}}</span>

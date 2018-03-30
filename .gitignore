@@ -28,6 +28,12 @@ plugins/
 plugins/android.json
 plugins/ios.json
 $RECYCLE.BIN/
+www/lib/moment
+www/lib/angular
+www/lib/angular-moment
+www/lib/angular-sanitize
+www/lib/angular-ui-router
+www/lib/angular-animate
 
 .DS_Store
 Thumbs.db
