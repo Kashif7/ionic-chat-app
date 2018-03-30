@@ -6,9 +6,9 @@
     .module('practeraChat')
     .factory('fcmFactory', fcmFactory);
 
-  fcmFactory.$inject = [];
+  fcmFactory.$inject = ['authService'];
 
-  function fcmFactory() {
+  function fcmFactory(_authService) {
     return {
       getToken: getToken,
       refreshToken: refreshToken,
@@ -16,12 +16,14 @@
     };
 
     function getToken(callback) {
-      FCMPlugin.getToken(callback);
+      FCMPlugin.getToken(function (token) {
+        _authService.updateToken(token);
+      });
     }
 
     function refreshToken() {
       FCMPlugin.onTokenRefresh(function (token) {
-        return token;
+        _authService.updateToken(token);
       });
     }
 

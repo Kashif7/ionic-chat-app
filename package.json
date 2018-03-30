@@ -20,14 +20,15 @@
   },
   "dependencies": {
     "angularfire": "^2.3.0",
+    "cordova-android": "7.0.0",
+    "cordova-ios": "4.5.4",
     "cordova-plugin-device": "^2.0.1",
     "cordova-plugin-fcm": "git+https://github.com/Kashif7/cordova-plugin-fcm.git",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-whitelist": "^1.3.3",
-    "jshint": "^2.9.5",
-    "cordova-android": "~7.0.0"
+    "jshint": "^2.9.5"
   },
   "cordova": {
     "plugins": {
@@ -39,7 +40,8 @@
       "cordova-plugin-fcm": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   }
 }
