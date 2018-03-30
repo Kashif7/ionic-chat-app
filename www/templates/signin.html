@@ -7,14 +7,16 @@
   <!--End - Sign in sub header-->
 
   <ion-content class="padding has-subheader">
+    <p>{{authCtrl.signInStatus}}</p>
+    <p>{{authCtrl.signInMessage}}</p>
     <!--Start - Sign in form-->
-    <form action="#/nav/chat">
+    <form ng-submit="authCtrl.userSignIn()">
       <div class="list practera-forms">
         <label class="item item-input">
-          <input type="email" placeholder="Email">
+          <input type="email" name="email" required ng-model="authCtrl.signInCredential.email" placeholder="Email">
         </label>
         <label class="item item-input">
-          <input type="password" placeholder="Password">
+          <input type="password" name="password" required ng-model="authCtrl.signInCredential.password" placeholder="Password">
         </label>
         <input type="submit" class="item button button-calm button-block" value="Sign In">
         <p class="text-right"><a class="dark">Forgot Password</a></p>

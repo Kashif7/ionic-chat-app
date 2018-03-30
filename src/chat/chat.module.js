@@ -1,4 +1,4 @@
 (function () {
     angular
-        .module('practeraChat.chat', ['firebase']);
+        .module('practeraChat.chat', ['firebase', 'practeraChat.message']);
 })();

@@ -63,14 +63,24 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 }
 
-//.platform-android {
-//  .action-sheet {
-//    @extend .ion-android-more-vertical;
-//  }
-//}
-//
-//.platform-ios {
-//  .action-sheet {
-//    @extend .ion-ios-more;
-//  }
-//}
+.bouble {
+  .time {
+    max-height: 0;
+    transition: max-height 5s ease-out;
+    overflow: hidden;
+    //display: none;
+    //visibility: hidden;
+    //opacity: 0;
+    //transition: visibility 0s linear 0.33s, opacity 0.33s linear, display 0s linear 0.33s;
+
+    &.show {
+      max-height: fit-content;
+      transition: max-height 5s ease-in;
+      //display: block;
+      //visibility: visible;
+      //opacity: 1;
+      //transition-delay: 2s;
+    }
+
+  }
+}

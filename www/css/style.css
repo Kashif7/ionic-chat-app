@@ -64,8 +64,8 @@
   color: gray;
 }
 
-.edit-profile .button {
-  /*padding: 15px 18px 15px 18px;*/
+.edit-profile label {
+  padding: 12px 15px 12px 17px;
   /*background: white !important; !* For browsers that do not support gradients *!*/
   background: radial-gradient(#e0e0e0, white, gray); /* Standard syntax (must be last) */
   color: #6ebdd3 !important;
@@ -75,6 +75,16 @@
   top: 85%;
   left: 65%;
   transform: translate(-50%, -50%);
+}
+
+.edit-profile label:before {
+  font-size: ;
+}
+
+.practera-forms-group input{
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid #e0e0e0 !important;
 }
 
 .practera-forms .item {
@@ -235,4 +245,9 @@ ion-popover-view.fit ion-content {
 
 .hrlpdesk-remove-left-padding {
   padding-left: 0px !important;
+}
+
+.disable-button {
+  pointer-events: none !important;
+  cursor: not-allowed !important;
 }

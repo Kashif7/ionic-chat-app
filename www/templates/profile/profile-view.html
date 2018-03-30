@@ -3,26 +3,27 @@
 
   <!--Start - Navigation bar back button-->
   <ion-nav-buttons side="left">
-    <a ng-click="myGoBack()" class="button button-icon icon ion-ios-arrow-back"></a>
+    <a ng-click="profileCtrl.goToBackView()" class="button button-icon icon ion-ios-arrow-back"></a>
   </ion-nav-buttons>
   <!--End - Navigation bar back button-->
 
   <!--Start - Navigation bar profile edit button-->
   <ion-nav-buttons side="secondary">
-    <a class="button button-icon icon ion-edit button-clear button-small" href="#/profileEdit"></a>
+    <a class="button button-icon icon ion-edit button-clear button-small" href="#/profileEdit?type='edit'"></a>
   </ion-nav-buttons>
   <!--End - Navigation bar profile edit button-->
 
   <ion-content class="padding">
     <div class="profile-view">
       <img align="center"
+           ng-src="{{profileCtrl.user.image_url}}"
            src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg">
       <!--<a class="profile-button button icon ion-edit button-calm button-small" href="#/profileEdit"></a>-->
-      <h3>User Name</h3>
-      <h5>abcd@abcd.com</h5>
+      <h3>{{profileCtrl.user.first_name}} {{profileCtrl.user.last_name}}</h3>
+      <h5>{{profileCtrl.user.email}}</h5>
     </div>
     <div class="list">
-      <button class="item button button-block button-calm">
+      <button class="item button button-block button-calm" ng-click="profileCtrl.userLogOut()">
         <i class="icon ion-log-out"></i>
         Logout
       </button>
