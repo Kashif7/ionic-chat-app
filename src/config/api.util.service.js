@@ -29,7 +29,9 @@
       "removeMember": "users/group/remove",
       "addMember": "users/group/add",
       "addUserList": "users/list/other",
-      "leaveGroup": "users/group/leave/self"
+      "leaveGroup": "users/group/leave/self",
+      "deleteConversation":"users/conversation/delete",
+      "deleteMessage": "users/message/delete"
     };
 
     return {

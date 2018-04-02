@@ -3,9 +3,9 @@
     .module('practeraChat.message')
     .controller('messageController', messageController);
 
-  messageController.$inject = ['messageDataService', '$state', '$ionicPopover', '$ionicScrollDelegate', '$scope', '$location', '$ionicHistory'];
+  messageController.$inject = ['messageDataService', '$state', '$ionicPopup', '$ionicPopover', '$ionicScrollDelegate', '$scope', '$location', '$ionicActionSheet'];
 
-  function messageController(_messageDataService, $state, $ionicPopover, $ionicScrollDelegate, $scope, $location, $ionicHistory) {
+  function messageController(_messageDataService, $state, $ionicPopup, $ionicPopover, $ionicScrollDelegate, $scope, $location, $ionicActionSheet) {
     let vm = this;
 
     vm.chatType = $location.search()['type'];
@@ -22,12 +22,15 @@
     vm.listenForEnter = listenForEnter;
     vm.goToBackView = goToBackView;
     vm.messageTimeShow = messageTimeShow;
+    vm.deleteConversation = deleteConversation;
+    vm.messageOnHold = messageOnHold;
 
     let lastMessageId;
     let user;
     let newMessage = {};
     let isLoaded;
     let thread;
+    let groupInfo;
 
     function messageTimeShow(id) {
 
@@ -133,6 +136,10 @@
       });
     }
 
+    $scope.deleteThisConversation = function () {
+      deleteConversation();
+    };
+
     $ionicPopover.fromTemplateUrl('templates/chat/popover.html', {
       scope: $scope
     }).then(function (popover) {
@@ -168,8 +175,68 @@
     }
 
     function getGroupFromIdForGroupSuccessCallback(snapshot) {
-      let groupInfo = snapshot.val();
+      groupInfo = snapshot.val();
       vm.chatName = groupInfo.name;
+    }
+
+    function messageOnHold(messageIndex) {
+      var hideSheet = $ionicActionSheet.show({
+        buttons: [
+          { text: '<i class="icon ion-trash-a"></i> Delete Message' }
+        ],
+        buttonClicked: function(index) {
+          if (index === 0) {
+            let messageDeleteData = {
+              message_id: vm.messages[messageIndex].messageId,
+              thread_id: thread.threadId,
+              user_ids: newMessage.recipient,
+              message_type: thread.type
+            };
+
+            deleteMessages(messageDeleteData);
+
+          }
+          return true;
+        }
+      });
+    }
+
+    function deleteMessagesOnSuccessCallback(response) {
+
+    }
+
+    function deleteMessagesOnErrorCallback(error) {
+      console.error(error);
+    }
+
+    function deleteMessages(data) {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Delete Message?',
+        template: 'Once you delete it cannot be undone.'
+      });
+      confirmPopup.then(function(res) {
+        if(res) {
+          _messageDataService.deleteCurrentConversationMessages(data, deleteMessagesOnSuccessCallback, deleteMessagesOnErrorCallback);
+        } else {
+          console.log('You are not sure');
+        }
+      });
+    }
+
+    function deleteConversationOnSuccessCallback(response) {
+      $state.go('nav.chat');
+    }
+
+    function deleteConversationOnErrorCallback(error) {
+      console.log(error);
+    }
+
+    function deleteConversation() {
+      let threadInfo = {
+        thread_id: thread.threadId,
+        user_id: parseInt(thread.user)
+      };
+      _messageDataService.deleteCurrentConversation(threadInfo, deleteConversationOnSuccessCallback, deleteConversationOnErrorCallback);
     }
 
     user = _messageDataService.getUser();
