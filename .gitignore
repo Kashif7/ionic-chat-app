@@ -12,6 +12,13 @@ log.txt
 .vscode/
 npm-debug.log*
 
+www/lib/angular
+www/lib/angular-animate
+www/lib/angular-sanitize
+www/lib/angular-ui-router
+www/lib/angular-moment
+www/lib/moment
+
 .idea/
 .sourcemaps/
 .sass-cache/
