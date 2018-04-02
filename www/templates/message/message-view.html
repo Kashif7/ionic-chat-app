@@ -9,9 +9,9 @@
 
   <!--Start - Navigation bar popup menu button-->
   <ion-nav-buttons side="secondary">
-    <button ng-if="messageCtrl.chatType === 'Private'"
-            class="button button-icon button-clear icon chat-option button-small"
-            ng-click="messageCtrl.openPopover($event)"></button>
+    <!--<button ng-if="messageCtrl.chatType === 'Private'"-->
+            <!--class="button button-icon button-clear icon chat-option button-small"-->
+            <!--ng-click="messageCtrl.openPopover($event)"></button>-->
     <a ng-if="messageCtrl.chatType === 'Group'"
        class="button button-icon button-clear icon ion-information-circled button-small"
        href="#/group-chat-info?type='info'"></a>

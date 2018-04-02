@@ -99,7 +99,7 @@
       if (response.status == 400 || response.status == 500) {
         onErrorCallback("Sign in error! Please try again!");
       } else if (response.status == 404) {
-        onErrorCallback("Entered credentials not match to our records! Please try again!");
+        onErrorCallback("Entered credentials are not in our records!");
       } else if (response.status === 200) {
         cookieManagerService.setUserCookie(response.data.data);
         onSuccessCallback("Login success!");
