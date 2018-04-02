@@ -16,6 +16,7 @@
     return {
       createNormalChat: createOne2OneChat,
       createGroupChat: createGroupChat,
+      createChatHelpdesk: createHelpdeskChat,
       setGroupData: setGroupData,
       getGroupData: getGroupData
     };
@@ -42,6 +43,17 @@
 
     function createGroupChat(data, onSuccessCallback, onErrorCallback) {
       $http(_backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'groupChatCreate'))
+        .then(function (successResponse) {
+          console.log("data service success", successResponse);
+          onSuccessCallback(successResponse);
+        }, function (errorResponse) {
+          onErrorCallback(errorResponse);
+          console.log("data service error", errorResponse);
+        });
+    }
+
+    function createHelpdeskChat(onSuccessCallback, onErrorCallback) {
+      $http(_backendUtilService.createAuthenticatedApiRequestWithData({}, 'POST', 'createHelpdeskChat'))
         .then(function (successResponse) {
           console.log("data service success", successResponse);
           onSuccessCallback(successResponse);

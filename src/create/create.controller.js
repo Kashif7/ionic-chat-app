@@ -20,6 +20,7 @@
     vm.checkHasMembers = checkHasMembers;
     vm.createGroupChat = createGroupChat;
     vm.goToBackView = goToBackView;
+    vm.createChatWithHelpdesk = createChatWithHelpdesk;
 
     let chatMembers = {};
     let loginUserId = _cookieManagerService.getLoginUserId();
@@ -187,6 +188,25 @@
         _groupDataService.addGroupMembers(tempGroupInfo, addGroupMembersOnSuccess, addGroupMembersOnError);
 
       }
+    }
+
+    function createChatWithHelpdeskOnSuccessCallback(response) {
+      let newChatData = response.data['threads']['helpDesk'][loginUserId];
+      // for (var key in response.data[loginUserId]) {
+      //   if (response.data[loginUserId].hasOwnProperty(key)) {
+      //     newChatData = response.data[loginUserId][key];
+      //   }
+      // }
+      _messageDataService.setThread(newChatData);
+      $window.location.href = ('#/chat-messages?type=' + newChatData.type);
+    }
+
+    function createChatWithHelpdeskOnErrorCallback(error) {
+
+    }
+
+    function createChatWithHelpdesk() {
+      _chatCreateService.createChatHelpdesk(createChatWithHelpdeskOnSuccessCallback, createChatWithHelpdeskOnErrorCallback);
     }
 
   }

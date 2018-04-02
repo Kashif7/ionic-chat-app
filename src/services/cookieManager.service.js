@@ -14,7 +14,8 @@
       setUserCookie: setUserCookie,
       getUserCookie: getUserCookie,
       getLoginUserId: getLoginUserId,
-      deleteUserCookie : deleteUserCookie
+      deleteUserCookie : deleteUserCookie,
+      getLoginUserType: getLoginUserType
     };
 
     function setUserCookie(user) {
@@ -31,6 +32,10 @@
 
     function deleteUserCookie() {
       $cookies.remove("user_");
+    }
+
+    function getLoginUserType() {
+      return $cookies.getObject("user_").user_type;
     }
 
   }

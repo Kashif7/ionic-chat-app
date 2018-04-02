@@ -57,17 +57,30 @@
       return senderId == user.userId ? 'bubbleRight' : 'bubbleLeft';
     }
 
+    function sendMessageToHelpDeskOnSuccessCallback(response) {
+      console.log(response);
+    }
+
     function sendMessage() {
       console.log(newMessage, 'newMessage');
       newMessage.text = vm.newMessageText;
       vm.newMessageText = '';
-      _messageDataService.sendMessage(newMessage);
+      if (vm.chatType === 'Help Desk') {
+        _messageDataService.sendMessageToHelpDesk(newMessage, sendMessageToHelpDeskOnSuccessCallback);
+      } else {
+        _messageDataService.sendMessage(newMessage);
+      }
     }
 
     function loadOlderMessages() {
       isLoaded = true;
-      _messageDataService.getOldMessages(user.userId, lastMessageId, messagesOnSuccess,
-        messagesOnError);
+      if (thread.type === 'Private') {
+        _messageDataService.getOldMessages('one', user.userId, lastMessageId, messagesOnSuccess, messagesOnError);
+      }  else if (thread.type === 'Group') {
+        _messageDataService.getOldMessages('group', user.userId, lastMessageId, messagesOnSuccess, messagesOnError);
+      } else {
+        _messageDataService.getOldMessages('help', user.userId, lastMessageId, messagesOnSuccess, messagesOnError);
+      }
     }
 
     function listenForEnter(event) {
@@ -245,13 +258,20 @@
 
     if (thread.type === 'Private') {
       newMessage = _messageDataService.createNewPrivateMessage();
-    } else {
+      console.log(newMessage, "messagesOnSuccess");
+      _messageDataService.getMessages('one', user.userId, messagesOnSuccess, messagesOnError);
+      _messageDataService.getNewMessage('one', user.userId, onNewMessageSuccess);
+    } else if (thread.type === 'Group') {
       _messageDataService.getGroupFromIdForGroup(thread.groupId, getGroupFromIdForGroupSuccessCallback);
       _messageDataService.createNewGroupMessage(createNewGroupMessageOnSuccess, createNewGroupMessageOnError);
+      console.log(newMessage, "messagesOnSuccess");
+      _messageDataService.getMessages('group', user.userId, messagesOnSuccess, messagesOnError);
+      _messageDataService.getNewMessage('group', user.userId, onNewMessageSuccess);
+    } else {
+      newMessage = _messageDataService.createNewHelpDeskMessage();
+      vm.chatName = "Help Desk";
+      _messageDataService.getMessages('help', user.userId, messagesOnSuccess, messagesOnError);
+      _messageDataService.getNewMessage('help', user.userId, onNewMessageSuccess);
     }
-
-    console.log(newMessage, "messagesOnSuccess");
-    _messageDataService.getMessages(user.userId, messagesOnSuccess, messagesOnError);
-    _messageDataService.getNewMessage(user.userId, onNewMessageSuccess);
   }
 })();

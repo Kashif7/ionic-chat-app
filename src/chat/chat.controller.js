@@ -8,12 +8,20 @@
   function chatController(_chatDataService, _messageDataService, _cookieManagerService) {
     let vm = this;
     vm.threads = [];
+    vm.helpDeskThreads = {};
     let userId = 1;
     let lastThreadId;
 
-    _chatDataService.getThreads(_cookieManagerService.getLoginUserId(), threadsOnSuccess, threadsOnError);
+    vm.userType = _cookieManagerService.getLoginUserType();
+    if (vm.userType === 'User') {
+      _chatDataService.getThreads(_cookieManagerService.getLoginUserId(), threadsOnSuccess, threadsOnError);
+      _chatDataService.getHelpdeskThreads(_cookieManagerService.getLoginUserId(), getHelpdeskThreadsOnSuccess, getHelpdeskThreadsOnError);
+    } else {
+      _chatDataService.getThreadsForAdmin(threadsOnSuccess, threadsOnError);
+    }
 
     vm.getMessageTime = getMessageTime;
+    // vm.setUnseenCount = setUnseenCount;
     vm.setThread = (thread) => {
       _messageDataService.setThread(thread);
     };
@@ -29,6 +37,15 @@
     }
 
     function threadsOnError(error) {
+      console.error('error', error);
+    }
+
+    function getHelpdeskThreadsOnSuccess(snapshot) {
+      console.log("data", snapshot.val());
+      vm.helpDeskThreads = snapshot.val();
+    }
+
+    function getHelpdeskThreadsOnError(error) {
       console.error('error', error);
     }
 

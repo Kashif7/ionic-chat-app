@@ -17,11 +17,13 @@
       getUser: getUser,
       createNewPrivateMessage: createNewPrivateMessage,
       createNewGroupMessage: createNewGroupMessage,
+      createNewHelpDeskMessage: createNewHelpDeskMessage,
       getMessages: getMessages,
       getOldMessages: getOldMessages,
       getNewMessage: getNewMessage,
       getGroupFromId: getGroupFromId,
       sendMessage: sendMessage,
+      sendMessageToHelpDesk: sendMessageToHelpDesk,
       getGroupFromIdForGroup: getGroupFromIdForGroup,
       deleteCurrentConversation: deleteCurrentConversation,
       deleteCurrentConversationMessages: deleteCurrentConversationMessages
@@ -73,6 +75,12 @@
         });
     }
 
+    function createNewHelpDeskMessage() {
+      let newMessage = {};
+      newMessage.threadId = thread.threadId;
+      return newMessage;
+    }
+
     function createNewMessage() {
       let newMessage = {};
       newMessage.threadId = thread.threadId;
@@ -101,9 +109,14 @@
       }
     }
 
-    function getMessages(userId, successCallback, errorCallback) {
+    function getMessages(type, userId, successCallback, errorCallback) {
       console.log("thread", thread);
-      let refString = `/messages/${userId}/${thread.threadId}`;
+      let refString;
+      if (type === 'help') {
+        refString = `/messages/helpDesk/${userId}`;
+      } else {
+        refString = `/messages/${userId}/${thread.threadId}`;
+      }
 
       let ref = firebase.database()
         .ref(refString)
@@ -116,8 +129,13 @@
         .catch(errorCallback);
     }
 
-    function getOldMessages(userId, lastMessageId, successCallback, errorCallback) {
-      let refString = `/messages/${userId}/${thread.threadId}`;
+    function getOldMessages(type, userId, lastMessageId, successCallback, errorCallback) {
+      let refString;
+      if (type === 'help') {
+        refString = `/messages/helpDesk/${userId}`;
+      } else {
+        refString = `/messages/${userId}/${thread.threadId}`;
+      }
 
       let ref = firebase.database()
         .ref(refString)
@@ -131,8 +149,13 @@
         .catch(errorCallback);
     }
 
-    function getNewMessage(userId, successCallback) {
-      let refString = `/messages/${userId}/${thread.threadId}`;
+    function getNewMessage(type, userId, successCallback) {
+      let refString;
+      if (type === 'help') {
+        refString = `/messages/helpDesk/${userId}`;
+      } else {
+        refString = `/messages/${userId}/${thread.threadId}`;
+      }
 
       firebase.database().ref(refString)
         .orderByChild('timeStamp')
@@ -184,6 +207,21 @@
       // $http.post('url', postBody)
       //     .then(successCallback)
       //     .catch(errorCallback);
+    }
+
+    function sendMessageToHelpDesk(newMessage, successCallback, errorCallback) {
+      let postBody = {
+        text: newMessage.text,
+        thread_id: newMessage.threadId
+      };
+      $http(_backendUtilService.createAuthenticatedApiRequestWithData(postBody, 'POST', 'sendMessageToHelpdesk'))
+        .then(function (successResponse) {
+          console.log("data service success", successResponse);
+          successCallback(successResponse);
+        }, function (errorResponse) {
+          errorCallback(errorResponse);
+          console.log("data service error", errorResponse);
+        });
     }
 
     function deleteCurrentConversation(data, successCallback, errorCallback) {

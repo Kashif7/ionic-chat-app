@@ -31,7 +31,9 @@
       "addUserList": "users/list/other",
       "leaveGroup": "users/group/leave/self",
       "deleteConversation":"users/conversation/delete",
-      "deleteMessage": "users/message/delete"
+      "deleteMessage": "users/message/delete",
+      "createHelpdeskChat": "users/helpdesk/create",
+      "sendMessageToHelpdesk": "users/helpdesk/message"
     };
 
     return {

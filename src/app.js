@@ -46,7 +46,9 @@
           cache: false,
           url: '/nav',
           abstract: true,
-          templateUrl: 'templates/navigation.html'
+          templateUrl: 'templates/navigation.html',
+          controller: 'appController',
+          controllerAs: 'appCtrl'
         });
 
       // if none of the above states are matched, use this as the fallback

@@ -29,7 +29,7 @@
     <!--Start - Chat with helpdesk-->
     <ion-list class="helpdesk" ng-if="contactCtrl.view === 'one2one'">
       <ion-item class="item-avatar item-icon-right item-text-wrap helpdesk-item"
-                href="#/chat-messages?chatId=0&type='single'">
+                ng-click="contactCtrl.createChatWithHelpdesk()">
         <img src="http://helpdesk.mdslogistics.net/components/images/logo2.png">
         <i class="icon ion-ios-arrow-right placeholder-icon" style="font-size: 16px"></i>
         <div class="row hrlpdesk-remove-left-padding">
