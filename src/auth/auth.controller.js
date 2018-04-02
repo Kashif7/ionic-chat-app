@@ -15,21 +15,23 @@
     vm.signInCredential = {};
     vm.signUpCredential = {};
     vm.signUpCredential.user_type = "User";
-    vm.signInStatus = "";
+    vm.signInError = false;
     vm.signInMessage = "";
-    vm.signUpStatus = "";
+    vm.signUpError = false;
     vm.signUpMessage = "";
 
     vm.userSignIn = userSignIn;
     vm.userSignUp = userSignUp;
     vm.selectUserType = selectUserType;
+    vm.removeErrorMessages = removeErrorMessages;
 
     function signInSuccessCallback(response) {
+      vm.signInError = false;
       $state.go('nav.chat');
     }
 
     function signInErrorCallback(error) {
-      vm.signInStatus = "error";
+      vm.signInError = true;
       vm.signInMessage = error;
     }
 
@@ -38,10 +40,12 @@
     }
 
     function signInAfterSignUpSuccessCallback(response) {
+      vm.signUpError = false;
       $state.go('nav.chat');
     }
 
     function signUpSuccessCallback(response) {
+      vm.signUpError = false;
       let credential = {
         email: vm.signUpCredential.email,
         password: vm.signUpCredential.password
@@ -50,7 +54,7 @@
     }
 
     function signUpErrorCallback(error) {
-      vm.signUpStatus = "error";
+      vm.signUpError = true;
       vm.signUpMessage = error;
     }
 
@@ -60,6 +64,13 @@
 
     function selectUserType(type) {
       vm.signUpCredential.user_type = type;
+    }
+
+    function removeErrorMessages() {
+      vm.signUpError = false;
+      vm.signUpMessage = "";
+      vm.signInError = false;
+      vm.signInMessage = "";
     }
 
   }
