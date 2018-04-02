@@ -6,7 +6,7 @@
   messageDataService.$inject = ['$firebaseObject', '$firebaseArray', '$http', 'cookieManagerService'];
 
   function messageDataService($firebaseObject, $firebaseArray, $http, _cookieManagerService) {
-    const noOfMessages = 9;
+    const noOfMessages = 20;
     let messages;
     let thread;
     let user;

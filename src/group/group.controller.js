@@ -2,9 +2,9 @@ angular
   .module('practeraChat.group')
   .controller('groupController', groupController);
 
-groupController.$inject = ['chatCreateService', 'groupDataService', '$state', '$scope', '$ionicPopup', 'cookieManagerService', 'messageDataService', '$location', '$ionicHistory'];
+groupController.$inject = ['chatCreateService', 'groupDataService', '$state', '$scope', '$ionicPopup', 'cookieManagerService', 'messageDataService', '$location', '$window'];
 
-function groupController(_chatCreateService, _groupDataService, $state, $scope, $ionicPopup, _cookieManagerService, _messageDataService, $location, $ionicHistory) {
+function groupController(_chatCreateService, _groupDataService, $state, $scope, $ionicPopup, _cookieManagerService, _messageDataService, $location, $window) {
   let vm = this;
   vm.groups = [];
   vm.groupMembersProfiles = [];
@@ -59,7 +59,7 @@ function groupController(_chatCreateService, _groupDataService, $state, $scope, 
   }
 
   function goToBackView() {
-    $ionicHistory.goBack();
+    $window.location.href = ('#/chat-messages?type=Group');
   }
 
   function loadOlderThreads() {

@@ -18,7 +18,7 @@
   <ion-content class="has-footer">
     <!--Start - Chat message list view-->
     <ion-list class="list">
-      <li class="item item-text-wrap" style="background-color: transparent !important; padding-top: 0; padding-bottom: 0">
+      <li ng-if="messageCtrl.displayLoadMore" class="item item-text-wrap" style="background-color: transparent !important; padding-top: 0; padding-bottom: 0">
         <button style="width:100%" class="text-center button button-dark button-clear" ng-click="messageCtrl.loadOldMessages()">load more</button>
       </li>
       <li class="item item-text-wrap chat-list" ng-class="messageCtrl.arrangeAvatar(message.senderId)" ng-repeat="message in messageCtrl.messages">

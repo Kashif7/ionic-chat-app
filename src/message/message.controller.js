@@ -12,6 +12,7 @@
     vm.messages = [];
     vm.newMessageText = '';
     vm.chatName = '';
+    vm.displayLoadMore = false;
 
     vm.arrangeAvatar = arrangeAvatar;
     vm.showAvatarImage = showAvatarImage;
@@ -67,7 +68,10 @@
 
     function messagesOnSuccess(messages) {
 
+      setLoadMoreButton(messages.length);
+
       if (messages.length > 0) {
+
         if (!vm.messages) {
           vm.messages = messages;
         } else {
@@ -83,6 +87,14 @@
         isLoaded = false;
       } else {
         $ionicScrollDelegate.scrollBottom();
+      }
+    }
+
+    function setLoadMoreButton(messagesLength) {
+      if (messagesLength > 0) {
+        vm.displayLoadMore = messagesLength >= 20;
+      } else {
+        vm.displayLoadMore = false;
       }
     }
 
@@ -145,6 +157,11 @@
 
     }
 
+    function getGroupFromIdForGroupSuccessCallback(snapshot) {
+      let groupInfo = snapshot.val();
+      vm.chatName = groupInfo.name;
+    }
+
     user = _messageDataService.getUser();
     thread = _messageDataService.getThread();
     vm.chatName = thread.displayName;
@@ -152,6 +169,7 @@
     if (thread.type === 'Private') {
       newMessage = _messageDataService.createNewPrivateMessage();
     } else {
+      _messageDataService.getGroupFromIdForGroup(thread.groupId, getGroupFromIdForGroupSuccessCallback);
       _messageDataService.createNewGroupMessage(createNewGroupMessageOnSuccess, createNewGroupMessageOnError);
     }
 
