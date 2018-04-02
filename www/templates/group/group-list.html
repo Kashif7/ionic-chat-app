@@ -34,7 +34,7 @@
     <!--Start - Group chat list-->
     <ion-list>
       <ion-item class="item-avatar-left" ng-repeat="group in groupCtrl.groups" ng-click="groupCtrl.setThread(group)" href="#/chat-messages?threadId={{group.threadId}}&type={{group.type}}">
-        <img ng-src="{{group.image}}" src="https://cdn.pixabay.com/photo/2016/04/15/18/05/computer-1331579_960_720.png">
+        <img ng-src="{{group.image}}" src="http://guguia.net/wp-content/plugins/wp-recall/add-on/groups/img/group-avatar.png">
         <h2>{{group.displayName}}</h2>
         <p>{{group.lastMessage}}</p>
         <span class="badge badge-calm" ng-hide="group.unseenCount === '0'">{{group.unseenCount}}</span>

@@ -51,7 +51,7 @@
     <!--Start - One to one chat List-->
     <ion-list class="">
       <ion-item class="item-avatar" ng-repeat="thread in chatCtrl.threads" ng-click="chatCtrl.setThread(thread)" ng-href="#/chat-messages?threadId={{thread.threadId}}&type={{thread.type}}">
-        <img ng-src="{{thread.image}}" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+        <img ng-src="{{thread.image}}" src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg">
         <h2>{{thread.displayName}}</h2>
         <span class="item-note" am-time-ago="chatCtrl.getMessageTime(thread.timeStamp) | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'"></span>
         <p>{{thread.lastMessage}}</p>

@@ -12,7 +12,8 @@
     <!--Start - Group name and image card-->
     <ion-list>
       <ion-item class="info-icons item-avatar item-button-right">
-        <img ng-src="{{groupCtrl.currentGroup.icon}}" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+        <img ng-src="{{groupCtrl.currentGroup.icon}}"
+             src="http://guguia.net/wp-content/plugins/wp-recall/add-on/groups/img/group-avatar.png">
         <div class="row row-center">
           <div class="col col-90 col-center">
             <h2>{{groupCtrl.currentGroup.name}}</h2>
@@ -52,7 +53,7 @@
         </ion-item>
         <!--End - Group member card Add member section-->
         <ion-item class="item-avatar item-text-wrap item-icon-right" ng-repeat="member in groupCtrl.groupMembersProfiles">
-          <img ng-src="{{member.image_url}}" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+          <img ng-src="{{member.image_url}}" src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg">
           <div class="row row-center">
             <div class="col col-100 col-center">
               <h2>{{member.first_name}} {{member.last_name}}<span style="font-size: 14px" ng-show="groupCtrl.checkMyProfile(member.id)"> (You)</span></h2>
