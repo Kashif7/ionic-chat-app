@@ -1,5 +1,5 @@
 <!--Start - chat create contact list-->
-<ion-view view-title="Chat App">
+<ion-view view-title="{{contactCtrl.viewTitle}}">
 
   <!--Start - Sub header search field-->
   <div class="bar bar-subheader item-input-inset">
@@ -66,8 +66,8 @@
                     ng-click="contactCtrl.selectOrUnselectUser($index)">
         <div class="row remove-padding">
           <div class="col col-20 col-center remove-padding">
-            <img ng-src="{{contact.image_url}}" width="40px" height="40px"
-                 src="http://guguia.net/wp-content/plugins/wp-recall/add-on/groups/img/group-avatar.png">
+            <img ng-src="{{contact.image_url}}" width="40px" height="40px" style="border-radius: 50% !important;"
+                 src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg">
           </div>
           <div class="col col-80 col-center remove-padding">
             <h2 class="text-left">{{contact.first_name}} {{contact.last_name}}</h2>

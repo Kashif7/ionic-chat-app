@@ -13,6 +13,7 @@
     vm.view = $stateParams.viewName;
     vm.contactList = [];
     vm.saveButtonText = 'Done';
+    vm.viewTitle = 'Create Chat';
 
     vm.createNormalChat = createNormalChat;
     vm.selectOrUnselectUser = selectOrUnSelectUser;
@@ -24,6 +25,14 @@
     let loginUserId = _cookieManagerService.getLoginUserId();
     let groupData = {};
     let groupMembersId;
+
+    if (vm.view === 'one2one') {
+      vm.viewTitle = 'Create Chat';
+    } else if (vm.view === 'group') {
+      vm.viewTitle = 'Create Group';
+    } else {
+      vm.viewTitle = 'Add Members';
+    }
 
     if (vm.view === 'one2one' || vm.view === 'group') {
       activate();
