@@ -65,9 +65,15 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 .bouble {
   .time {
+    background-color: transparent !important;
+    color: gray !important;
     max-height: 0;
     transition: max-height 5s ease-out;
-    overflow: hidden;
+    visibility: hidden;
+    line-height: 20px !important;
+    padding: 0 !important;
+    width: 100% !important;
+    text-align: -webkit-center;
     //display: none;
     //visibility: hidden;
     //opacity: 0;
@@ -75,6 +81,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
     &.show {
       max-height: fit-content;
+      visibility: visible;
       transition: max-height 5s ease-in;
       //display: block;
       //visibility: visible;

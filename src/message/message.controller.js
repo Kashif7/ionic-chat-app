@@ -21,6 +21,7 @@
     vm.loadOldMessages = loadOlderMessages;
     vm.listenForEnter = listenForEnter;
     vm.goToBackView = goToBackView;
+    vm.messageTimeShow = messageTimeShow;
 
     let lastMessageId;
     let user;
@@ -28,12 +29,21 @@
     let isLoaded;
     let thread;
 
+    function messageTimeShow(id) {
+
+      var e = document.getElementById(id);
+      if (e.classList.contains('show'))
+        e.classList.remove('show');
+      else
+        e.classList.add('show');
+    }
+
     function goToBackView() {
       $state.go('nav.chat');
     }
 
     function arrangeAvatar(senderId) {
-      return senderId != user.userId ? 'item-avatar-left' : 'item-avatar-right';
+      return senderId != user.userId ? 'item-avatar-left bubbleLeft' : 'item-avatar-right bubbleRight';
     }
 
     function showAvatarImage(senderId) {
