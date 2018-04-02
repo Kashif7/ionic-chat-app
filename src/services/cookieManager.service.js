@@ -13,10 +13,13 @@
     return {
       setUserCookie: setUserCookie,
       getUserCookie: getUserCookie,
-      getLoginUserId: getLoginUserId
+      getLoginUserId: getLoginUserId,
+      deleteUserCookie : deleteUserCookie
     };
 
     function setUserCookie(user) {
+      let newUser = JSON.stringify(user);
+      window.localStorage.setItem('user', newUser);
       $cookies.putObject("user_", user);
     }
 
@@ -25,7 +28,12 @@
     }
 
     function getLoginUserId() {
+      console.log($cookies.getObject("user_"), 'vkdvijisn', $cookies.getObject("user_").id);
       return $cookies.getObject("user_").id;
+    }
+
+    function deleteUserCookie() {
+      $cookies.remove("user_");
     }
 
   }

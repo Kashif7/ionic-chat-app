@@ -7,9 +7,12 @@
 
 (function () {
 
-  angular.module('practeraChat', ['ionic', 'ionic.ion.autoListDivider', 'ngCookies', 'practeraChat.chat', 'practeraChat.group', 'practeraChat.message', 'practeraChat.auth', 'practeraChat.config', 'practeraChat.createChat'])
+  angular.module('practeraChat', ['ionic', 'angularMoment', 'ionic.ion.autoListDivider', 'ngCookies', 'practeraChat.chat',
+    'practeraChat.group', 'practeraChat.message', 'practeraChat.auth', 'practeraChat.config',
+    'practeraChat.createChat', 'practeraChat.profile'])
 
     .run(function ($ionicPlatform, cordovaService, firebaseService) {
+      firebaseService.configFirebase();
       $ionicPlatform.ready(function () {
         if (window.cordova) {
           // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -22,7 +25,6 @@
           // cordova.plugins.Keyboard.disableScroll(true);
           cordovaService.initialize();
         } else {
-          firebaseService.configFirebase();
           firebaseService.configMessage();
           firebaseService.requestPermission();
         }
@@ -48,13 +50,20 @@
 
         // setup an abstract state for the tabs directive
         .state('nav', {
+          cache: false,
           url: '/nav',
           abstract: true,
           templateUrl: 'templates/navigation.html'
         });
+      let user = window.localStorage.getItem('user');
 
-      // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/login');
+      console.log(user, 'dhggr');
+
+      if (user) {
+        $urlRouterProvider.otherwise('/nav/chat');
+      } else {
+        $urlRouterProvider.otherwise('/login');
+      }
 
     });
 })();

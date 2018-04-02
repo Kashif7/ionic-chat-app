@@ -16,7 +16,7 @@
 
     function initialize() {
       console.log("fjefjefefue");
-      document.addEventListener('deviceready',onDeviceReady.bind(this), false);
+      document.addEventListener('deviceready', onDeviceReady.bind(this), false);
     }
 
     function onDeviceReady() {

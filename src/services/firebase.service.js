@@ -47,8 +47,8 @@
             messaging.getToken().then(function (currentToken) {
                 if (currentToken) {
                     alert(currentToken);
-                    console.log(currentToken, 'current');
-                    _authService.updateToken(currentToken);
+                    console.log(currentToken, 'current eifjefi');
+                    _authService.setToken(currentToken);
                     tokenSentToServer = true;
                 } else {
                     // Show permission request.
@@ -67,12 +67,13 @@
         function onTokenRefresh() {
             messaging.onTokenRefresh(function () {
                 messaging.getToken().then(function (refreshedToken) {
-                    console.log('Token refreshed.');
+                    console.log('Token refreshed. ok');
                     // Indicate that the new Instance ID token has not yet been sent to the
                     // app server.
                     tokenSentToServer = false;
                     // Send Instance ID token to app server.
-                    _authService.updateToken(refreshedToken);
+                    _authService.setToken(currentToken);
+                    // _authService.updateToken(refreshedToken);
                     // ...
                 }).catch(function (err) {
                     console.log('Unable to retrieve refreshed token ', err);

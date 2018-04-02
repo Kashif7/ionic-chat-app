@@ -3,9 +3,9 @@
     .module('practeraChat.message')
     .factory('messageDataService', messageDataService);
 
-  messageDataService.$inject = ['$firebaseObject', '$firebaseArray', '$http', 'cookieManagerService'];
+  messageDataService.$inject = ['$firebaseObject', '$firebaseArray', '$http', 'cookieManagerService', 'authService'];
 
-  function messageDataService($firebaseObject, $firebaseArray, $http, _cookieManagerService) {
+  function messageDataService($firebaseObject, $firebaseArray, $http, _cookieManagerService, _authService) {
     const noOfMessages = 9;
     let messages;
     let thread;
@@ -48,7 +48,8 @@
 
       array[0] = parseInt(thread.user);
       newMessage.recipient = array;
-      console.log("new message", newMessage);
+      newMessage.message_type = 'Private';
+      console.log("new message", newMessage.message_type);
       console.log("array", array);
       return newMessage;
     }
@@ -62,6 +63,7 @@
       group.$loaded()
         .then((group) => {
           newMessage.recipient = Object.keys(group.members);
+          newMessage.message_type = 'Group';
           onSuccessCallback(newMessage);
         })
         .catch((error) => {
@@ -80,6 +82,7 @@
         newMessage.recipient = array;
         console.log("new message", newMessage);
         console.log("array", array);
+        newMessage.message_type = 'Private';
         return newMessage;
       } else {
         let group = getGroupFromId(thread.groupId);
@@ -87,7 +90,7 @@
         group.$loaded()
           .then((group) => {
             newMessage.recipient = Object.keys(group.members);
-
+            newMessage.message_type = 'Group';            
             console.log("new message data service", newMessage);
 
             return newMessage;
@@ -149,8 +152,14 @@
       let postBody = {
         text: newMessage.text,
         thread_id: newMessage.threadId,
-        recipient: newMessage.recipient
+        recipient: newMessage.recipient,
+        message_type: newMessage.message_type
       };
+
+      if (!_authService.serverUpdated()) {
+        let firebaseToken = localStorage.getItem('firebase_token');
+        _authService.setToken(firebaseToken);
+      } 
 
       let userCookie = _cookieManagerService.getUserCookie();
 
