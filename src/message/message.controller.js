@@ -79,28 +79,56 @@
       }
     }
 
+    function addMessages(messages) {
+      setTimeout(() => {
+        $scope.$apply(() => {
+          add(messages);
+        });
+      }, 0);
+    }
+
+    function add(messages) {
+      console.log(threads.val(), 'threads');
+      let index = 0;
+      vm.threads.length = 0;
+      if (threads.numChildren() > 0) {
+        threads.forEach((thread) => {
+          vm.threads.push(thread.val());
+
+          if (index === threads.numChildren() - 1) {
+            vm.threads.sort(sort);
+            console.log(vm.threads, 'ejgiogegegiehgeuh');
+          }
+          index++;
+        });
+      }
+    }
+
     function messagesOnSuccess(messages) {
+      messages = messages.val();
 
       setLoadMoreButton(messages.length);
 
-      if (messages.length > 0) {
+      $scope.$apply(() => {
+        if (messages.length > 0) {
 
-        if (!vm.messages) {
-          vm.messages = messages;
+          if (!vm.messages) {
+            vm.messages = messages;
+          } else {
+            vm.messages = messages.concat(vm.messages.slice(1, vm.messages.length));
+          }
+          lastMessageId = vm.messages[0].$id;
         } else {
-          vm.messages = messages.concat(vm.messages.slice(1, vm.messages.length));
+          // newMessage = _messageDataService.createNewMessage();
+          // console.log(newMessage, "messagesOnSuccess");
         }
-        lastMessageId = vm.messages[0].$id;
-      } else {
-        // newMessage = _messageDataService.createNewMessage();
-        // console.log(newMessage, "messagesOnSuccess");
-      }
 
-      if (isLoaded) {
-        isLoaded = false;
-      } else {
-        $ionicScrollDelegate.scrollBottom();
-      }
+        if (isLoaded) {
+          isLoaded = false;
+        } else {
+          $ionicScrollDelegate.scrollBottom();
+        }
+      });
     }
 
     function setLoadMoreButton(messagesLength) {
@@ -184,7 +212,7 @@
         buttons: [
           { text: '<i class="icon ion-trash-a"></i> Delete Message' }
         ],
-        buttonClicked: function(index) {
+        buttonClicked: function (index) {
           if (index === 0) {
             let messageDeleteData = {
               message_id: vm.messages[messageIndex].messageId,
@@ -214,8 +242,8 @@
         title: 'Delete Message?',
         template: 'Once you delete it cannot be undone.'
       });
-      confirmPopup.then(function(res) {
-        if(res) {
+      confirmPopup.then(function (res) {
+        if (res) {
           _messageDataService.deleteCurrentConversationMessages(data, deleteMessagesOnSuccessCallback, deleteMessagesOnErrorCallback);
         } else {
           console.log('You are not sure');

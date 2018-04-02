@@ -11,19 +11,29 @@
 
         return {
             getThreads: getThreads,
+            getThreadsOb: getThreadsOb,
             getOldThreads: getOldThreads
         };
 
         function getThreads(userId, successCallback, errorCallback) {
+            console.log(userId, 'userId');
             let ref = firebase.database()
                 .ref(`/threads/${userId}`)
                 .orderByChild('timeStamp');
-               // .limitToFirst(noOfThreads);
 
-            $firebaseArray(ref)
-                .$loaded()
-                .then(successCallback)
-                .catch(errorCallback);
+            ref.on('value', successCallback);
+        }
+
+        function getThreadsOb(userId) {
+            let ref = firebase.database()
+                .ref(`/threads/${userId}`)
+                .orderByChild('timeStamp');
+
+            console.log('hufsuhfsufhs');
+            return $firebaseObject(ref);
+            // .$loaded()
+            // .then(successCallback)
+            // .catch(errorCallback);
         }
 
         function getOldThreads(userId, lastThreadId, successCallback, errorCallback) {
@@ -35,6 +45,11 @@
 
             $firebaseArray(ref)
                 .$loaded()
+                .then(successCallback)
+                .catch(errorCallback);
+
+            $firebaseArray(ref)
+                .$change()
                 .then(successCallback)
                 .catch(errorCallback);
         }

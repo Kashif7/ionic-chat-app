@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1036267604116",
+    "firebase_url": "https://practera-notification.firebaseio.com",
+    "project_id": "practera-notification",
+    "storage_bucket": "practera-notification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036267604116:android:30ee2ca0b646ad04",
+        "android_client_info": {
+          "package_name": "com.intersective.practeraNotifications"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036267604116-lsenupbhm2jco33lqdmrp5t5kq2ph1fa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTU2keLBi6wOpdwybyFl91bvMgpv3Cdf0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

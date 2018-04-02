@@ -26,10 +26,7 @@
         .orderByChild('type')
         .equalTo('Group');
 
-      $firebaseArray(ref)
-        .$loaded()
-        .then(successCallback)
-        .catch(errorCallback);
+      ref.on('value', successCallback);
     }
 
     function getOldGroups(userId, lastGroupId, successCallback, errorCallback) {

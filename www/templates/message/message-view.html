@@ -50,7 +50,7 @@
              name="newMessage" ng-model="messageCtrl.newMessageText" ng-keypress="messageCtrl.listenForEnter($event)"
              required/>
     </label>
-    <button class="button icon message-send" ng-click="messageCtrl.sendMessage()"></button>
+    <button class="button icon message-send" ng-disabled="!messageCtrl.newMessageText" ng-click="messageCtrl.sendMessage()"></button>
   </div>
   <!--End - Chat message typing text field-->
 </ion-view>
