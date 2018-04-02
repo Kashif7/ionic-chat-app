@@ -25,7 +25,13 @@
       "groupUsers": "users/list",
       "myProfile": "users/self",
       "profileUpdate": "users/update",
-      "logout": "users/logout"
+      "logout": "users/logout",
+      "removeMember": "users/group/remove",
+      "addMember": "users/group/add",
+      "addUserList": "users/list/other",
+      "leaveGroup": "users/group/leave/self",
+      "deleteConversation":"users/conversation/delete",
+      "deleteMessage": "users/message/delete"
     };
 
     return {

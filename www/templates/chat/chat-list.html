@@ -23,7 +23,7 @@
   </div>
   <!--End - One to one chat search-->
 
-  <ion-content class="has-subheader">
+  <ion-content class="has-subheader" scrollbar-y="true">
     <!--Start - one to one chat search-->
     <!--<div class="list list-inset">-->
     <!--<label class="item item-input">-->
@@ -34,28 +34,29 @@
     <!--End - One to one chat search-->
 
     <!--Start - Chat with helpdesk-->
-    <ion-list class="helpdesk">
-      <h6 style="padding-left: 20px; padding-top: 10px; font-weight: normal">CHAT WITH HELPDESK</h6>
-      <ion-item class="item-avatar item-text-wrap helpdesk-item" href="#/chat-messages?chatId=0&type=single">
-        <img src="http://helpdesk.mdslogistics.net/components/images/logo2.png">
-        <div class="row hrlpdesk-remove-left-padding">
-          <div class="col col-100 col-center hrlpdesk-remove-left-padding">
-            <h2>Helpdesk</h2>
-          </div>
-        </div>
-        <span class="badge badge-calm">5</span>
-      </ion-item>
-    </ion-list>
+    <!--<ion-list class="helpdesk">-->
+      <!--<h6 style="padding-left: 20px; padding-top: 10px; font-weight: normal">CHAT WITH HELPDESK</h6>-->
+      <!--<ion-item class="item-avatar item-text-wrap helpdesk-item" href="#/chat-messages?chatId=0&type=single">-->
+        <!--<img src="http://helpdesk.mdslogistics.net/components/images/logo2.png">-->
+        <!--<div class="row hrlpdesk-remove-left-padding">-->
+          <!--<div class="col col-100 col-center hrlpdesk-remove-left-padding">-->
+            <!--<h2>Helpdesk</h2>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<span class="badge badge-calm">5</span>-->
+      <!--</ion-item>-->
+    <!--</ion-list>-->
     <!--End - Chat with helpdesk-->
 
     <!--Start - One to one chat List-->
     <ion-list class="">
       <ion-item class="item-avatar" ng-repeat="thread in chatCtrl.threads" ng-click="chatCtrl.setThread(thread)" ng-href="#/chat-messages?threadId={{thread.threadId}}&type={{thread.type}}">
-        <img ng-src="{{thread.image}}" src="http://bdfjade.com/data/out/75/5807300-avatar-images.png">
+        <img ng-src="{{thread.image}}" src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg">
         <h2>{{thread.displayName}}</h2>
-        <span class="item-note">10.20 PM</span>
+        <span class="item-note" am-time-ago="chatCtrl.getMessageTime(thread.timeStamp) | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'"></span>
         <p>{{thread.lastMessage}}</p>
-        <span class="badge badge-calm">{{thread.unseenCount}}</span>
+        <!--<span an-time-ago="announcement.createTimestamp | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'"></span>-->
+        <span class="badge badge-calm" ng-hide="thread.unseenCount === '0'">{{thread.unseenCount}}</span>
       </ion-item>
     </ion-list>
     <!--End - One to one chat List-->

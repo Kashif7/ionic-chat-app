@@ -14,7 +14,10 @@
       getGroups: getGroups,
       getOldGroups: getOldGroups,
       UpdateGroupNameOrImage: UpdateGroupNameOrImage,
-      getGroupMembers: getGroupMembers
+      getGroupMembers: getGroupMembers,
+      removeGroupMembers: removeGroupMembers,
+      addGroupMembers: addGroupMembers,
+      leaveFromGroup: leaveFromGroup
     };
 
     function getGroups(userId, successCallback, errorCallback) {
@@ -55,6 +58,39 @@
 
     function getGroupMembers(data, onSuccessCallback, onErrorCallback) {
       $http(_backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'groupUsers'))
+        .then(function (successResponse) {
+          console.log("data service success", successResponse);
+          onSuccessCallback(successResponse);
+        }, function (errorResponse) {
+          onErrorCallback(errorResponse);
+          console.log("data service error", errorResponse);
+        });
+    }
+
+    function removeGroupMembers(data, onSuccessCallback, onErrorCallback) {
+      $http(_backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'removeMember'))
+        .then(function (successResponse) {
+          console.log("data service success", successResponse);
+          onSuccessCallback(successResponse);
+        }, function (errorResponse) {
+          onErrorCallback(errorResponse);
+          console.log("data service error", errorResponse);
+        });
+    }
+
+    function addGroupMembers(data, onSuccessCallback, onErrorCallback) {
+      $http(_backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'addMember'))
+        .then(function (successResponse) {
+          console.log("data service success", successResponse);
+          onSuccessCallback(successResponse);
+        }, function (errorResponse) {
+          onErrorCallback(errorResponse);
+          console.log("data service error", errorResponse);
+        });
+    }
+
+    function leaveFromGroup(data, onSuccessCallback, onErrorCallback) {
+      $http(_backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'leaveGroup'))
         .then(function (successResponse) {
           console.log("data service success", successResponse);
           onSuccessCallback(successResponse);

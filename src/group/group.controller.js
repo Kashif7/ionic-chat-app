@@ -2,12 +2,13 @@ angular
   .module('practeraChat.group')
   .controller('groupController', groupController);
 
-groupController.$inject = ['groupDataService', '$scope', '$ionicPopup', 'cookieManagerService', 'messageDataService', '$location', '$ionicHistory'];
+groupController.$inject = ['chatCreateService', 'groupDataService', '$state', '$scope', '$ionicPopup', 'cookieManagerService', 'messageDataService', '$location', '$window'];
 
-function groupController(_groupDataService, $scope, $ionicPopup, _cookieManagerService, _messageDataService, $location, $ionicHistory) {
+function groupController(_chatCreateService, _groupDataService, $state, $scope, $ionicPopup, _cookieManagerService, _messageDataService, $location, $window) {
   let vm = this;
   vm.groups = [];
   vm.groupMembersProfiles = [];
+  vm.currentGroup = {};
   let userId = 1;
   let lastgroupId;
   let groupMembersId;
@@ -15,21 +16,24 @@ function groupController(_groupDataService, $scope, $ionicPopup, _cookieManagerS
 
   vm.goToBackView = goToBackView;
   vm.editGroupNamePopup = editGroupNamePopup;
+  vm.removeMemberFromGroup = removeMemberFromGroup;
+  vm.checkMyProfile = checkMyProfile;
+  vm.leaveGroup = leaveGroup;
+
+  function getGroupDataFromIdCallback(snapshot) {
+    let groupInfo = snapshot.val();
+    _chatCreateService.setGroupData(groupInfo);
+    vm.currentGroup = groupInfo;
+    $scope.groupData = groupInfo;
+    groupMembersId = Object.keys(groupInfo.members).map(Number);
+    loadGroupMembers();
+  }
 
   if ($location.search()['type']) {
     vm.chatType = $location.search()['type'];
 
     let thread = _messageDataService.getThread();
-    let group = _messageDataService.getGroupFromId(thread.groupId);
-    group.$loaded()
-      .then((group) => {
-        $scope.groupData = group;
-        groupMembersId = Object.keys(group.members).map(Number);
-        loadGroupMembers();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    _messageDataService.getGroupFromIdForGroup(thread.groupId, getGroupDataFromIdCallback);
 
   } else {
     _groupDataService.getGroups(_cookieManagerService.getLoginUserId(), threadsOnSuccess, threadsOnError);
@@ -55,7 +59,7 @@ function groupController(_groupDataService, $scope, $ionicPopup, _cookieManagerS
   }
 
   function goToBackView() {
-    $ionicHistory.goBack();
+    $window.location.href = ('#/chat-messages?type=Group');
   }
 
   function loadOlderThreads() {
@@ -117,6 +121,67 @@ function groupController(_groupDataService, $scope, $ionicPopup, _cookieManagerS
       name: name
     };
     _groupDataService.UpdateGroupNameOrImage(groupData, updateGroupNameOnSuccessCallback, updateGroupNameOnErrorCallback);
+  }
+
+  function removeMemberFromGroupOnSuccess(response) {
+    console.log("remove success", response);
+  }
+
+  function removeMemberFromGroupOnError(error) {
+    console.log("remove fail", error);
+  }
+
+  function removeMemberFromGroup(memberId) {
+    let groupMembers = vm.currentGroup.members;
+    if (groupMembers.hasOwnProperty(memberId)) {
+      delete groupMembers[memberId];
+    }
+
+    let groupNewData = {
+      group_id: vm.currentGroup.groupId,
+      removed_user_id: memberId,
+      members: groupMembers
+    };
+
+    _groupDataService.removeGroupMembers(groupNewData, removeMemberFromGroupOnSuccess, removeMemberFromGroupOnError);
+
+  }
+
+  function checkMyProfile(id) {
+    return _cookieManagerService.getLoginUserId() === id;
+  }
+
+  function leaveGroupOnSuccessCallback(response) {
+
+  }
+
+  function leaveGroupOnErrorCallback(error) {
+    console.log(error);
+  }
+
+  function leaveGroup() {
+
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Leave Group?',
+      template: 'You will no longer be able to send or receive new messages'
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        let members = vm.currentGroup.members;
+        if (members.hasOwnProperty(_cookieManagerService.getLoginUserId())) {
+          delete members[_cookieManagerService.getLoginUserId()];
+        }
+        let groupData = {
+          group_id: vm.currentGroup.groupId,
+          members: members
+        };
+
+        _groupDataService.leaveFromGroup(groupData, leaveGroupOnSuccessCallback, leaveGroupOnErrorCallback);
+        $state.go('nav.chat');
+      } else {
+        console.log('You are not sure');
+      }
+    });
   }
 
 }

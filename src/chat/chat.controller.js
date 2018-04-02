@@ -11,26 +11,34 @@
     let userId = 1;
     let lastThreadId;
 
-    vm.threads = _chatDataService.getThreads(_cookieManagerService.getLoginUserId(), threadsOnSuccess, threadsOnError);
+    _chatDataService.getThreads(_cookieManagerService.getLoginUserId(), threadsOnSuccess, threadsOnError);
 
+    vm.getMessageTime = getMessageTime;
     vm.setThread = (thread) => {
       _messageDataService.setThread(thread);
     };
 
     function loadOlderThreads() {
-      vm.threads = _chatDataService.getOldThreads(_cookieManagerService.getLoginUserId(), lastThreadId, threadsOnSuccess,
+      _chatDataService.getOldThreads(_cookieManagerService.getLoginUserId(), lastThreadId, threadsOnSuccess,
         threadsOnError);
     };
 
     function threadsOnSuccess(data) {
-      console.log('data', data);
       vm.threads = data;
       lastThreadId = data[data.length-1].$id;
-      console.log('lastThreadId',lastThreadId);
     }
 
     function threadsOnError(error) {
       console.error('error', error);
     }
+
+    let messageDay;
+
+    function getMessageTime(time) {
+      let newTime = time.substr(1);
+      messageDay = new Date(newTime  * 1000);
+      return messageDay;
+    }
+
   }
 })();

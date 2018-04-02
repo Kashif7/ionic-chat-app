@@ -3,10 +3,10 @@
     .module('practeraChat.message')
     .factory('messageDataService', messageDataService);
 
-  messageDataService.$inject = ['$firebaseObject', '$firebaseArray', '$http', 'cookieManagerService'];
+  messageDataService.$inject = ['$firebaseObject', '$firebaseArray', '$http', 'cookieManagerService', 'backendUtilService'];
 
-  function messageDataService($firebaseObject, $firebaseArray, $http, _cookieManagerService) {
-    const noOfMessages = 9;
+  function messageDataService($firebaseObject, $firebaseArray, $http, _cookieManagerService, _backendUtilService) {
+    const noOfMessages = 20;
     let messages;
     let thread;
     let user;
@@ -21,7 +21,10 @@
       getOldMessages: getOldMessages,
       getNewMessage: getNewMessage,
       getGroupFromId: getGroupFromId,
-      sendMessage: sendMessage
+      sendMessage: sendMessage,
+      getGroupFromIdForGroup: getGroupFromIdForGroup,
+      deleteCurrentConversation: deleteCurrentConversation,
+      deleteCurrentConversationMessages: deleteCurrentConversationMessages
     };
 
     function setThread(selectedThread) {
@@ -61,7 +64,7 @@
 
       group.$loaded()
         .then((group) => {
-          newMessage.recipient = Object.keys(group.members);
+          newMessage.recipient = Object.keys(group.members).map(Number);
           onSuccessCallback(newMessage);
         })
         .catch((error) => {
@@ -145,6 +148,12 @@
       return $firebaseObject(ref);
     }
 
+    function getGroupFromIdForGroup(groupId, successCallback) {
+      let refString = `groups/${groupId}`;
+      firebase.database().ref(refString)
+        .on('value', successCallback);
+    }
+
     function sendMessage(newMessage) {
       let postBody = {
         text: newMessage.text,
@@ -176,5 +185,28 @@
       //     .then(successCallback)
       //     .catch(errorCallback);
     }
+
+    function deleteCurrentConversation(data, successCallback, errorCallback) {
+      $http(_backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'deleteConversation'))
+        .then(function (successResponse) {
+          console.log("data service success", successResponse);
+          successCallback(successResponse);
+        }, function (errorResponse) {
+          errorCallback(errorResponse);
+          console.log("data service error", errorResponse);
+        });
+    }
+
+    function deleteCurrentConversationMessages(data, successCallback, errorCallback) {
+      $http(_backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'deleteMessage'))
+        .then(function (successResponse) {
+          console.log("data service success", successResponse);
+          successCallback(successResponse);
+        }, function (errorResponse) {
+          errorCallback(errorResponse);
+          console.log("data service error", errorResponse);
+        });
+    }
+
   }
 })();

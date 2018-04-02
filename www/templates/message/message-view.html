@@ -9,23 +9,35 @@
 
   <!--Start - Navigation bar popup menu button-->
   <ion-nav-buttons side="secondary">
-    <button ng-if="messageCtrl.chatType === 'Private'" class="button button-icon button-clear icon chat-option button-small" ng-click="messageCtrl.openPopover($event)"></button>
-    <a ng-if="messageCtrl.chatType === 'Group'" class="button button-icon button-clear icon ion-information-circled button-small"
-      href="#/group-chat-info?type='info'"></a>
+    <button ng-if="messageCtrl.chatType === 'Private'"
+            class="button button-icon button-clear icon chat-option button-small"
+            ng-click="messageCtrl.openPopover($event)"></button>
+    <a ng-if="messageCtrl.chatType === 'Group'"
+       class="button button-icon button-clear icon ion-information-circled button-small"
+       href="#/group-chat-info?type='info'"></a>
   </ion-nav-buttons>
   <!--End - Navigation bar popup menu button-->
 
-  <ion-content class="has-footer">
+  <ion-content class="has-footer padding">
     <!--Start - Chat message list view-->
     <ion-list class="list">
-      <li class="item item-text-wrap">
-        <button style="width:100%" class="text-center button button-dark button-clear" ng-click="messageCtrl.loadOldMessages()">load more</button>
+      <li ng-if="messageCtrl.displayLoadMore" class="item item-text-wrap"
+          style="background-color: transparent !important; padding-top: 0; padding-bottom: 0">
+        <button style="width:100%" class="text-center button button-dark button-clear"
+                ng-click="messageCtrl.loadOldMessages()">load more
+        </button>
       </li>
-      <li class="item item-text-wrap chat-list" ng-class="messageCtrl.arrangeAvatar(message.senderId)" ng-repeat="message in messageCtrl.messages">
-        <img   ng-if="messageCtrl.showAvatarImage(message.senderId)" src="https://exelord.com/ember-initials/images/default-d5f51047d8bd6327ec4a74361a7aae7f.jpg" alt="" />
-        <div ng-class="messageCtrl.arrangeBubble(message.senderId)">
-          <p>{{message.text}}</p>
-        </div>
+      <li class="item item-text-wrap chat-list bouble"
+          ng-class="messageCtrl.arrangeAvatar(message.senderId)" ng-repeat="message in messageCtrl.messages track by $index">
+        <img ng-if="messageCtrl.showAvatarImage(message.senderId)"
+             src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg" alt=""/>
+        <p class="text-center time" id="{{$index}}">
+          <small>10.00 PM</small>
+        </p>
+        <!--<p class="text-center" style="font-size: 25px; color: red; background-color: transparent">-->
+          <!--<i class="icon ion-trash-a"></i>-->
+        <!--</p>-->
+        <p on-hold="messageCtrl.messageOnHold($index)" ng-click="messageCtrl.messageTimeShow($index)">{{message.text}}</p>
       </li>
     </ion-list>
     <!--End - Chat message list view-->
@@ -35,7 +47,8 @@
     <label class="item-input-wrapper">
       <i class="icon ion-android-chat placeholder-icon"></i>
       <input type="text" placeholder="Type your message..."
-      name="newMessage" ng-model="messageCtrl.newMessageText" ng-keypress="messageCtrl.listenForEnter($event)" required/>
+             name="newMessage" ng-model="messageCtrl.newMessageText" ng-keypress="messageCtrl.listenForEnter($event)"
+             required/>
     </label>
     <button class="button icon message-send" ng-click="messageCtrl.sendMessage()"></button>
   </div>
