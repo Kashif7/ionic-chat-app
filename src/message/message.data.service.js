@@ -3,10 +3,11 @@
     .module('practeraChat.message')
     .factory('messageDataService', messageDataService);
 
-  messageDataService.$inject = ['$firebaseObject', '$firebaseArray', '$http', 'cookieManagerService', 'backendUtilService'];
+  messageDataService.$inject = ['$firebaseObject', '$firebaseArray', '$http', 'cookieManagerService', 'backendUtilService', 'authService'];
 
-  function messageDataService($firebaseObject, $firebaseArray, $http, _cookieManagerService, _backendUtilService) {
+  function messageDataService($firebaseObject, $firebaseArray, $http, _cookieManagerService, _backendUtilService,  _authService) {
     const noOfMessages = 20;
+    // const noOfMessages = 9;
     let messages;
     let thread;
     let user;
@@ -31,6 +32,7 @@
 
     function setThread(selectedThread) {
       thread = selectedThread;
+      updateUnseenCount();
     }
 
     function getThread() {
@@ -46,6 +48,26 @@
       return user;
     }
 
+    function updateUnseenCount() {
+      // let ref = firebase.database()
+      // .ref(`/threads/${userId}/${thread.threadId}`);
+
+      thread.unseenCount = "0";
+
+      let user = JSON.parse(localStorage.getItem('user')).id;
+
+      var updates = {};
+      updates[`/threads/${user}/${thread.threadId}`] = thread;
+
+      // firebase.database().ref().update(updates);
+
+      console.log(user,thread.threadId,'dduvheuhevvhev');
+
+      firebase.database().ref().child(`/threads/${user}/${thread.threadId}`)
+      .update({ unseenCount: "0" });
+
+    }
+
     function createNewPrivateMessage() {
       let newMessage = {};
       newMessage.threadId = thread.threadId;
@@ -53,7 +75,8 @@
 
       array[0] = parseInt(thread.user);
       newMessage.recipient = array;
-      console.log("new message", newMessage);
+      newMessage.message_type = 'Private';
+      console.log("new message", newMessage.message_type);
       console.log("array", array);
       return newMessage;
     }
@@ -91,6 +114,7 @@
         newMessage.recipient = array;
         console.log("new message", newMessage);
         console.log("array", array);
+        newMessage.message_type = 'Private';
         return newMessage;
       } else {
         let group = getGroupFromId(thread.groupId);
@@ -98,7 +122,7 @@
         group.$loaded()
           .then((group) => {
             newMessage.recipient = Object.keys(group.members);
-
+            newMessage.message_type = 'Group';            
             console.log("new message data service", newMessage);
 
             return newMessage;
@@ -123,10 +147,12 @@
         .orderByKey()
         .limitToLast(noOfMessages);
 
-      $firebaseArray(ref)
-        .$loaded()
-        .then(successCallback)
-        .catch(errorCallback);
+    ref.on('value', successCallback);
+
+      // $firebaseArray(ref)
+      //   .$loaded()
+      //   .then(successCallback)
+      //   .catch(errorCallback);
     }
 
     function getOldMessages(type, userId, lastMessageId, successCallback, errorCallback) {
@@ -181,8 +207,14 @@
       let postBody = {
         text: newMessage.text,
         thread_id: newMessage.threadId,
-        recipient: newMessage.recipient
+        recipient: newMessage.recipient,
+        message_type: newMessage.message_type
       };
+
+      if (!_authService.serverUpdated()) {
+        let firebaseToken = localStorage.getItem('firebase_token');
+        _authService.setToken(firebaseToken);
+      } 
 
       let userCookie = _cookieManagerService.getUserCookie();
 

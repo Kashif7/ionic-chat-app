@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -41,7 +42,7 @@
   <script src="lib/moment/moment.js"></script>
   <script src="lib/angular-moment/angular-moment.js"></script>
 
-  <script>
+  <!-- <script>
     // Initialize Firebase
     var config = {
       apiKey: "AIzaSyB0GbLPy5PEqkteoLq6rNg-0LaibyheINo",
@@ -52,7 +53,62 @@
       messagingSenderId: "1036267604116"
     };
     firebase.initializeApp(config);
-  </script>
+
+    const messaging = firebase.messaging();
+    messaging.usePublicVapidKey("BI3g0Hc4w9bNo2onAe2Ag6C8dqJP3SsXlxBPfMKEXoCqWrOJjUzHReT63ji5Wsz91OfisS_kO679UZAGvNonBbY");
+
+    messaging.requestPermission().then(function () {
+      console.log('Notification permission granted.');
+      getToken();
+      // TODO(developer): Retrieve an Instance ID token for use with FCM.
+      // ...
+    }).catch(function (err) {
+      console.log('Unable to get permission to notify.', err);
+    });
+
+    function getToken() {
+      messaging.getToken().then(function (currentToken) {
+        if (currentToken) {
+          alert(currentToken);
+          console.log(currentToken, 'current');
+          // sendTokenToServer(currentToken);
+          // updateUIForPushEnabled(currentToken);
+        } else {
+          // Show permission request.
+          console.log('No Instance ID token available. Request permission to generate one.');
+          // Show permission UI.
+          //updateUIForPushPermissionRequired();
+          // setTokenSentToServer(false);
+        }
+      }).catch(function (err) {
+        console.log('An error occurred while retrieving token. ', err);
+        // showToken('Error retrieving Instance ID token. ', err);
+        // setTokenSentToServer(false);
+      });
+
+      messaging.onTokenRefresh(function () {
+        messaging.getToken().then(function (refreshedToken) {
+          console.log('Token refreshed.');
+          // Indicate that the new Instance ID token has not yet been sent to the
+          // app server.
+          setTokenSentToServer(false);
+          // Send Instance ID token to app server.
+          sendTokenToServer(refreshedToken);
+          // ...
+        }).catch(function (err) {
+          console.log('Unable to retrieve refreshed token ', err);
+          showToken('Unable to retrieve refreshed token ', err);
+        });
+      });
+    }
+
+    messaging.onMessage(function (payload) {
+      console.log('Message received. ', payload);
+      // ...
+    });
+  </script> -->
+
+
 
 
   <!-- cordova script (this will be a 404 during development) -->
@@ -61,40 +117,41 @@
   <!-- your app's js -->
   <script src="dist/practera.min.js"></script>
 </head>
+
 <body ng-app="practeraChat">
 
-<ion-pane>
-  <!--Start Navigation Bar-->
-  <ion-nav-bar class="bar-stable" style="color: #6ebdd3 !important">
-    <ion-nav-back-button>
-    </ion-nav-back-button>
-  </ion-nav-bar>
-  <!--End Navigation Bar-->
+  <ion-pane>
+    <!--Start Navigation Bar-->
+    <ion-nav-bar class="bar-stable" style="color: #6ebdd3 !important">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+    </ion-nav-bar>
+    <!--End Navigation Bar-->
 
-  <!--Start Dynamic content area-->
-  <ion-nav-view></ion-nav-view>
-  <!--End Dynamic content area-->
-</ion-pane>
+    <!--Start Dynamic content area-->
+    <ion-nav-view></ion-nav-view>
+    <!--End Dynamic content area-->
+  </ion-pane>
 
-<script type="text/javascript">
-  <!--
-  function messageBoubleTimeShow(id) {
+  <script type="text/javascript">
+    function messageBoubleTimeShow(id) {
 
-    var e = document.getElementById(id);
-    if (e.classList.contains('show'))
-      e.classList.remove('show');
-    else
-      e.classList.add('show');
-  }
+      var e = document.getElementById(id);
+      if (e.classList.contains('show'))
+        e.classList.remove('show');
+      else
+        e.classList.add('show');
+    }
   //-->
-</script>
+  </script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript">
-$(function() {
-   $('#content').load('http://192.168.8.100:8000/users/login');
-});
-</script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $('#content').load('http://192.168.8.100:8000/users/login');
+    });
+  </script>
 
 </body>
+
 </html>

@@ -11,21 +11,28 @@
     'practeraChat.group', 'practeraChat.message', 'practeraChat.auth', 'practeraChat.config',
     'practeraChat.createChat', 'practeraChat.profile'])
 
-    .run(function ($ionicPlatform) {
+    .run(function ($ionicPlatform, cordovaService, firebaseService) {
+      firebaseService.configFirebase();
       $ionicPlatform.ready(function () {
-        if (window.cordova && window.cordova.plugins.Keyboard) {
+        if (window.cordova) {
           // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
           // for form inputs)
-          cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+          // cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
 
           // Don't remove this line unless you know what you are doing. It stops the viewport
           // from snapping when text inputs are focused. Ionic handles this internally for
           // a much nicer keyboard experience.
-          cordova.plugins.Keyboard.disableScroll(true);
+          // cordova.plugins.Keyboard.disableScroll(true);
+          cordovaService.initialize();
+        } else {
+          firebaseService.configMessage();
+          firebaseService.requestPermission();
         }
         if (window.StatusBar) {
           StatusBar.styleDefault();
         }
+
+
       });
     })
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -50,9 +57,15 @@
           controller: 'appController',
           controllerAs: 'appCtrl'
         });
+      let user = window.localStorage.getItem('user');
 
-      // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/login');
+      console.log(user, 'dhggr');
+
+      if (user) {
+        $urlRouterProvider.otherwise('/nav/chat');
+      } else {
+        $urlRouterProvider.otherwise('/login');
+      }
 
     });
 })();

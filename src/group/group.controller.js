@@ -36,11 +36,38 @@ function groupController(_chatCreateService, _groupDataService, $state, $scope, 
     _messageDataService.getGroupFromIdForGroup(thread.groupId, getGroupDataFromIdCallback);
 
   } else {
-    _groupDataService.getGroups(_cookieManagerService.getLoginUserId(), threadsOnSuccess, threadsOnError);
+    _groupDataService.getGroups(_cookieManagerService.getLoginUserId(), addConvos, threadsOnError);
 
     vm.setThread = (thread) => {
       _messageDataService.setThread(thread);
     };
+  }
+
+  function addConvos(threads) {
+    setTimeout(() => {
+      $scope.$apply(() => {
+        add(threads);
+      });
+    },0); 
+  }
+
+  function add(groups) {
+    let index = 0;
+    vm.groups.length = 0;
+    if (groups.numChildren() > 0) {
+      groups.forEach((group) => {
+        vm.groups.push(group.val());
+
+        if (index === groups.numChildren() - 1) {
+          vm.groups.sort(sort);
+        }
+        index++;
+      });
+    }
+  }
+
+  function sort(a, b) {
+    return parseInt(b.timeStamp) - parseInt(a.timeStamp);
   }
 
   function loadGroupMembersOnSuccessCallback(response) {
