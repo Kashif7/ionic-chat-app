@@ -20,14 +20,14 @@
     }
 
     function onDeviceReady() {
-      alert("hdjheuhe");
+      // alert("hdjheuhe");
       console.log("hdjheuhe");
       FcmFactory.onNotification();
       FcmFactory.getToken(addUserApiCall);
     }
 
     function addUserApiCall(token) {
-      alert(token);
+      // alert(token);
       console.log("hdjheuhe",token);
     }
 

@@ -46,7 +46,7 @@
         function getToken() {
             messaging.getToken().then(function (currentToken) {
                 if (currentToken) {
-                    alert(currentToken);
+                    // alert(currentToken);
                     console.log(currentToken, 'current eifjefi');
                     _authService.setToken(currentToken);
                     tokenSentToServer = true;

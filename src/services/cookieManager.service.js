@@ -26,26 +26,27 @@
 
     function getUserCookie() {
       if (!$cookies.getObject("user_")) {
-        console.log('cookie eka naha');        
         return JSON.parse(localStorage.getItem('user'));
       }
       return $cookies.getObject("user_");
     }
 
     function getLoginUserId() {
-      console.log($cookies.getObject("user_"), 'vkdvijisn', $cookies.getObject("user_").id);
       if (!$cookies.getObject("user_")) {
-        console.log('cookie eka naha');
         return JSON.parse(localStorage.getItem('user')).id;
       }
       return $cookies.getObject("user_").id;
     }
 
     function deleteUserCookie() {
+      localStorage.clear();
       $cookies.remove("user_");
     }
 
     function getLoginUserType() {
+      if (!$cookies.getObject("user_")) {
+        return JSON.parse(localStorage.getItem('user')).user_type;
+      }
       return $cookies.getObject("user_").user_type;
     }
 

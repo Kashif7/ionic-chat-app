@@ -3,9 +3,9 @@
     .module('practeraChat.message')
     .controller('messageController', messageController);
 
-  messageController.$inject = ['messageDataService', '$state', '$ionicPopup', '$ionicPopover', '$ionicScrollDelegate', '$scope', '$location', '$ionicActionSheet'];
+  messageController.$inject = ['messageDataService', '$state', '$ionicPopup', '$ionicPopover', '$ionicScrollDelegate', '$scope', '$location', '$ionicActionSheet', 'cookieManagerService'];
 
-  function messageController(_messageDataService, $state, $ionicPopup, $ionicPopover, $ionicScrollDelegate, $scope, $location, $ionicActionSheet) {
+  function messageController(_messageDataService, $state, $ionicPopup, $ionicPopover, $ionicScrollDelegate, $scope, $location, $ionicActionSheet, _cookieManagerService) {
     let vm = this;
 
     vm.chatType = $location.search()['type'];
@@ -31,6 +31,8 @@
     let isLoaded;
     let thread;
     let groupInfo;
+
+    let userType = _cookieManagerService.getLoginUserType();
 
     function messageTimeShow(id) {
 
@@ -221,25 +223,28 @@
     }
 
     function messageOnHold(messageIndex) {
-      var hideSheet = $ionicActionSheet.show({
-        buttons: [
-          { text: '<i class="icon ion-trash-a"></i> Delete Message' }
-        ],
-        buttonClicked: function (index) {
-          if (index === 0) {
-            let messageDeleteData = {
-              message_id: vm.messages[messageIndex].messageId,
-              thread_id: thread.threadId,
-              user_ids: newMessage.recipient,
-              message_type: thread.type
-            };
 
-            deleteMessages(messageDeleteData);
+      if (thread.type === 'Private' || thread.type === 'Group') {
+        var hideSheet = $ionicActionSheet.show({
+          buttons: [
+            { text: '<i class="icon ion-trash-a"></i> Delete Message' }
+          ],
+          buttonClicked: function (index) {
+            if (index === 0) {
+              let messageDeleteData = {
+                message_id: vm.messages[messageIndex].messageId,
+                thread_id: thread.threadId,
+                user_ids: newMessage.recipient,
+                message_type: thread.type
+              };
 
+              deleteMessages(messageDeleteData);
+
+            }
+            return true;
           }
-          return true;
-        }
-      });
+        });
+      }
     }
 
     function deleteMessagesOnSuccessCallback(response) {

@@ -6,15 +6,14 @@
     .module('practeraChat')
     .controller('appController', appController);
 
-  appController.$inject = ['cookieManagerService'];
+  appController.$inject = ['appService'];
 
-  function appController(_cookieManagerService) {
+  function appController(_appService) {
     let vm = this;
     vm.checkUserType = checkUserType;
 
     function checkUserType() {
-      let user = _cookieManagerService.getUserCookie();
-      return user.user_type === 'User';
+      return _appService.checkLoginUserTypeIsUser();
     }
 
   }

@@ -3,24 +3,20 @@
  */
 (function () {
   angular
-    .module('practeraChat.createChat')
-    .factory('chatCreateService', chatCreateService);
+    .module('practeraChat')
+    .factory('appService', appService);
 
-  function chatCreateService() {
+  appService.$inject = ['cookieManagerService'];
 
-    let groupInfo = {};
+  function appService(_cookieManagerService) {
 
     return {
-      setGroupData: setGroupData,
-      getGroupData: getGroupData
+      checkLoginUserTypeIsUser: checkLoginUserTypeIsUser
     };
 
-    function setGroupData(group) {
-      groupInfo = group;
-    }
-
-    function getGroupData() {
-      return groupInfo;
+    function checkLoginUserTypeIsUser() {
+      let user = _cookieManagerService.getUserCookie();
+      return user.user_type === 'User';
     }
 
   }

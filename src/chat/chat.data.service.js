@@ -33,7 +33,6 @@
         .ref(`/threads/${userId}`)
         .orderByChild('timeStamp');
 
-      console.log('hufsuhfsufhs');
       return $firebaseObject(ref);
       // .$loaded()
       // .then(successCallback)

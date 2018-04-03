@@ -9,7 +9,7 @@
 
   <!--Start - Navigation bar button for create new chat-->
   <ion-nav-buttons side="secondary">
-    <a class="button button-icon button-clear icon ion-compose button-small" href="#/contact-list/one2one"></a>
+    <a ng-if="chatCtrl.checkLoginUserType()" class="button button-icon button-clear icon ion-compose button-small" href="#/contact-list/one2one"></a>
   </ion-nav-buttons>
   <!--End - Navigation bar button for create new chat-->
 
@@ -34,7 +34,7 @@
     <!--End - One to one chat search-->
 
     <!--Start - Chat with helpdesk-->
-    <ion-list class="helpdesk" ng-if="chatCtrl.userType === 'User'">
+    <ion-list class="helpdesk" ng-if="chatCtrl.isHelpDeskThreadsShow">
       <h6 style="padding-left: 20px; padding-top: 10px; font-weight: normal">CHAT WITH HELPDESK</h6>
       <ion-item class="item-avatar item-text-wrap helpdesk-item"
                 ng-click="chatCtrl.setThread(chatCtrl.helpDeskThreads)"

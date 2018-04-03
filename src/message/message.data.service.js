@@ -135,7 +135,7 @@
     function getMessages(type, userId, successCallback, errorCallback) {
       let refString;
       if (type === 'help') {
-        refString = `/messages/helpDesk/${userId}`;
+        refString = `/messages/helpDesk/${thread.threadId}`;
       } else {
         refString = `/messages/${userId}/${thread.threadId}`;
       }

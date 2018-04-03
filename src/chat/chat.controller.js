@@ -3,13 +3,14 @@
     .module('practeraChat.chat')
     .controller('chatController', chatController);
 
-  chatController.$inject = ['$scope', 'chatDataService', 'messageDataService', 'cookieManagerService', 'authService', 'firebaseService'];
+  chatController.$inject = ['$scope', 'chatDataService', 'messageDataService', 'cookieManagerService', 'authService', 'firebaseService', 'appService'];
 
-  function chatController($scope, _chatDataService, _messageDataService, _cookieManagerService,  _authService, _firebaseService) {
+  function chatController($scope, _chatDataService, _messageDataService, _cookieManagerService,  _authService, _firebaseService, _appService) {
     let vm = this;
     vm.threads = [];
     vm.threadOb = {};
     vm.helpDeskThreads = {};
+    vm.isHelpDeskThreadsShow = false;
     let userId = 1;
     let lastThreadId;
 
@@ -30,10 +31,24 @@
     }
 
     vm.getMessageTime = getMessageTime;
-    // vm.setUnseenCount = setUnseenCount;
+    vm.checkLoginUserType = checkLoginUserType;
     vm.setThread = (thread) => {
       _messageDataService.setThread(thread);
     };
+
+    function checkLoginUserType() {
+      return _appService.checkLoginUserTypeIsUser();
+    }
+
+    function helpDeskShow() {
+      if (vm.helpDeskThreads && vm.userType === 'User') {
+        vm.isHelpDeskThreadsShow = true;
+      } else {
+        vm.isHelpDeskThreadsShow = false;
+      }
+    }
+
+    helpDeskShow();
 
     function loadOlderThreads() {
       _chatDataService.getOldThreads(_cookieManagerService.getLoginUserId(), lastThreadId, addConvos,
@@ -54,6 +69,7 @@
 
     function getHelpdeskThreadsOnSuccess(snapshot) {
       vm.helpDeskThreads = snapshot.val();
+      helpDeskShow();
     }
 
     function getHelpdeskThreadsOnError(error) {

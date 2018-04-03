@@ -9898,3 +9898,9 @@ a.button {
     background-color: rgba(63, 164, 66, 0.2);
     color: green;
     border: 1px solid green; }
+
+.hide-content {
+  display: none !important; }
+
+.show-content {
+  display: block !important; }

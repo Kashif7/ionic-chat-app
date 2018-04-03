@@ -23,7 +23,7 @@
         .then(function (successResponse) {
           onSuccessCallback(successResponse);
         }, function (errorResponse) {
-          console.log("user list error", errorResponse);
+          console.error("user list error", errorResponse);
           onErrorCallback(errorResponse);
         });
     }
@@ -46,7 +46,7 @@
             onSuccessCallback(finalResponse);
           }
         }, function (errorResponse) {
-          console.log("user list error", errorResponse);
+          console.error("user list error", errorResponse);
           // checkSignInResponseStatus(errorResponse, onSuccessCallback, onErrorCallback);
         });
     }
@@ -70,7 +70,7 @@
           }
         }, function (errorResponse) {
           onErrorCallback(errorResponse);
-          console.log("user list error", errorResponse);
+          console.error("user list error", errorResponse);
           // checkSignInResponseStatus(errorResponse, onSuccessCallback, onErrorCallback);
         });
     }
