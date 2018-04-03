@@ -422,8 +422,14 @@
       _messageDataService.getNewMessage('group', user.userId, onNewMessageSuccess);
     } else {
       newMessage = _messageDataService.createNewHelpDeskMessage();
-      if (LoginUserObject.user_type !== 'User') {
+      if (LoginUserObject.user_type === 'User') {
+        console.log(LoginUserObject.user_type);
         vm.chatName = "Help Desk";
+        console.log(vm.chatName);
+      } else {
+        console.log(LoginUserObject.user_type);
+        vm.chatName = thread.displayName;
+        console.log(vm.chatName);
       }
       _messageDataService.getMessages('help', user.userId, addMessages, messagesOnError);
       _messageDataService.getNewMessage('help', user.userId, onNewMessageSuccess);
