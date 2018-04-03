@@ -126,7 +126,6 @@
     }
 
     function getMessages(userId, successCallback, errorCallback) {
-      console.log("thread", thread);
       let refString = `/messages/${userId}/${thread.threadId}`;
 
       let ref = firebase.database()
@@ -151,10 +150,7 @@
         .orderByKey()
         .limitToLast(noOfMessages);
 
-      $firebaseArray(ref)
-        .$loaded()
-        .then(successCallback)
-        .catch(errorCallback);
+        ref.on('value', successCallback);
     }
 
     function getNewMessage(userId, successCallback) {
