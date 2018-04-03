@@ -6,9 +6,9 @@
     .module('practeraChat.createChat')
     .controller('chatCreateController', chatCreateController);
 
-  chatCreateController.$inject = ['$stateParams', '$scope', '$ionicHistory', '$ionicPopup', '$window', 'authDataService', 'chatCreateService', 'messageDataService', 'cookieManagerService', 'groupDataService'];
+  chatCreateController.$inject = ['$stateParams', '$scope', '$ionicBackdrop', '$ionicHistory', '$ionicPopup', '$window', 'authDataService', 'chatCreateService', 'messageDataService', 'cookieManagerService', 'groupDataService'];
 
-  function chatCreateController($stateParams, $scope, $ionicHistory, $ionicPopup, $window, _authDataService, _chatCreateService , _messageDataService, _cookieManagerService, _groupDataService) {
+  function chatCreateController($stateParams, $scope, $ionicBackdrop, $ionicHistory, $ionicPopup, $window, _authDataService, _chatCreateService , _messageDataService, _cookieManagerService, _groupDataService) {
     let vm = this;
     vm.view = $stateParams.viewName;
     vm.contactList = [];
@@ -46,6 +46,10 @@
       groupMembersId = Object.keys(groupData.members).map(Number);
       activateMemberAdd(groupMembersId);
     }
+
+    $scope.$on('backdrop.hidden', function() {
+      $ionicBackdrop.release();
+    });
 
     function filterMembers(response) {
       let list = response;
@@ -140,6 +144,7 @@
         }
       }
       _messageDataService.setThread(newChatData);
+      $ionicBackdrop.release();
       $window.location.href = ('#/chat-messages?type=' + newChatData.type);
     }
 
@@ -148,6 +153,7 @@
     }
 
     function addGroupMembersOnSuccess(response) {
+      $ionicBackdrop.release();
       $ionicHistory.goBack();
     }
 
@@ -182,6 +188,7 @@
 
         groupNamePopup.then(function(res) {
           if (res) {
+            $ionicBackdrop.retain();
             chatMembers[loginUserId] = "admin";
             let chatData = {
               members: chatMembers,
@@ -191,6 +198,7 @@
           }
         });
       } else {
+        $ionicBackdrop.retain();
         let allMembers  = angular.extend({}, chatMembers, groupData.members);
         console.log("groupData", groupData);
         let tempGroupInfo = {
