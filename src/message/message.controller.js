@@ -163,12 +163,14 @@
 
     function onNewMessageSuccess(snapshot) {
       snapshot.forEach((childSnapShot) => {
-        $scope.$apply(() => {
-          if (!checkExist(childSnapShot.key)) {
-            pushNewMessage(childSnapShot);
-          }
-        });
-        $ionicScrollDelegate.scrollBottom();
+        setTimeout(() => {
+          $scope.$apply(() => {
+            if (!checkExist(childSnapShot.key)) {
+              pushNewMessage(childSnapShot);
+            }
+          });
+          $ionicScrollDelegate.scrollBottom();
+        }, 0);
       });
     }
 
@@ -289,24 +291,26 @@
     function addMessages(messages) {
       let add;
 
-      $scope.$apply(() => {
-        let index = 0;
-        let messageArray = [];
-        setLoadMoreButton(messages.numChildren());
-        messages.forEach((message) => {
-          if (index === 0) {
-            lastMessageId = message.key;
-          }
+      setTimeout(() => {
+        $scope.$apply(() => {
+          let index = 0;
+          let messageArray = [];
+          setLoadMoreButton(messages.numChildren());
+          messages.forEach((message) => {
+            if (index === 0) {
+              lastMessageId = message.key;
+            }
 
-          if (!checkExist(message.key)) {
-            messageArray.push(message.val());
-          }
-          vm.messages = vm.messages.concat(messageArray);
-          vm.messages = removeRepeatingValues(vm.messages);
+            if (!checkExist(message.key)) {
+              messageArray.push(message.val());
+            }
+            vm.messages = vm.messages.concat(messageArray);
+            vm.messages = removeRepeatingValues(vm.messages);
 
-          index++;
+            index++;
+          });
         });
-      });
+      }, 0);
     }
 
     function appendMessages(messages) {
@@ -314,24 +318,26 @@
 
       setLoadMoreButton(messages.numChildren());
 
-      $scope.$apply(() => {
-        let index = 0;
-        let messageArray = [];
-        setLoadMoreButton(messages.numChildren());
-        messages.forEach((message) => {
-          if (index === 0) {
-            lastMessageId = message.key;
-          }
+      setTimeout(() => {
+        $scope.$apply(() => {
+          let index = 0;
+          let messageArray = [];
+          setLoadMoreButton(messages.numChildren());
+          messages.forEach((message) => {
+            if (index === 0) {
+              lastMessageId = message.key;
+            }
 
-          if (!checkExist(message.key)) {
-            messageArray.push(message.val());
-          }
-          vm.messages = messageArray.concat(vm.messages);
-          vm.messages = removeRepeatingValues(vm.messages);
+            if (!checkExist(message.key)) {
+              messageArray.push(message.val());
+            }
+            vm.messages = messageArray.concat(vm.messages);
+            vm.messages = removeRepeatingValues(vm.messages);
 
-          index++;
+            index++;
+          });
         });
-      });
+      }, 0);
     }
 
     function removeRepeatingValues(array) {

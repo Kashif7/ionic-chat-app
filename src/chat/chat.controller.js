@@ -14,6 +14,7 @@
     vm.threadShearch = '';
     let userId = 1;
     let lastThreadId;
+    console.log('came to chat');
 
     vm.platformIsAndroid = ionic.Platform.isAndroid();
 
@@ -22,7 +23,7 @@
     if (!window.cordova) {
       setTimeout(() => {
         _firebaseService.getToken();
-      },1000);
+      }, 1000);
     }
 
     vm.userType = _cookieManagerService.getLoginUserType();
@@ -82,17 +83,14 @@
     let messageDay;
 
     function getMessageTime(time) {
+      console.log(time, 'time');
       messageDay = new Date(time * 1000);
       messageDay = new Date(time);
       return messageDay;
     }
 
     function addConvos(threads) {
-      setTimeout(() => {
-        $scope.$apply(() => {
-          add(threads);
-        });
-      }, 0);
+      add(threads);
     }
 
     function add(threads) {
@@ -100,11 +98,17 @@
       vm.threads.length = 0;
       if (threads.numChildren() > 0) {
         threads.forEach((thread) => {
-          vm.threads.push(thread.val());
 
-          if (index === threads.numChildren() - 1) {
-            vm.threads.sort(sort);
-          }
+          setTimeout(() => {
+            $scope.$apply(() => {
+              vm.threads.push(thread.val());
+
+              if (index === threads.numChildren() - 1) {
+                vm.threads.sort(sort);
+                console.log(vm.threads, 'ejgiogegegiehgeuh');
+              }
+            });
+          }, 0);
           index++;
         });
       }
