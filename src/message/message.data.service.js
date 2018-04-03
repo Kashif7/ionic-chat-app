@@ -167,10 +167,7 @@
         .orderByKey()
         .limitToLast(noOfMessages);
 
-      $firebaseArray(ref)
-        .$loaded()
-        .then(successCallback)
-        .catch(errorCallback);
+        ref.on('value', successCallback);
     }
 
     function getNewMessage(type, userId, successCallback) {
