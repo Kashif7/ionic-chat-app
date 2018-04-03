@@ -49,22 +49,26 @@
     }
 
     function updateUnseenCount() {
-      // let ref = firebase.database()
-      // .ref(`/threads/${userId}/${thread.threadId}`);
+      let userID = JSON.parse(localStorage.getItem('user')).id;
+      let userType = JSON.parse(localStorage.getItem('user')).user_type;
+      if (thread.type === 'Help Desk') {
+        if (userType === 'User') {
+          console.log(userID,thread.threadId,'thread type Help Desk - user type User');
 
-      thread.unseenCount = "0";
+          firebase.database().ref().child(`/threads/helpDesk/${userID}`)
+            .update({ unseenCount: "0" });
+        } else {
+          console.log(userID,thread.threadId,'thread type Help Desk - user type Admin');
 
-      let user = JSON.parse(localStorage.getItem('user')).id;
+          firebase.database().ref().child(`/threads/helpDesk/${userID}`)
+            .update({ helpDeskCount: "0" });
+        }
+      } else {
+        console.log(userID,thread.threadId,'thread type not Help Desk');
 
-      var updates = {};
-      updates[`/threads/${user}/${thread.threadId}`] = thread;
-
-      // firebase.database().ref().update(updates);
-
-      console.log(user,thread.threadId,'dduvheuhevvhev');
-
-      firebase.database().ref().child(`/threads/${user}/${thread.threadId}`)
-      .update({ unseenCount: "0" });
+        firebase.database().ref().child(`/threads/${userID}/${thread.threadId}`)
+          .update({ unseenCount: "0" });
+      }
 
     }
 
@@ -122,7 +126,7 @@
         group.$loaded()
           .then((group) => {
             newMessage.recipient = Object.keys(group.members);
-            newMessage.message_type = 'Group';            
+            newMessage.message_type = 'Group';
             console.log("new message data service", newMessage);
 
             return newMessage;
@@ -214,7 +218,7 @@
       if (!_authService.serverUpdated()) {
         let firebaseToken = localStorage.getItem('firebase_token');
         _authService.setToken(firebaseToken);
-      } 
+      }
 
       let userCookie = _cookieManagerService.getUserCookie();
 
