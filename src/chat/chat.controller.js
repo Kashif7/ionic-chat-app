@@ -101,7 +101,9 @@
 
           setTimeout(() => {
             $scope.$apply(() => {
-              vm.threads.push(thread.val());
+              if (thread.val().createdTime !== thread.val().timeStamp) {
+                vm.threads.push(thread.val());
+              }
 
               if (index === threads.numChildren() - 1) {
                 vm.threads.sort(sort);

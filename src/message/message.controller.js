@@ -68,12 +68,15 @@
     function sendMessage() {
       console.log(newMessage, 'newMessage');
       newMessage.text = vm.newMessageText;
-      vm.newMessageText = '';
-      if (vm.chatType === 'Help Desk') {
-        _messageDataService.sendMessageToHelpDesk(newMessage, sendMessageToHelpDeskOnSuccessCallback);
-      } else {
-        _messageDataService.sendMessage(newMessage);
+      if (vm.newMessageText) {
+        if (vm.chatType === 'Help Desk') {
+          _messageDataService.sendMessageToHelpDesk(newMessage, sendMessageToHelpDeskOnSuccessCallback);
+        } else {
+          _messageDataService.sendMessage(newMessage);
+        }
       }
+
+      vm.newMessageText = '';
     }
 
     function loadOlderMessages() {
