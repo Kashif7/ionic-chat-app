@@ -46,10 +46,10 @@
         function getToken() {
             messaging.getToken().then(function (currentToken) {
                 if (currentToken) {
-                    alert(currentToken);
                     console.log(currentToken, 'current eifjefi');
                     localStorage.setItem('firebase_token', currentToken);
                     _authService.setToken(currentToken);
+                    onMessage();
                     tokenSentToServer = true;
                 } else {
                     // Show permission request.

@@ -34,11 +34,9 @@
 
     function onNotification() {
       FCMPlugin.onNotification(function (data) {
-        alert(data);
         console.log(data, 'sas das');
         console.log('notification');
         if (data.wasTapped) {
-          alert(data);
           let user = JSON.parse(localStorage.getItem('user'));
           let threadId = data.tag;
           let thread;
@@ -51,14 +49,13 @@
           .$loaded()
           .then((newThread) => {
             thread = newThread;
-            console.log(thread);
             _messageDataService.setThread(thread);
             $window.location.href = (`#/chat-messages?type=${thread.type}`);
           })
           .catch(errorCallback);
         } else {
           //Notification was received in foreground. Maybe the user needs to be notified.
-          alert('notified');
+          console.log('notify');
         }
       });
     }
