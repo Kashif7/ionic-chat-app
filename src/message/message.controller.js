@@ -62,8 +62,11 @@
     function sendMessage() {
       console.log(newMessage, 'newMessage');
       newMessage.text = vm.newMessageText;
+      if (vm.newMessageText) {
+        _messageDataService.sendMessage(newMessage);
+      }
+      
       vm.newMessageText = '';
-      _messageDataService.sendMessage(newMessage);
     }
 
     function loadOlderMessages() {
