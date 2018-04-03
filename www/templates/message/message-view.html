@@ -28,8 +28,8 @@
         </button>
       </li>
       <li class="item item-text-wrap chat-list bouble"
-          ng-class="messageCtrl.arrangeAvatar(message.senderId)" ng-repeat="message in messageCtrl.messages track by $index">
-        <img ng-if="messageCtrl.showAvatarImage(message.senderId)"
+          ng-class="messageCtrl.arrangeAvatar(message)" ng-repeat="message in messageCtrl.messages track by $index">
+        <img ng-if="messageCtrl.showAvatarImage(message)"
              src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg" alt=""/>
         <p class="text-center time" id="{{$index}}">
           <small>{{messageCtrl.getMessageTime(message.timeStamp)}}</small>

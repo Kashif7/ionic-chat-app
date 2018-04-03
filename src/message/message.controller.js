@@ -35,6 +35,7 @@
     let groupInfo;
 
     let userType = _cookieManagerService.getLoginUserType();
+    let LoginUserObject = _cookieManagerService.getUserCookie();
 
     function messageTimeShow(id) {
       let e = document.getElementById(id);
@@ -88,12 +89,20 @@
       $state.go('nav.chat');
     }
 
-    function arrangeAvatar(senderId) {
-      return senderId != user.userId ? 'item-avatar-left bubbleLeft' : 'item-avatar-right bubbleRight';
+    function arrangeAvatar(message) {
+      if (LoginUserObject.user_type === 'Admin') {
+        return message.from === 'User' ? 'item-avatar-left bubbleLeft' : 'item-avatar-right bubbleRight';
+      } else {
+        return message.senderId != user.userId ? 'item-avatar-left bubbleLeft' : 'item-avatar-right bubbleRight';
+      }
     }
 
-    function showAvatarImage(senderId) {
-      return senderId != user.userId ? true : false;
+    function showAvatarImage(message) {
+      if (LoginUserObject.user_type === 'Admin') {
+        return message.from === 'User' ? true : false;
+      } else {
+        return message.senderId != user.userId ? true : false;
+      }
     }
 
     function arrangeBubble(senderId) {
@@ -341,6 +350,9 @@
           messages.forEach((message) => {
             if (index === 0) {
               lastMessageId = message.key;
+            } else if(index === messages.numChildren()-1) {
+              console.log("bobobob");
+              $ionicScrollDelegate.scrollBottom();
             }
 
             if (!checkExist(message.key)) {

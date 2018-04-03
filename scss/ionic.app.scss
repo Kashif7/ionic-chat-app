@@ -68,25 +68,19 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     background-color: transparent !important;
     color: gray !important;
     max-height: 0;
-    transition: max-height 5s ease-out;
     visibility: hidden;
     line-height: 20px !important;
     padding: 0 !important;
     width: 100% !important;
     text-align: -webkit-center;
-    //display: none;
-    //visibility: hidden;
-    //opacity: 0;
-    //transition: visibility 0s linear 0.33s, opacity 0.33s linear, display 0s linear 0.33s;
 
     &.show {
       max-height: fit-content;
       visibility: visible;
-      transition: max-height 5s ease-in;
-      //display: block;
-      //visibility: visible;
-      //opacity: 1;
-      //transition-delay: 2s;
+      transition: max-height 0s ease-in;
+      -webkit-transition: max-height 0s ease-in;
+      -moz-transition: max-height 0s ease-in;
+      -o-transition: max-height 0s ease-in;
     }
 
   }

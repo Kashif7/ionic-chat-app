@@ -156,6 +156,7 @@
       vm.userForEdit = response.data.data;
       _cookieManagerService.setUserCookie(response.data.data);
       vm.user = _cookieManagerService.getUserCookie();
+      $scope.modal.remove();
       setTimeout(() => {
         removeProfileUpdateMessage();
       }, 3000);
