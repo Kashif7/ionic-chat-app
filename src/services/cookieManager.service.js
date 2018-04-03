@@ -32,7 +32,6 @@
     }
 
     function getLoginUserId() {
-      console.log($cookies.getObject("user_"), 'vkdvijisn', $cookies.getObject("user_").id);
       if (!$cookies.getObject("user_")) {
         console.log('cookie eka naha');
         return JSON.parse(localStorage.getItem('user')).id;
