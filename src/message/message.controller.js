@@ -73,11 +73,11 @@
       msec -= ss * 1000;
 
       if (hh > 0) {
-        time = hh + "hours ago";
+        time = hh + " hours ago";
       } else if (mm > 0) {
-        time = mm + "minutes ago";
+        time = mm + " minutes ago";
       } else {
-        time = ss + "seconds ago";
+        time = ss + " seconds ago";
       }
 
       return time;
