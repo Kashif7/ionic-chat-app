@@ -46,9 +46,10 @@
         function getToken() {
             messaging.getToken().then(function (currentToken) {
                 if (currentToken) {
-                    // alert(currentToken);
                     console.log(currentToken, 'current eifjefi');
+                    localStorage.setItem('firebase_token', currentToken);
                     _authService.setToken(currentToken);
+                    onMessage();
                     tokenSentToServer = true;
                 } else {
                     // Show permission request.
@@ -67,6 +68,7 @@
         function onTokenRefresh() {
             messaging.onTokenRefresh(function () {
                 messaging.getToken().then(function (refreshedToken) {
+                    localStorage.setItem('firebase_token', refreshedToken);
                     console.log('Token refreshed. ok');
                     // Indicate that the new Instance ID token has not yet been sent to the
                     // app server.
