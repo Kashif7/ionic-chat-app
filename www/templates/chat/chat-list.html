@@ -58,7 +58,7 @@
         <img ng-src="{{thread.image}}" src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg">
         <h2>{{thread.displayName}}</h2>
         <span class="item-note"
-              am-time-ago="thread.timeStamp * 1000 | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'"></span>
+              am-time-ago="thread.timeStamp | amFromUnix | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'"></span>
         <p>{{thread.lastMessage}}</p>
         <!--<span an-time-ago="announcement.createTimestamp | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'"></span>-->
         <span ng-if="chatCtrl.userType === 'User'" class="badge badge-calm" ng-hide="thread.unseenCount === '0'">{{thread.unseenCount}}</span>
