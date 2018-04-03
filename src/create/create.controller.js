@@ -132,6 +132,7 @@
     }
 
     function groupChatCreateSuccessCallback(response) {
+      console.log("create group", response);
       let newChatData;
       for (var key in response.data['threads'][loginUserId]) {
         if (response.data['threads'][loginUserId].hasOwnProperty(key)) {

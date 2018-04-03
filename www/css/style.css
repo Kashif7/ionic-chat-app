@@ -262,3 +262,11 @@ ion-popover-view.fit ion-content {
   pointer-events: none !important;
   cursor: not-allowed !important;
 }
+
+.nav-buttons:before {
+  font-size: 24px !important;
+}
+
+.nav-text-buttons {
+  font-weight:bold !important;
+}

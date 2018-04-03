@@ -13,7 +13,7 @@
             <!--class="button button-icon button-clear icon chat-option button-small"-->
             <!--ng-click="messageCtrl.openPopover($event)"></button>-->
     <a ng-if="messageCtrl.chatType === 'Group'"
-       class="button button-icon button-clear icon ion-information-circled button-small"
+       class="button button-icon button-clear icon ion-ios-information button-small nav-buttons"
        href="#/group-chat-info?type='info'"></a>
   </ion-nav-buttons>
   <!--End - Navigation bar popup menu button-->
@@ -50,7 +50,7 @@
              name="newMessage" ng-model="messageCtrl.newMessageText" ng-keypress="messageCtrl.listenForEnter($event)"
              required/>
     </label>
-    <button class="button icon message-send" ng-disabled="!messageCtrl.newMessageText" ng-click="messageCtrl.sendMessage()"></button>
+    <button class="button icon ion-paper-airplane" ng-disabled="!messageCtrl.newMessageText" ng-click="messageCtrl.sendMessage()"></button>
   </div>
   <!--End - Chat message typing text field-->
 </ion-view>
