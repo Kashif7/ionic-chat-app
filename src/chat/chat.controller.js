@@ -107,9 +107,10 @@
                 vm.threads.sort(sort);
                 console.log(vm.threads, 'ejgiogegegiehgeuh');
               }
+              index++;
             });
           }, 0);
-          index++;
+
         });
       }
     }
