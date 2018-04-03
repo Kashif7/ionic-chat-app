@@ -187,6 +187,8 @@
     }
 
     function userLogOutOnErrorCallback(error) {
+      _cookieManagerService.deleteUserCookie();
+      $state.go('login');
       console.log(error);
     }
 

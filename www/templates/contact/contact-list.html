@@ -5,7 +5,7 @@
   <div class="bar bar-subheader item-input-inset">
     <label class="item-input-wrapper">
       <i class="icon ion-ios-search placeholder-icon"></i>
-      <input type="search" placeholder="Search">
+      <input type="search" placeholder="Search" ng-model="contactCtrl.contactShearch">
     </label>
   </div>
   <!--End - Sub header search field-->
@@ -44,12 +44,14 @@
     <!--Start - One to one chat contact List-->
     <ion-list ng-if="contactCtrl.view === 'one2one'">
       <!--<ion-item class="item-divider">A</ion-item>-->
-      <ion-item class="item-avatar item-icon-right item-text-wrap" ng-repeat="contact in contactCtrl.contactList"
-                auto-list-divider auto-list-divider-value="{{contact.first_name}}"
+      <ion-item class=""
+                ng-repeat="contact in contactCtrl.contactList | filter : contactCtrl.contactShearch"
+                ng-class="contact.letter ? 'item-divider':'item-avatar item-icon-right item-text-wrap'"
                 ng-click="contactCtrl.createNormalChat(contact.id)">
-        <img ng-src="{{contact.image_url}}" src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg">
-        <i class="icon ion-ios-arrow-right placeholder-icon" style="font-size: 16px"></i>
-        <div class="row">
+        <img ng-if="!contact.letter" ng-src="{{contact.image_url}}" src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg">
+        <i ng-if="!contact.letter" class="icon ion-ios-arrow-right placeholder-icon" style="font-size: 16px"></i>
+        <p ng-if="contact.letter">{{contact.name}}</p>
+        <div ng-if="!contact.letter" class="row">
           <div class="col col-100 col-center">
             <h2 class="text-left">{{contact.first_name}} {{contact.last_name}}</h2>
           </div>
@@ -59,12 +61,13 @@
     <!--End - One to one chat contact List-->
 
     <!--Start - Group chat contact List-->
-    <ion-list ng-if="contactCtrl.view === 'group' || contactCtrl.view === 'groupInfo'" class="item-checkbox-right item-accordion">
+    <ion-list ng-if="contactCtrl.view === 'group' || contactCtrl.view === 'groupInfo'" class="">
       <ion-checkbox class="contact-checkbox" ng-repeat="contact in contactCtrl.contactList track by $index"
-                    auto-list-divider auto-list-divider-value="{{contact.first_name}}"
+                    ng-class="contact.letter ? 'item-divider checkbox-divider':'item-checkbox-right item-accordion'"
                     ng-model="contact.active"
                     ng-click="contactCtrl.selectOrUnselectUser($index)">
-        <div class="row remove-padding">
+        <p style="padding-left: 15px" ng-if="contact.letter">{{contact.name}}</p>
+        <div ng-if="!contact.letter" class="row remove-padding">
           <div class="col col-20 col-center remove-padding">
             <img ng-src="{{contact.image_url}}" width="40px" height="40px" style="border-radius: 50% !important;"
                  src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg">

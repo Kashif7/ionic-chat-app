@@ -15,6 +15,8 @@
     let userId = 1;
     let lastThreadId;
 
+    vm.platformIsAndroid = ionic.Platform.isAndroid();
+
     _authService.updateToken();
 
     if (!window.cordova) {

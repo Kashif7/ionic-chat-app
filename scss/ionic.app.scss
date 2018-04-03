@@ -117,3 +117,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .show-content {
   display: block !important;
 }
+
+.checkbox-divider {
+  &.item-checkbox {
+    .checkbox {
+      display: none;
+    }
+  }
+}

@@ -7,9 +7,9 @@
     .module('practeraChat.auth')
     .controller('authController', authController);
 
-  authController.$inject = ['authDataService', '$state'];
+  authController.$inject = ['authDataService', '$state', '$ionicHistory'];
 
-  function authController(_authDataService, $state) {
+  function authController(_authDataService, $state, $ionicHistory) {
     let vm = this;
 
     vm.signInCredential = {};
@@ -24,10 +24,15 @@
     vm.userSignUp = userSignUp;
     vm.selectUserType = selectUserType;
     vm.removeErrorMessages = removeErrorMessages;
+    vm.goToBackView = goToBackView;
 
     function signInSuccessCallback(response) {
       vm.signInError = false;
       $state.go('nav.chat');
+    }
+
+    function goToBackView() {
+      $ionicHistory.goBack();
     }
 
     function signInErrorCallback(error) {

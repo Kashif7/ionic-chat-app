@@ -9904,3 +9904,6 @@ a.button {
 
 .show-content {
   display: block !important; }
+
+.checkbox-divider.item-checkbox .checkbox {
+  display: none; }

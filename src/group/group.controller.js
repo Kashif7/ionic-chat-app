@@ -14,6 +14,7 @@ function groupController(_chatCreateService, _groupDataService, $state, $scope, 
   let groupMembersId;
   $scope.groupData = {};
   vm.groupShearch = '';
+  vm.platformIsAndroid = ionic.Platform.isAndroid();
 
   vm.goToBackView = goToBackView;
   vm.editGroupNamePopup = editGroupNamePopup;

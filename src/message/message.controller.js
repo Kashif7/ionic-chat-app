@@ -286,27 +286,6 @@
       _messageDataService.deleteCurrentConversation(threadInfo, deleteConversationOnSuccessCallback, deleteConversationOnErrorCallback);
     }
 
-    user = _messageDataService.getUser();
-    thread = _messageDataService.getThread();
-    vm.chatName = thread.displayName;
-
-    if (thread.type === 'Private') {
-      newMessage = _messageDataService.createNewPrivateMessage();
-      console.log(newMessage, "messagesOnSuccess");
-      _messageDataService.getMessages('one', user.userId, addMessages, messagesOnError);
-      _messageDataService.getNewMessage('one', user.userId, onNewMessageSuccess);
-    } else if (thread.type === 'Group') {
-      _messageDataService.getGroupFromIdForGroup(thread.groupId, getGroupFromIdForGroupSuccessCallback);
-      _messageDataService.createNewGroupMessage(createNewGroupMessageOnSuccess, createNewGroupMessageOnError);
-      console.log(newMessage, "messagesOnSuccess");
-      _messageDataService.getMessages('group', user.userId, addMessages, messagesOnError);
-      _messageDataService.getNewMessage('group', user.userId, onNewMessageSuccess);
-    } else {
-      newMessage = _messageDataService.createNewHelpDeskMessage();
-      vm.chatName = "Help Desk";
-      _messageDataService.getMessages('help', user.userId, addMessages, messagesOnError);
-      _messageDataService.getNewMessage('help', user.userId, onNewMessageSuccess);
-    }
     function addMessages(messages) {
       let add;
 
@@ -368,5 +347,24 @@
       return index === -1 ? false : true;
     }
 
+    user = _messageDataService.getUser();
+    thread = _messageDataService.getThread();
+    vm.chatName = thread.displayName;
+
+    if (thread.type === 'Private') {
+      newMessage = _messageDataService.createNewPrivateMessage();
+      _messageDataService.getMessages('one', user.userId, addMessages, messagesOnError);
+      _messageDataService.getNewMessage('one', user.userId, onNewMessageSuccess);
+    } else if (thread.type === 'Group') {
+      _messageDataService.getGroupFromIdForGroup(thread.groupId, getGroupFromIdForGroupSuccessCallback);
+      _messageDataService.createNewGroupMessage(createNewGroupMessageOnSuccess, createNewGroupMessageOnError);
+      _messageDataService.getMessages('group', user.userId, addMessages, messagesOnError);
+      _messageDataService.getNewMessage('group', user.userId, onNewMessageSuccess);
+    } else {
+      newMessage = _messageDataService.createNewHelpDeskMessage();
+      vm.chatName = "Help Desk";
+      _messageDataService.getMessages('help', user.userId, addMessages, messagesOnError);
+      _messageDataService.getNewMessage('help', user.userId, onNewMessageSuccess);
+    }
   }
 })();

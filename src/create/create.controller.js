@@ -14,6 +14,7 @@
     vm.contactList = [];
     vm.saveButtonText = 'Done';
     vm.viewTitle = 'Create Chat';
+    vm.contactShearch = '';
 
     vm.createNormalChat = createNormalChat;
     vm.selectOrUnselectUser = selectOrUnSelectUser;
@@ -46,8 +47,22 @@
       activateMemberAdd(groupMembersId);
     }
 
+    function filterMembers(response) {
+      let list = response;
+      var lastChar = '';
+      for(var i=0,len=list.length; i<len; i++) {
+        var item = list[i];
+
+        if(item.first_name.charAt(0).toUpperCase() != lastChar.toUpperCase()) {
+          vm.contactList.push({name:item.first_name.charAt(0).toUpperCase(),letter:true});
+          lastChar = item.first_name.charAt(0).toUpperCase();
+        }
+        vm.contactList.push(item);
+      }
+    }
+
     function activateMemberAddOnSuccess(response) {
-      vm.contactList = response;
+      filterMembers(response);
       console.log("response", response);
     }
 
@@ -81,7 +96,8 @@
     }
 
     function userListOnSuccessCallback(response) {
-      vm.contactList = response;
+      filterMembers(response);
+      // vm.contactList = response;
       console.log("response", response);
     }
 
