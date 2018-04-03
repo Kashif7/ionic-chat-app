@@ -11,6 +11,7 @@
     vm.threadOb = {};
     vm.helpDeskThreads = {};
     vm.isHelpDeskThreadsShow = false;
+    vm.threadShearch = '';
     let userId = 1;
     let lastThreadId;
 

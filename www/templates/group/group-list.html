@@ -17,7 +17,7 @@
   <div class="bar bar-subheader item-input-inset">
     <label class="item-input-wrapper">
       <i class="icon ion-ios-search placeholder-icon"></i>
-      <input type="search" placeholder="Search">
+      <input type="search" placeholder="Search" ng-model="chatCtrl.groupShearch">
     </label>
   </div>
   <!--End - Group chat search-->
@@ -33,7 +33,7 @@
     <!--End - Group chat search-->
     <!--Start - Group chat list-->
     <ion-list>
-      <ion-item class="item-avatar-left" ng-repeat="group in groupCtrl.groups" ng-click="groupCtrl.setThread(group)" href="#/chat-messages?threadId={{group.threadId}}&type={{group.type}}">
+      <ion-item class="item-avatar-left" ng-repeat="group in groupCtrl.groups | filter : chatCtrl.groupShearch" ng-click="groupCtrl.setThread(group)" href="#/chat-messages?threadId={{group.threadId}}&type={{group.type}}">
         <img ng-src="{{group.image}}" src="http://guguia.net/wp-content/plugins/wp-recall/add-on/groups/img/group-avatar.png">
         <h2>{{group.displayName}}</h2>
         <p>{{group.lastMessage}}</p>

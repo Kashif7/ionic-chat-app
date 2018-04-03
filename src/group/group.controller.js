@@ -13,6 +13,7 @@ function groupController(_chatCreateService, _groupDataService, $state, $scope, 
   let lastgroupId;
   let groupMembersId;
   $scope.groupData = {};
+  vm.groupShearch = '';
 
   vm.goToBackView = goToBackView;
   vm.editGroupNamePopup = editGroupNamePopup;
@@ -48,7 +49,7 @@ function groupController(_chatCreateService, _groupDataService, $state, $scope, 
       $scope.$apply(() => {
         add(threads);
       });
-    },0); 
+    },0);
   }
 
   function add(groups) {
