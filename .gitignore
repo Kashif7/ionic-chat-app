@@ -12,9 +12,8 @@ log.txt
 .vscode/
 npm-debug.log*
 
-www/css/ionic.app.cs
-www/css/ionic.app.min.cs
-
+www/css/ionic.app.css
+www/css/ionic.app.min.css
 
 www/lib/angular
 www/lib/angular-animate
