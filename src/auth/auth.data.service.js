@@ -108,9 +108,9 @@
 
     function checkSignUpResponseStatus(response, onSuccessCallback, onErrorCallback) {
       if (response.status == 400 || response.status == 500) {
-        onErrorCallback("Registration fail! Please try again!");
+        onErrorCallback("Registration failed! Please try again!");
       } else if (response.status == 404) {
-        onErrorCallback("Registration fail! Please try again!");
+        onErrorCallback("Registration failed! Please try again!");
       } else if (response.status === 200) {
         onSuccessCallback("Registration success!");
       }

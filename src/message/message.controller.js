@@ -422,7 +422,9 @@
       _messageDataService.getNewMessage('group', user.userId, onNewMessageSuccess);
     } else {
       newMessage = _messageDataService.createNewHelpDeskMessage();
-      // vm.chatName = "Help Desk";
+      if (LoginUserObject.user_type !== 'User') {
+        vm.chatName = "Help Desk";
+      }
       _messageDataService.getMessages('help', user.userId, addMessages, messagesOnError);
       _messageDataService.getNewMessage('help', user.userId, onNewMessageSuccess);
     }

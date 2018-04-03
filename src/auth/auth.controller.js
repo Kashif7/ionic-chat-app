@@ -7,9 +7,9 @@
     .module('practeraChat.auth')
     .controller('authController', authController);
 
-  authController.$inject = ['authDataService', '$state', '$ionicHistory'];
+  authController.$inject = ['authDataService', '$state', '$ionicHistory', '$ionicPopup'];
 
-  function authController(_authDataService, $state, $ionicHistory) {
+  function authController(_authDataService, $state, $ionicHistory, $ionicPopup) {
     let vm = this;
 
     vm.signInCredential = {};
@@ -64,7 +64,33 @@
     }
 
     function userSignUp() {
-      _authDataService.signUp(vm.signUpCredential, signUpSuccessCallback, signUpErrorCallback);
+
+      console.log(vm.signUpCredential.first_name, vm.signUpCredential.last_name , vm.signUpCredential.email , vm.signUpCredential.password);
+
+      if (vm.signUpCredential.first_name && vm.signUpCredential.last_name && vm.signUpCredential.email && vm.signUpCredential.password) {
+        let message = '';
+        if (vm.signUpCredential.user_type === 'Admin') {
+          message = 'Are you sure you want to register as <b>Help Desk</b> user.';
+        } else {
+          message = 'Are you sure you want to register as <b>Chat App</b> user.';
+        }
+
+        var confirmPopup = $ionicPopup.confirm({
+          title: 'Registration',
+          template: message
+        });
+        confirmPopup.then(function (res) {
+          if (res) {
+            _authDataService.signUp(vm.signUpCredential, signUpSuccessCallback, signUpErrorCallback);
+          } else {
+          }
+        });
+      } else {
+        var alertPopup = $ionicPopup.alert({
+          title: 'Check Entered data',
+          template: 'Please fill all required fields!'
+        });
+      }
     }
 
     function selectUserType(type) {

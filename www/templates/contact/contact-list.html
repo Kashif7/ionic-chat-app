@@ -62,7 +62,7 @@
 
     <!--Start - Group chat contact List-->
     <ion-list ng-if="contactCtrl.view === 'group' || contactCtrl.view === 'groupInfo'" class="">
-      <ion-checkbox class="contact-checkbox" ng-repeat="contact in contactCtrl.contactList track by $index"
+      <ion-checkbox class="contact-checkbox" ng-repeat="contact in contactCtrl.contactList | filter : contactCtrl.contactShearch track by $index"
                     ng-class="contact.letter ? 'item-divider checkbox-divider':'item-checkbox-right item-accordion'"
                     ng-model="contact.active"
                     ng-click="contactCtrl.selectOrUnselectUser($index)">
