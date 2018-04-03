@@ -1,6 +1,12 @@
 <!--Start - User profile edit view-->
 <ion-view view-title="Profile Edit">
 
+  <!--Start - Navigation bar back button-->
+  <ion-nav-buttons side="left">
+    <a ng-click="profileCtrl.goToBackView()" class="button button-icon icon ion-ios-arrow-back"></a>
+  </ion-nav-buttons>
+  <!--End - Navigation bar back button-->
+
   <!--Start - Navigation bar save button-->
   <ion-nav-buttons side="secondary">
     <button ng-class="profileCtrl.disableEditButton ? 'dark disable-button': ''" style="color: #387ef5 !important;" class="button button-positive button-outline"
