@@ -23,12 +23,11 @@
 
     vm.userType = _cookieManagerService.getLoginUserType();
     if (vm.userType === 'User') {
-      _chatDataService.getThreads(_cookieManagerService.getLoginUserId(), threadsOnSuccess, threadsOnError);
+      _chatDataService.getThreads(_cookieManagerService.getLoginUserId(), addConvos, threadsOnError);
       _chatDataService.getHelpdeskThreads(_cookieManagerService.getLoginUserId(), getHelpdeskThreadsOnSuccess, getHelpdeskThreadsOnError);
     } else {
-      _chatDataService.getThreadsForAdmin(threadsOnSuccess, threadsOnError);
+      _chatDataService.getThreadsForAdmin(addConvos, threadsOnError);
     }
-    console.log(vm.threads, 'vm.threads');
 
     vm.getMessageTime = getMessageTime;
     // vm.setUnseenCount = setUnseenCount;
@@ -37,7 +36,7 @@
     };
 
     function loadOlderThreads() {
-      _chatDataService.getOldThreads(_cookieManagerService.getLoginUserId(), lastThreadId, threadsOnSuccess,
+      _chatDataService.getOldThreads(_cookieManagerService.getLoginUserId(), lastThreadId, addConvos,
         threadsOnError);
     };
 
@@ -54,7 +53,6 @@
     }
 
     function getHelpdeskThreadsOnSuccess(snapshot) {
-      console.log("data", snapshot.val());
       vm.helpDeskThreads = snapshot.val();
     }
 
@@ -65,11 +63,8 @@
     let messageDay;
 
     function getMessageTime(time) {
-      console.log(time,'time');
       messageDay = new Date(time * 1000);
-      console.log(messageDay, 'messageDay');
       messageDay = new Date(time);
-      console.log(messageDay, 'message day 1');
       return messageDay;
     }
 
@@ -82,7 +77,6 @@
     }
 
     function add(threads) {
-      console.log(threads.val(), 'threads');
       let index = 0;
       vm.threads.length = 0;
       if (threads.numChildren() > 0) {
@@ -91,7 +85,6 @@
 
           if (index === threads.numChildren() - 1) {
             vm.threads.sort(sort);
-            console.log(vm.threads, 'ejgiogegegiehgeuh');
           }
           index++;
         });
@@ -99,7 +92,6 @@
     }
 
     function sort(a, b) {
-      console.log(vm.threads, 'ijgijgu');
       return parseInt(b.timeStamp) - parseInt(a.timeStamp);
     }
   }

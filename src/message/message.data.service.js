@@ -60,7 +60,7 @@
         } else {
           console.log(userID,thread.threadId,'thread type Help Desk - user type Admin');
 
-          firebase.database().ref().child(`/threads/helpDesk/${userID}`)
+          firebase.database().ref().child(`/threads/helpDesk/${thread.threadId}`)
             .update({ helpDeskCount: "0" });
         }
       } else {
@@ -80,8 +80,6 @@
       array[0] = parseInt(thread.user);
       newMessage.recipient = array;
       newMessage.message_type = 'Private';
-      console.log("new message", newMessage.message_type);
-      console.log("array", array);
       return newMessage;
     }
 
@@ -116,8 +114,6 @@
       if (thread.type === 'Private') {
         array[0] = parseInt(thread.user);
         newMessage.recipient = array;
-        console.log("new message", newMessage);
-        console.log("array", array);
         newMessage.message_type = 'Private';
         return newMessage;
       } else {
@@ -127,7 +123,6 @@
           .then((group) => {
             newMessage.recipient = Object.keys(group.members);
             newMessage.message_type = 'Group';
-            console.log("new message data service", newMessage);
 
             return newMessage;
           })
@@ -138,7 +133,6 @@
     }
 
     function getMessages(type, userId, successCallback, errorCallback) {
-      console.log("thread", thread);
       let refString;
       if (type === 'help') {
         refString = `/messages/helpDesk/${userId}`;
@@ -222,8 +216,6 @@
 
       let userCookie = _cookieManagerService.getUserCookie();
 
-      console.log(userCookie);
-
       let json = {
         method: 'POST',
         url: 'http://ec2-54-84-172-12.compute-1.amazonaws.com:8000/users/message',
@@ -233,7 +225,6 @@
         },
         data: postBody
       };
-      console.log(json);
       $http(json).then(success => {
         console.log(success);
       }).catch(error => {
@@ -252,7 +243,6 @@
       };
       $http(_backendUtilService.createAuthenticatedApiRequestWithData(postBody, 'POST', 'sendMessageToHelpdesk'))
         .then(function (successResponse) {
-          console.log("data service success", successResponse);
           successCallback(successResponse);
         }, function (errorResponse) {
           errorCallback(errorResponse);
@@ -263,7 +253,6 @@
     function deleteCurrentConversation(data, successCallback, errorCallback) {
       $http(_backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'deleteConversation'))
         .then(function (successResponse) {
-          console.log("data service success", successResponse);
           successCallback(successResponse);
         }, function (errorResponse) {
           errorCallback(errorResponse);
@@ -274,7 +263,6 @@
     function deleteCurrentConversationMessages(data, successCallback, errorCallback) {
       $http(_backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'deleteMessage'))
         .then(function (successResponse) {
-          console.log("data service success", successResponse);
           successCallback(successResponse);
         }, function (errorResponse) {
           errorCallback(errorResponse);

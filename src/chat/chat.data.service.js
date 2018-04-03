@@ -9,46 +9,43 @@
     const noOfThreads = 3;
     let threads;
 
-        return {
-            getThreads: getThreads,
-          getThreadsForAdmin: getThreadsForAdmin,
-            getThreadsOb: getThreadsOb,
-            getOldThreads: getOldThreads,
-          getHelpdeskThreads: getHelpdeskThreads,
-          getHelpdeskOldThreads: getHelpdeskOldThreads
-        };
+    return {
+      getThreads: getThreads,
+      getThreadsForAdmin: getThreadsForAdmin,
+      getThreadsOb: getThreadsOb,
+      getOldThreads: getOldThreads,
+      getHelpdeskThreads: getHelpdeskThreads,
+      getHelpdeskOldThreads: getHelpdeskOldThreads
+    };
 
     function getThreads(userId, successCallback, errorCallback) {
+
       let ref = firebase.database()
         .ref(`/threads/${userId}`)
         .orderByChild('timeStamp');
       // .limitToFirst(noOfThreads);
 
-            ref.on('value', successCallback);
-        }
+      ref.on('value', successCallback);
+    }
 
-        function getThreadsOb(userId) {
-            let ref = firebase.database()
-                .ref(`/threads/${userId}`)
-                .orderByChild('timeStamp');
+    function getThreadsOb(userId) {
+      let ref = firebase.database()
+        .ref(`/threads/${userId}`)
+        .orderByChild('timeStamp');
 
-            console.log('hufsuhfsufhs');
-            return $firebaseObject(ref);
-            // .$loaded()
-            // .then(successCallback)
-            // .catch(errorCallback);
-        }
+      console.log('hufsuhfsufhs');
+      return $firebaseObject(ref);
+      // .$loaded()
+      // .then(successCallback)
+      // .catch(errorCallback);
+    }
 
     function getThreadsForAdmin(successCallback, errorCallback) {
       let ref = firebase.database()
-        .ref(`/threads`)
+        .ref(`/threads/helpDesk`)
         .orderByChild('timeStamp');
       // .limitToFirst(noOfThreads);
-
-      $firebaseArray(ref)
-        .$loaded()
-        .then(successCallback)
-        .catch(errorCallback);
+      ref.on('value', successCallback);
     }
 
     function getOldThreads(userId, lastThreadId, successCallback, errorCallback) {

@@ -10,11 +10,11 @@
 
   function appController(_cookieManagerService) {
     let vm = this;
-    vm.checkUserAdmin = checkUserAdmin;
+    vm.checkUserType = checkUserType;
 
-    function checkUserAdmin() {
+    function checkUserType() {
       let user = _cookieManagerService.getUserCookie();
-      return user.type === 'Admin';
+      return user.user_type === 'User';
     }
 
   }

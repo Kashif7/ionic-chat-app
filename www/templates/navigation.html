@@ -18,7 +18,7 @@
       <ion-nav-view name="tab-chat"></ion-nav-view>
     </ion-tab>
 <!-- badge="10"-->
-    <ion-tab title="Groups" badge-style="badge-assertive" icon-on="calm ion-chatbubbles"
+    <ion-tab ng-if="appCtrl.checkUserType()" title="Groups" badge-style="badge-assertive" icon-on="calm ion-chatbubbles"
              icon-off="dark ion-chatbubbles" href="#/nav/group">
       <!--Tab Content-->
       <ion-nav-view name="tab-group"></ion-nav-view>
