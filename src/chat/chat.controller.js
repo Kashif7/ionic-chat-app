@@ -5,7 +5,7 @@
 
   chatController.$inject = ['$scope', '$filter', 'chatDataService', 'messageDataService', 'cookieManagerService', 'authService', 'firebaseService', 'appService'];
 
-  function chatController($scope, $filter, _chatDataService, _messageDataService, _cookieManagerService,  _authService, _firebaseService, _appService) {
+  function chatController($scope, $filter, _chatDataService, _messageDataService, _cookieManagerService, _authService, _firebaseService, _appService) {
     let vm = this;
     vm.threads = [];
     vm.threadOb = {};
@@ -71,8 +71,13 @@
     }
 
     function getHelpdeskThreadsOnSuccess(snapshot) {
-      vm.helpDeskThreads = snapshot.val();
-      helpDeskShow();
+      setTimeout(() => {
+        $scope.$apply(() => {
+          console.log(snapshot.val(), 'efek');
+          vm.helpDeskThreads = snapshot.val();
+          helpDeskShow();
+        });
+      }, 0);
     }
 
     function getHelpdeskThreadsOnError(error) {
