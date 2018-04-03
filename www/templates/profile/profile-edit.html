@@ -3,7 +3,8 @@
 
   <!--Start - Navigation bar save button-->
   <ion-nav-buttons side="secondary">
-    <button ng-class="profileCtrl.disableEditButton ? 'dark disable-button': 'calm'" class="button button-clear button-small" ng-click="profileCtrl.updateSelfProfile()">Save</button>
+    <button ng-class="profileCtrl.disableEditButton ? 'dark disable-button': ''" style="color: #387ef5 !important;" class="button button-positive button-outline"
+            ng-click="profileCtrl.updateSelfProfile()">Save</button>
   </ion-nav-buttons>
   <!--End - Navigation bar save button-->
 
@@ -20,20 +21,23 @@
     <!--Start - Profile details edit-->
     <div class="list practera-forms">
 
+      <p ng-if="profileCtrl.profileUpdateErrorStatus" class="message-content error-message">Profile update fail</p>
+      <p ng-if="profileCtrl.profileUpdateSuccessStatus" class="message-content success-message">Profile updated</p>
+
       <label class="item item-input item-stacked-label">
         <span class="input-label">First Name</span>
         <input type="text" ng-model="profileCtrl.userForEdit.first_name"
-        ng-keyup="profileCtrl.checkValueChange($event)">
+        ng-keyup="profileCtrl.checkValueChange($event)" ng-focus="profileCtrl.removeProfileUpdateMessage()">
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">Last Name</span>
         <input type="text" ng-model="profileCtrl.userForEdit.last_name"
-        ng-keyup="profileCtrl.checkValueChange($event)">
+        ng-keyup="profileCtrl.checkValueChange($event)" ng-focus="profileCtrl.removeProfileUpdateMessage()">
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">Email</span>
         <input type="text" ng-model="profileCtrl.userForEdit.email"
-        ng-keyup="profileCtrl.checkValueChange($event)">
+        ng-keyup="profileCtrl.checkValueChange($event)" ng-focus="profileCtrl.removeProfileUpdateMessage()">
       </label>
     </div>
     <!--Start - Profile details edit-->

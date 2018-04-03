@@ -14,10 +14,13 @@
     vm.user = _cookieManagerService.getUserCookie();
     vm.userForEdit = {};
     vm.disableEditButton = true;
+    vm.profileUpdateSuccessStatus = false;
+    vm.profileUpdateErrorStatus = false;
     $scope.passwordChangeInfo = {};
     $scope.passwordChangeErrors = {
       emptyError: false,
-      misMatchError: false
+      misMatchError: false,
+      changeSuccess: false
     };
 
     vm.goToBackView = goToBackView;
@@ -28,10 +31,14 @@
     vm.closeChangePasswordModal = closeChangePasswordModal;
     vm.changeUserPassword = changeUserPassword;
     vm.userLogOut = userLogOut;
+    vm.removeProfileUpdateMessage = removeProfileUpdateMessage;
+
+    $scope.closeChangePasswordModal = closeChangePasswordModal;
+    $scope.changeUserPassword = changeUserPassword;
+    $scope.removeProfileUpdateMessage = removeProfileUpdateMessage;
 
     $ionicModal.fromTemplateUrl('templates/profile/change-password.html', {
-      controller: 'profileController',
-      controllerAs: 'profileCtrl',
+      scope: $scope,
       animation: 'slide-in-up'
     }).then(function(modal) {
       $scope.modal = modal;
@@ -74,11 +81,34 @@
     }
 
     function profileUpdateSuccessCallback(response) {
+      vm.profileUpdateSuccessStatus = true;
+      vm.profileUpdateErrorStatus = false;
+      vm.userForEdit = response.data.data;
+      _cookieManagerService.setUserCookie(response.data.data);
+      vm.user = _cookieManagerService.getUserCookie();
+      setTimeout(() => {
+        removeProfileUpdateMessage();
+      }, 3000);
       console.log(response);
     }
 
     function profileUpdateErrorCallback(error) {
+      vm.profileUpdateSuccessStatus = false;
+      vm.profileUpdateErrorStatus = true;
+      setTimeout(() => {
+        removeProfileUpdateMessage();
+      }, 3000);
       console.log(error);
+    }
+
+    function removeProfileUpdateMessage() {
+      vm.profileUpdateSuccessStatus = false;
+      vm.profileUpdateErrorStatus = false;
+      $scope.passwordChangeErrors = {
+        emptyError: false,
+        misMatchError: false,
+        changeSuccess: false
+      };
     }
 
     function updateSelfProfile() {
@@ -95,6 +125,12 @@
     }
 
     function closeChangePasswordModal() {
+      $scope.passwordChangeInfo = {};
+      $scope.passwordChangeErrors = {
+        emptyError: false,
+        misMatchError: false,
+        changeSuccess: false
+      };
       $scope.modal.hide();
     }
     // Cleanup the modal when we're done with it!
@@ -111,11 +147,23 @@
     });
 
     function changeUserPasswordOnSuccessCallback(response) {
-
+      $scope.passwordChangeInfo = {};
+      $scope.passwordChangeErrors = {
+        emptyError: false,
+        misMatchError: false,
+        changeSuccess: true
+      };
+      vm.userForEdit = response.data.data;
+      _cookieManagerService.setUserCookie(response.data.data);
+      vm.user = _cookieManagerService.getUserCookie();
+      setTimeout(() => {
+        removeProfileUpdateMessage();
+      }, 3000);
+      console.log(response);
     }
 
     function changeUserPasswordOnErrorCallback(error) {
-
+      console.log(error);
     }
 
     function changeUserPassword() {
