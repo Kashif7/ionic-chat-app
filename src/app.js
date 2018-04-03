@@ -23,6 +23,7 @@
           // from snapping when text inputs are focused. Ionic handles this internally for
           // a much nicer keyboard experience.
           // cordova.plugins.Keyboard.disableScroll(true);
+          console.log('cordova walata aawa');
           cordovaService.initialize();
         } else {
           firebaseService.configMessage();
@@ -32,11 +33,12 @@
           StatusBar.styleDefault();
         }
 
-
+        console.log('cordova walata aawa 1');
       });
     })
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
+      console.log('cordova walata aawa 2');
       $httpProvider.defaults.headers.common = {};
       $httpProvider.defaults.headers.post = {};
       $httpProvider.defaults.headers.put = {};
@@ -55,7 +57,7 @@
           abstract: true,
           templateUrl: 'templates/navigation.html'
         });
-      let user = window.localStorage.getItem('user');
+      let user = localStorage.getItem('user');
 
       console.log(user, 'dhggr');
 

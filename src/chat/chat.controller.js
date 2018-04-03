@@ -5,19 +5,20 @@
 
   chatController.$inject = ['$scope', 'chatDataService', 'messageDataService', 'cookieManagerService', 'authService', 'firebaseService'];
 
-  function chatController($scope, _chatDataService, _messageDataService, _cookieManagerService,  _authService, _firebaseService) {
+  function chatController($scope, _chatDataService, _messageDataService, _cookieManagerService, _authService, _firebaseService) {
     let vm = this;
     vm.threads = [];
     vm.threadOb = {};
     let userId = 1;
     let lastThreadId;
+    console.log('came to chat');
 
     _authService.updateToken();
 
     if (!window.cordova) {
       setTimeout(() => {
         _firebaseService.getToken();
-      },1000);
+      }, 1000);
     }
 
     _chatDataService.getThreads(_cookieManagerService.getLoginUserId(), addConvos, threadsOnError);
@@ -48,7 +49,7 @@
     let messageDay;
 
     function getMessageTime(time) {
-      console.log(time,'time');
+      console.log(time, 'time');
       messageDay = new Date(time * 1000);
       console.log(messageDay, 'messageDay');
       messageDay = new Date(time);
@@ -57,11 +58,7 @@
     }
 
     function addConvos(threads) {
-      setTimeout(() => {
-        $scope.$apply(() => {
-          add(threads);
-        });
-      }, 0);
+      add(threads);
     }
 
     function add(threads) {
@@ -70,12 +67,17 @@
       vm.threads.length = 0;
       if (threads.numChildren() > 0) {
         threads.forEach((thread) => {
-          vm.threads.push(thread.val());
 
-          if (index === threads.numChildren() - 1) {
-            vm.threads.sort(sort);
-            console.log(vm.threads, 'ejgiogegegiehgeuh');
-          }
+          setTimeout(() => {
+            $scope.$apply(() => {
+              vm.threads.push(thread.val());
+
+              if (index === threads.numChildren() - 1) {
+                vm.threads.sort(sort);
+                console.log(vm.threads, 'ejgiogegegiehgeuh');
+              }
+            });
+          }, 0);
           index++;
         });
       }

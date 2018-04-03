@@ -34,7 +34,8 @@
     function onNotification() {
       FCMPlugin.onNotification(function (data) {
         alert(data);
-        console.log(data, 'data');
+        console.log(data, 'sas das');
+        console.log('notification');
         if (data.wasTapped) {
           alert(data);
           let user = JSON.parse(localStorage.getItem('user'));
@@ -56,7 +57,7 @@
           .catch(errorCallback);
         } else {
           //Notification was received in foreground. Maybe the user needs to be notified.
-          alert('Primary notification');
+          alert('notified');
         }
       });
     }
