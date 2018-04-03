@@ -32,7 +32,7 @@
         <img ng-if="messageCtrl.showAvatarImage(message.senderId)"
              src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg" alt=""/>
         <p class="text-center time" id="{{$index}}">
-          <small am-time-ago="message.timeStamp | amFromUnix | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'"></small>
+          <small>{{messageCtrl.getMessageTime(message.timeStamp)}}</small>
         </p>
         <!--<p class="text-center" style="font-size: 25px; color: red; background-color: transparent">-->
           <!--<i class="icon ion-trash-a"></i>-->

@@ -9,7 +9,7 @@
 
   <!--Start - Navigation bar save button-->
   <ion-nav-buttons side="secondary">
-    <button ng-class="profileCtrl.disableEditButton ? 'dark disable-button': ''" style="color: #387ef5 !important;" class="button button-positive button-outline"
+    <button ng-class="profileCtrl.disableEditButton ? 'dark disable-button': ''" class="button button-calm button-clear nav-text-buttons"
             ng-click="profileCtrl.updateSelfProfile()">Save</button>
   </ion-nav-buttons>
   <!--End - Navigation bar save button-->
@@ -20,8 +20,8 @@
       <img align="center"
            ng-src="{{profileCtrl.userForEdit.image_url}}"
            src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg">
-      <label ng-click="profileCtrl.imageSelecter('select_profile_image')" class="profile-button icon ion-camera button-calm"></label>
-      <input id="select_profile_image" type="file" name="selectedProfileImage" style="visibility:hidden; line-height: 0;">
+      <!--<label ng-click="profileCtrl.imageSelecter('select_profile_image')" class="profile-button icon ion-camera button-calm"></label>-->
+      <!--<input id="select_profile_image" type="file" name="selectedProfileImage" style="visibility:hidden; line-height: 0;">-->
     </div>
     <!--End - Profile image edit-->
     <!--Start - Profile details edit-->

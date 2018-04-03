@@ -12,13 +12,13 @@
 
   <!--Start - Navigation bar profile button-->
   <ion-nav-buttons side="primary">
-    <a class="button button-icon button-clear icon ion-person button-small" href="#/profile"></a>
+    <a class="button button-icon button-clear icon ion-person button-small nav-buttons" href="#/profile"></a>
   </ion-nav-buttons>
   <!--End - Navigation bar profile button-->
 
   <!--Start - Navigation bar button for create new chat-->
   <ion-nav-buttons side="secondary">
-    <a ng-if="chatCtrl.checkLoginUserType()" class="button button-icon button-clear icon ion-compose button-small"
+    <a ng-if="chatCtrl.checkLoginUserType()" class="button button-icon button-clear icon ion-compose button-small nav-buttons"
        href="#/contact-list/one2one"></a>
   </ion-nav-buttons>
   <!--End - Navigation bar button for create new chat-->
@@ -57,8 +57,7 @@
                 ng-href="#/chat-messages?threadId={{thread.threadId}}&type={{thread.type}}">
         <img ng-src="{{thread.image}}" src="http://moorehumane.org/wp-content/uploads/2016/06/avatar-male.jpg">
         <h2>{{thread.displayName}}</h2>
-        <span class="item-note"
-              am-time-ago="thread.timeStamp | amFromUnix | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'"></span>
+        <span class="item-note">{{chatCtrl.getMessageTime(thread.timeStamp)}}</span>
         <p>{{thread.lastMessage}}</p>
         <!--<span an-time-ago="announcement.createTimestamp | amUtc | amLocal | amDateFormat:'MM.DD.YYYY HH:mm:ss'"></span>-->
         <span ng-if="chatCtrl.userType === 'User'" class="badge badge-calm" ng-hide="thread.unseenCount === '0'">{{thread.unseenCount}}</span>

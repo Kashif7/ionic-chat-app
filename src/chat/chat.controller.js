@@ -3,9 +3,9 @@
     .module('practeraChat.chat')
     .controller('chatController', chatController);
 
-  chatController.$inject = ['$scope', 'chatDataService', 'messageDataService', 'cookieManagerService', 'authService', 'firebaseService', 'appService'];
+  chatController.$inject = ['$scope', '$filter', 'chatDataService', 'messageDataService', 'cookieManagerService', 'authService', 'firebaseService', 'appService'];
 
-  function chatController($scope, _chatDataService, _messageDataService, _cookieManagerService,  _authService, _firebaseService, _appService) {
+  function chatController($scope, $filter, _chatDataService, _messageDataService, _cookieManagerService,  _authService, _firebaseService, _appService) {
     let vm = this;
     vm.threads = [];
     vm.threadOb = {};
@@ -14,7 +14,6 @@
     vm.threadShearch = '';
     let userId = 1;
     let lastThreadId;
-    console.log('came to chat');
 
     vm.platformIsAndroid = ionic.Platform.isAndroid();
 
@@ -83,10 +82,39 @@
     let messageDay;
 
     function getMessageTime(time) {
-      console.log(time, 'time');
       messageDay = new Date(time * 1000);
-      messageDay = new Date(time);
-      return messageDay;
+      let toDay = new Date();
+      let dateDifference = toDay.getDate() - messageDay.getDate();
+      if (dateDifference === 1) {
+        return "yesterday";
+      } else if (dateDifference < 1) {
+        let timeDifference = toDay - messageDay;
+        return checkTimeDifference(timeDifference);
+      } else {
+        return $filter('date')(time * 1000, "MMM dd, yyyy");
+      }
+    }
+
+    function checkTimeDifference(timeDifference) {
+      let time = '';
+      let msec = timeDifference;
+      let hh = Math.floor(msec / 1000 / 60 / 60);
+      msec -= hh * 1000 * 60 * 60;
+      let mm = Math.floor(msec / 1000 / 60);
+      msec -= mm * 1000 * 60;
+      let ss = Math.floor(msec / 1000);
+      msec -= ss * 1000;
+
+      if (hh > 0) {
+        time = hh + "hours ago";
+      } else if (mm > 0) {
+        time = mm + "minutes ago";
+      } else {
+        time = ss + "seconds ago";
+      }
+
+      return time;
+
     }
 
     function addConvos(threads) {
@@ -107,7 +135,6 @@
 
               if (index === threads.numChildren() - 1) {
                 vm.threads.sort(sort);
-                console.log(vm.threads, 'ejgiogegegiehgeuh');
               }
               index++;
             });

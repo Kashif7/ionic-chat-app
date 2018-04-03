@@ -25,6 +25,7 @@
     vm.messageTimeShow = messageTimeShow;
     vm.deleteConversation = deleteConversation;
     vm.messageOnHold = messageOnHold;
+    vm.getMessageTime = getMessageTime;
 
     let lastMessageId;
     let user;
@@ -43,6 +44,44 @@
       } else {
         e.classList.add('show');
       }
+    }
+
+    let messageDay;
+
+    function getMessageTime(time) {
+      messageDay = new Date(time * 1000);
+      let toDay = new Date();
+      let dateDifference = toDay.getDate() - messageDay.getDate();
+      if (dateDifference === 1) {
+        return "yesterday";
+      } else if (dateDifference < 1) {
+        let timeDifference = toDay - messageDay;
+        return checkTimeDifference(timeDifference);
+      } else {
+        return $filter('date')(time * 1000, "MMM dd, yyyy");
+      }
+    }
+
+    function checkTimeDifference(timeDifference) {
+      let time = '';
+      let msec = timeDifference;
+      let hh = Math.floor(msec / 1000 / 60 / 60);
+      msec -= hh * 1000 * 60 * 60;
+      let mm = Math.floor(msec / 1000 / 60);
+      msec -= mm * 1000 * 60;
+      let ss = Math.floor(msec / 1000);
+      msec -= ss * 1000;
+
+      if (hh > 0) {
+        time = hh + "hours ago";
+      } else if (mm > 0) {
+        time = mm + "minutes ago";
+      } else {
+        time = ss + "seconds ago";
+      }
+
+      return time;
+
     }
 
     function goToBackView() {
