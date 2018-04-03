@@ -26,6 +26,7 @@
 
     function refreshToken() {
       FCMPlugin.onTokenRefresh(function (token) {
+        localStorage.setItem('firebase_token', token);
         _authService.setToken(token);        
         // _authService.updateToken(token);
       });
