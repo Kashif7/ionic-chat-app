@@ -27,12 +27,16 @@
       let user = JSON.parse(localStorage.getItem('user'));
       let threadId;
       let refString;
+      let title;
+      let name;
+
       if (user.user_type === 'User') {
         if (data.tag) {
           threadInfo = data.tag.split(" ");
           let threadId = threadInfo[0];
           if (data.type === 'HelpDesk') {
             refString = `/threads/helpDesk/${threadId}`;
+            title = 'HelpDesk';
           } else {
             refString = `/threads/${user.id}/${threadId}`;
           }
@@ -42,16 +46,19 @@
           let threadId = threadInfo[0];
           if (data.type === 'HelpDesk') {
             refString = `/threads/${user.id}/${threadId}`;
+            title = 'HelpDesk';
           } else {
             refString = `/threads/${user.id}/${threadId}`;
           }
         }
       } else {
         if (data.tag) {
-          threadId = data.tag;
+          threadInfo = data.tag.split(" ");
+          let threadId = threadInfo[0];
           refString = `/threads/helpDesk/${threadId}`;
         } else {
-          threadId = data.data.tag;
+          threadInfo = data.tag.split(" ");
+          let threadId = threadInfo[0];
           refString = `/threads/helpDesk/${threadId}`;
         }
       }
@@ -64,11 +71,20 @@
         .$loaded()
         .then((newThread) => {
           thread = newThread;
+
+          if (title) {
+            name = title;
+          } else {
+            name = thread.displayName;
+          }
+
+          console.log(name, 'name');
+          console.log(thread, 'thread');
           var notification = {
             template: '<p ng-click="goToChat()">New message<br> from <small>{{title}}</small></p>',
             position: 'top right',
             scope: {
-              title: thread.displayName,
+              title: name,
               goToChat: function () {
                 _messageDataService.setThread(thread);
                 $window.location.href = (`#/chat-messages?type=${thread.type}`);
