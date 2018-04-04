@@ -28,10 +28,10 @@
     vm.userType = _cookieManagerService.getLoginUserType();
     if (vm.userType === 'User') {
       _chatDataService.getThreads(_cookieManagerService.getLoginUserId(), addConvos, threadsOnError);
-      _chatDataService.getNewThreads(_cookieManagerService.getLoginUserId(), (thread)=> {
-        vm.threads.push(thread.val());
-        vm.threads.sort(sort);
-      });
+      // _chatDataService.getNewThreads(_cookieManagerService.getLoginUserId(), (thread)=> {
+      //   vm.threads.push(thread.val());
+      //   vm.threads.sort(sort);
+      // });
       _chatDataService.getHelpdeskThreads(_cookieManagerService.getLoginUserId(), getHelpdeskThreadsOnSuccess, getHelpdeskThreadsOnError);
     } else {
       _chatDataService.getThreadsForAdmin(addConvos, threadsOnError);

@@ -36,12 +36,20 @@
       FCMPlugin.onNotification(function (data) {
         console.log(data, 'sas das');
         console.log('notification');
+        let threadInfo = [];
+        let refString = '';
         if (data.wasTapped) {
           let user = JSON.parse(localStorage.getItem('user'));
-          let threadId = data.tag;
+          threadInfo = data.tag.split(" ");
+          let threadId = threadInfo[0];
           let thread;
 
-          let refString = `/threads/${user.id}/${threadId}`;
+          if (threadInfo[1] === 'HelpDesk') {
+            refString = `/threads/helpDesk/${threadId}`;
+          } else {
+            refString = `/threads/${user.id}/${threadId}`;
+          }
+
           let ref = firebase.database()
           .ref(refString);
 

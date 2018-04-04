@@ -31,7 +31,7 @@
       ref.off('value', successCallback);
     }
 
-    function getNewThreads(successCallback) {
+    function getNewThreads(userId, successCallback) {
       let ref = firebase.database()
         .ref(`/threads/${userId}`)
         .orderByChild('timeStamp');

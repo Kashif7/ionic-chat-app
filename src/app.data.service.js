@@ -22,17 +22,41 @@
 
     function showNotification(data) {
       console.log("showNotification", data);
+      let threadInfo = [];
 
       let user = JSON.parse(localStorage.getItem('user'));
       let threadId;
-      if (data.tag) {
-        threadId = data.tag;
+      let refString;
+      if (user.user_type === 'User') {
+        if (data.tag) {
+          threadInfo = data.tag.split(" ");
+          let threadId = threadInfo[0];
+          if (data.type === 'HelpDesk') {
+            refString = `/threads/helpDesk/${threadId}`;
+          } else {
+            refString = `/threads/${user.id}/${threadId}`;
+          }
+          console.log(refString, 'refString');
+        } else {
+          threadInfo = data.tag.split(" ");
+          let threadId = threadInfo[0];
+          if (data.type === 'HelpDesk') {
+            refString = `/threads/${user.id}/${threadId}`;
+          } else {
+            refString = `/threads/${user.id}/${threadId}`;
+          }
+        }
       } else {
-        threadId = data.data.tag;
+        if (data.tag) {
+          threadId = data.tag;
+          refString = `/threads/helpDesk/${threadId}`;
+        } else {
+          threadId = data.data.tag;
+          refString = `/threads/helpDesk/${threadId}`;
+        }
       }
       let thread;
 
-      let refString = `/threads/${user.id}/${threadId}`;
       let ref = firebase.database()
         .ref(refString);
 
