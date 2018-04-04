@@ -45,8 +45,8 @@
               });
           }
         },
-        hasDelay: false
-        // delay: 3000,
+        hasDelay: true,
+        delay: 3000,
       };
       notifier.notify(notification);
     }
