@@ -148,7 +148,7 @@
         }
       }
       _messageDataService.setThread(newChatData);
-      // $ionicBackdrop.release();
+      $ionicBackdrop.release();
       $window.location.href = ('#/chat-messages?type=' + newChatData.type);
     }
 
@@ -190,8 +190,11 @@
         });
 
         function tempfun(res) {
+          if (!res) {
+            return;
+          }
           if (res) {
-            // $ionicBackdrop.retain();
+            $ionicBackdrop.retain();
             chatMembers[loginUserId] = "admin";
             let chatData = {
               members: chatMembers,
@@ -215,7 +218,7 @@
         //   }
         // });
       } else {
-        // $ionicBackdrop.retain();
+        $ionicBackdrop.retain();
         let allMembers  = angular.extend({}, chatMembers, groupData.members);
         console.log("groupData", groupData);
         let tempGroupInfo = {
