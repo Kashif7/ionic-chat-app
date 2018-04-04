@@ -141,14 +141,12 @@
     }
 
     function groupChatCreateSuccessCallback(response) {
-      let newChatData;
-      for (var key in response.data['threads'][loginUserId]) {
-        if (response.data['threads'][loginUserId].hasOwnProperty(key)) {
-          newChatData = response.data['threads'][loginUserId][key];
-        }
-      }
+      let keys = Object.keys(response.data['threads'][loginUserId]);
+      let newChatData = response.data['threads'][loginUserId][keys[0]];
       _messageDataService.setThread(newChatData);
-      $ionicBackdrop.release();
+      setTimeout(function () {
+        $ionicBackdrop.release();
+      }, 1000);
       $window.location.href = ('#/chat-messages?type=' + newChatData.type);
     }
 
@@ -203,20 +201,6 @@
             _chatCreateService.createGroupChat(chatData, groupChatCreateSuccessCallback, groupChatCreateErrorCallback);
           }
         }
-
-        // groupNamePopup.then(function(res) {
-        //   console.log("createGroupChat 4");
-        //   if (res) {
-        //     console.log("name added");
-        //     // $ionicBackdrop.retain();
-        //     chatMembers[loginUserId] = "admin";
-        //     let chatData = {
-        //       members: chatMembers,
-        //       name: res
-        //     };
-        //     _chatCreateService.createGroupChat(chatData, groupChatCreateSuccessCallback, groupChatCreateErrorCallback);
-        //   }
-        // });
       } else {
         $ionicBackdrop.retain();
         let allMembers  = angular.extend({}, chatMembers, groupData.members);

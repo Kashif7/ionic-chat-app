@@ -42,14 +42,15 @@
     }
 
     function createGroupChat(data, onSuccessCallback, onErrorCallback) {
-      $http(_backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'groupChatCreate'))
-        .then(function (successResponse) {
-          console.log("data service success", successResponse);
-          onSuccessCallback(successResponse);
-        }, function (errorResponse) {
-          onErrorCallback(errorResponse);
-          console.log("data service error", errorResponse);
-        });
+      let request = _backendUtilService.createAuthenticatedApiRequestWithData(data, 'POST', 'groupChatCreate');
+
+      $http(request).then(function (successResponse) {
+        console.log("data service success", successResponse);
+        onSuccessCallback(successResponse);
+      }, function (errorResponse) {
+        onErrorCallback(errorResponse);
+        console.log("data service error", errorResponse);
+      });
     }
 
     function createHelpdeskChat(onSuccessCallback, onErrorCallback) {
