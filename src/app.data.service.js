@@ -21,12 +21,15 @@
     }
 
     function showNotification(data) {
+      console.log("showNotification", data);
       var notification = {
-        template: '<h3 ng-click="goToChat()">Click me!</h3>',
+        template: '<p ng-click="goToChat()">New message<br> from <small>{{title}}</small></p>',
+        position: 'top right',
         scope: {
+          title: data.notification.title,
           goToChat: function () {
             let user = JSON.parse(localStorage.getItem('user'));
-            let threadId = data.tag;
+            let threadId = data.data.tag;
             let thread;
 
             let refString = `/threads/${user.id}/${threadId}`;
@@ -43,6 +46,7 @@
           }
         },
         hasDelay: false
+        // delay: 3000,
       };
       notifier.notify(notification);
     }

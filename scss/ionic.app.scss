@@ -119,3 +119,135 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     }
   }
 }
+
+.notifier-msg {
+  position: fixed;
+  z-index: 1000;
+}
+
+.notifier-msg.top {
+  top: 1%;
+}
+
+.notifier-msg.right {
+  right: 1%;
+}
+
+.notifier-msg.bottom {
+  bottom: 1%;
+}
+
+.notifier-msg.left {
+  left: 1%;
+}
+
+.notifier-msg.center {
+  left: 50%;
+}
+
+.notifier-msg-content {
+  padding: 12px 20px;
+  box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.12), 0 10px 36px -4px rgba(77, 96, 232, 0.3);
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Gilda Display', serif;
+  -webkit-user-select: none;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.notifier-msg-content.center {
+  position: relative;
+  left: -50%;
+}
+
+.notifier-msg-content.default {
+  background: -webkit-linear-gradient(315deg, rgba(17, 90, 116, 0.55), #6ebdd3);
+  background: linear-gradient(135deg, #73a5ff, #6ebdd3);
+
+  div[ng-transclude] {
+    div {
+      p {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.notifier-msg-content.success {
+  background-color: #739e73;
+  border-color: #618561;
+}
+
+.notifier-msg-content.warning {
+  background-color: #c79121;
+  border-color: #a87a1b;
+}
+
+.notifier-msg-content.info {
+  background-color: #3276b1;
+  border-color: #2a6496;
+}
+
+.notifier-msg-content.error {
+  background-color: #c46a69;
+  border-color: #a65959;
+}
+
+/* BUTTONS */
+.notifier-button.notifier-button-close {
+  position: absolute;
+  display: none;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  outline:none;
+  padding-bottom: 2px;
+  border: none;
+  color: #FFF;
+  opacity: 0.5;
+  background: transparent;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+/* TRANSITION */
+@-moz-keyframes fadeIn {
+  0%{opacity:0}
+  100%{opacity:1}
+}
+@-webkit-keyframes fadeIn {
+  0%{opacity:0}
+  100%{opacity:1}
+}
+@-ms-keyframes fadeIn {
+  0%{opacity:0}
+  100%{opacity:1}
+}
+@keyframes fadeIn {
+  0%{opacity:0}
+  100%{opacity:1}
+}
+.notifier-msg {
+  -webkit-animation:fadeIn 0.2s linear;
+  animation:fadeIn 0.2s linear;
+}
+.notifier-msg.ng-hide-add,
+.notifier-msg.ng-hide-remove {
+  -webkit-transition:all linear 0.5s;
+  -moz-transition:all linear 0.5s;
+  -o-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+  display:block!important;
+}
+
+.notifier-msg.ng-hide-add.ng-hide-add-active,
+.notifier-msg.ng-hide-remove {
+  opacity:0;
+}
+
+.notifier-msg.ng-hide-add,
+.notifier-msg.ng-hide-remove.ng-hide-remove-active {
+  opacity:1;
+}
+

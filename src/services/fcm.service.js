@@ -27,7 +27,7 @@
     function refreshToken() {
       FCMPlugin.onTokenRefresh(function (token) {
         localStorage.setItem('firebase_token', token);
-        _authService.setToken(token);        
+        _authService.setToken(token);
         // _authService.updateToken(token);
       });
     }
@@ -44,7 +44,7 @@
           let refString = `/threads/${user.id}/${threadId}`;
           let ref = firebase.database()
           .ref(refString);
-  
+
         $firebaseObject(ref)
           .$loaded()
           .then((newThread) => {
@@ -53,7 +53,7 @@
             $window.location.href = (`#/chat-messages?type=${thread.type}`);
           });
         } else {
-          _appService.showNotification(data);
+          // _appService.showNotification(data);
           //Notification was received in foreground. Maybe the user needs to be notified.
           console.log('notify');
         }
