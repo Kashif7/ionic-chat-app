@@ -32,6 +32,7 @@
         function configMessage() {
             messaging = firebase.messaging();
             messaging.usePublicVapidKey("BI3g0Hc4w9bNo2onAe2Ag6C8dqJP3SsXlxBPfMKEXoCqWrOJjUzHReT63ji5Wsz91OfisS_kO679UZAGvNonBbY");
+            onMessage();
         }
 
         function requestPermission() {
@@ -49,7 +50,6 @@
                     console.log(currentToken, 'current eifjefi');
                     localStorage.setItem('firebase_token', currentToken);
                     _authService.setToken(currentToken);
-                    onMessage();
                     tokenSentToServer = true;
                 } else {
                     // Show permission request.
