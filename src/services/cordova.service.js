@@ -15,19 +15,15 @@
     };
 
     function initialize() {
-      console.log("fjefjefefue");
       document.addEventListener('deviceready', onDeviceReady.bind(this), false);
     }
 
     function onDeviceReady() {
-      // alert("hdjheuhe");
-      console.log("hdjheuhe");
       FcmFactory.onNotification();
       FcmFactory.getToken(addUserApiCall);
     }
 
     function addUserApiCall(token) {
-      // alert(token);
       console.log("hdjheuhe",token);
     }
 

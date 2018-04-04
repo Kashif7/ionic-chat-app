@@ -18,6 +18,7 @@ www/css/ionic.app.min.css
 www/lib/angular
 www/lib/angular-animate
 www/lib/angular-sanitize
+www/lib/angular-notifier
 www/lib/angular-ui-router
 www/lib/angular-moment
 www/lib/moment

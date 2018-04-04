@@ -182,6 +182,8 @@
         .orderByChild('timeStamp')
         .limitToLast(1)
         .on('value', successCallback);
+      
+      updateUnseenCount();
     }
 
     function getGroupFromId(groupId) {

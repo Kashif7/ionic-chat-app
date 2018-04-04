@@ -3,8 +3,8 @@
         .module('practeraChat')
         .factory('firebaseService', firebaseService);
 
-    firebaseService.$inject = ['authService'];
-    function firebaseService(_authService) {
+    firebaseService.$inject = ['authService', 'appService'];
+    function firebaseService(_authService, _appService) {
         let messaging;
         let tokenSentToServer = false;
 
@@ -87,6 +87,7 @@
         function onMessage() {
             messaging.onMessage(function (payload) {
                 console.log('Message received. ', payload);
+                _appService.showNotification(payload);
             });
         }
     }

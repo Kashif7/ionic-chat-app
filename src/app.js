@@ -7,7 +7,7 @@
 
 (function () {
 
-  angular.module('practeraChat', ['ionic', 'angularMoment', 'ngCookies', 'practeraChat.chat',
+  angular.module('practeraChat', ['ionic', 'llNotifier', 'angularMoment', 'ngCookies', 'practeraChat.chat',
     'practeraChat.group', 'practeraChat.message', 'practeraChat.auth', 'practeraChat.config',
     'practeraChat.createChat', 'practeraChat.profile'])
 

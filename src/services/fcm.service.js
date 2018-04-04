@@ -6,9 +6,9 @@
     .module('practeraChat')
     .factory('fcmFactory', fcmFactory);
 
-  fcmFactory.$inject = ['authService', 'messageDataService', '$firebaseObject', '$firebaseArray', '$window'];
+  fcmFactory.$inject = ['authService', 'messageDataService', '$firebaseObject', '$firebaseArray', '$window', 'appService'];
 
-  function fcmFactory(_authService, _messageDataService, $firebaseObject, $firebaseArray, $window) {
+  function fcmFactory(_authService, _messageDataService, $firebaseObject, $firebaseArray, $window, _appService) {
     return {
       getToken: getToken,
       refreshToken: refreshToken,
@@ -51,9 +51,9 @@
             thread = newThread;
             _messageDataService.setThread(thread);
             $window.location.href = (`#/chat-messages?type=${thread.type}`);
-          })
-          .catch(errorCallback);
+          });
         } else {
+          _appService.showNotification(data);
           //Notification was received in foreground. Maybe the user needs to be notified.
           console.log('notify');
         }
