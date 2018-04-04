@@ -53,7 +53,7 @@
             $window.location.href = (`#/chat-messages?type=${thread.type}`);
           });
         } else {
-          // _appService.showNotification(data);
+          _appService.showNotification(data);
           //Notification was received in foreground. Maybe the user needs to be notified.
           console.log('notify');
         }

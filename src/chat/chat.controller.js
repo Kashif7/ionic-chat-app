@@ -28,6 +28,10 @@
     vm.userType = _cookieManagerService.getLoginUserType();
     if (vm.userType === 'User') {
       _chatDataService.getThreads(_cookieManagerService.getLoginUserId(), addConvos, threadsOnError);
+      _chatDataService.getNewThreads(_cookieManagerService.getLoginUserId(), (thread)=> {
+        vm.threads.push(thread.val());
+        vm.threads.sort(sort);
+      });
       _chatDataService.getHelpdeskThreads(_cookieManagerService.getLoginUserId(), getHelpdeskThreadsOnSuccess, getHelpdeskThreadsOnError);
     } else {
       _chatDataService.getThreadsForAdmin(addConvos, threadsOnError);
@@ -122,16 +126,15 @@
 
     }
 
-    function addConvos(threads) {
-      add(threads);
-    }
+    // function addConvos(threads) {
+    //   add(threads);
+    // }
 
     function add(threads) {
       let index = 0;
       vm.threads.length = 0;
       if (threads.numChildren() > 0) {
         threads.forEach((thread) => {
-
           setTimeout(() => {
             $scope.$apply(() => {
               if (thread.val().createdTime !== thread.val().timeStamp) {
@@ -149,8 +152,79 @@
       }
     }
 
+    function checkExist(key) {
+      let index = vm.threads.findIndex(thread => {
+        return thread.threadId === key;
+      });
+    }
+
     function sort(a, b) {
       return parseInt(b.timeStamp) - parseInt(a.timeStamp);
     }
+
+    function addConvos(threads) {
+      let index = 0;
+      setTimeout(() => {
+        $scope.$apply(() => {
+          if (threads.numChildren() > 0) {
+            threads.forEach((thread) => {
+              if (thread.val().createdTime !== thread.val().timeStamp) {
+                vm.threads.push(thread.val());
+              }
+  
+              if (index === threads.numChildren() - 1) {
+                vm.threads.sort(sort);
+                getUpdatedThreads();
+              }
+              index++;
+            });
+          }
+        });
+      }, 0);
+    }
+
+    function getUpdatedThreads() {
+      _chatDataService.getUpdatedThreads(_cookieManagerService.getLoginUserType(), _cookieManagerService.getLoginUserId(), updateThreads);
+    }
+
+    function updateThreads(newThread) {
+        let oldThread = {};
+        let oldThreadId;
+
+        function checkEqual(thread) {
+          console.log(thread.threadId, 'thread.threadId');
+          console.log(newThread.key, 'newThread.key');
+          return thread.threadId == newThread.key;
+        }
+
+        setTimeout(() => {
+          $scope.$apply(() => {
+            oldThreadId = vm.threads.findIndex(checkEqual);
+            if (oldThreadId !== -1) {
+              oldThread = vm.threads[oldThreadId];
+
+              if (_cookieManagerService.getLoginUserType() === 'User') {
+                if (newThread.val().unseenCount !== oldThread.unseenCount) {
+                  let index = vm.threads.indexOf(oldThread);
+                  vm.threads[index] = newThread.val();
+                } 
+              } else {
+                console.log("Admin");
+                console.log(newThread.val(), 'new thread value');
+                console.log(oldThread, 'oldThread');
+                if (newThread.val().helpDeskCount !== oldThread.helpDeskCount) {
+                  console.log("Admin", newThread.val().helpDeskCount, oldThread.helpDeskCount);
+                  let index = vm.threads.indexOf(oldThread);
+                  vm.threads[index] = newThread.val();
+                } 
+              }
+            } else {
+              vm.threads.push(newThread.val());
+            }
+            vm.threads.sort(sort);
+          });
+        }, 0);
+    }
+
   }
 })();

@@ -11,6 +11,8 @@
 
     return {
       getThreads: getThreads,
+      getNewThreads: getNewThreads,
+      getUpdatedThreads: getUpdatedThreads,
       getThreadsForAdmin: getThreadsForAdmin,
       getThreadsOb: getThreadsOb,
       getOldThreads: getOldThreads,
@@ -25,7 +27,30 @@
         .orderByChild('timeStamp');
       // .limitToFirst(noOfThreads);
 
-      ref.on('value', successCallback);
+      ref.once('value', successCallback);
+      ref.off('value', successCallback);
+    }
+
+    function getNewThreads(successCallback) {
+      let ref = firebase.database()
+        .ref(`/threads/${userId}`)
+        .orderByChild('timeStamp');
+
+      ref.on('child_added', successCallback);
+    }
+
+    function getUpdatedThreads(type, userId, successCallback) {
+      let ref;
+      console.log("type",type);
+      if (type === 'Admin') {
+        ref = firebase.database()
+        .ref(`/threads/helpDesk`);
+      } else {
+        ref = firebase.database()
+        .ref(`/threads/${userId}`);
+      }
+
+      ref.on('child_changed', successCallback);
     }
 
     function getThreadsOb(userId) {
@@ -44,7 +69,8 @@
         .ref(`/threads/helpDesk`)
         .orderByChild('timeStamp');
       // .limitToFirst(noOfThreads);
-      ref.on('value', successCallback);
+      ref.once('value', successCallback);
+      ref.off('value', successCallback);
     }
 
     function getOldThreads(userId, lastThreadId, successCallback, errorCallback) {

@@ -66,8 +66,10 @@
       } else {
         console.log(userID,thread.threadId,'thread type not Help Desk');
 
-        firebase.database().ref().child(`/threads/${userID}/${thread.threadId}`)
+        let x= firebase.database().ref().child(`/threads/${userID}/${thread.threadId}`)
           .update({ unseenCount: "0" });
+
+        console.log(x);
       }
 
     }
