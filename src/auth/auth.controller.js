@@ -65,8 +65,6 @@
 
     function userSignUp() {
 
-      console.log(vm.signUpCredential.first_name, vm.signUpCredential.last_name , vm.signUpCredential.email , vm.signUpCredential.password);
-
       if (vm.signUpCredential.first_name && vm.signUpCredential.last_name && vm.signUpCredential.email && vm.signUpCredential.password) {
         let message = '';
         if (vm.signUpCredential.user_type === 'Admin') {
@@ -87,7 +85,7 @@
         });
       } else {
         var alertPopup = $ionicPopup.alert({
-          title: 'Check Entered data',
+          title: 'Check entered data',
           template: 'Please fill all required fields!'
         });
       }

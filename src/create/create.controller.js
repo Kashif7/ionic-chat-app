@@ -15,6 +15,7 @@
     vm.saveButtonText = 'Done';
     vm.viewTitle = 'Create Chat';
     vm.contactShearch = '';
+    vm.hasMembers = false;
 
     vm.createNormalChat = createNormalChat;
     vm.selectOrUnselectUser = selectOrUnSelectUser;
@@ -67,7 +68,6 @@
 
     function activateMemberAddOnSuccess(response) {
       filterMembers(response);
-      console.log("response", response);
     }
 
     function activateMemberAddOnError(error) {
@@ -81,14 +81,15 @@
       _authDataService.userListForAddMemberToGroup(requestData, activateMemberAddOnSuccess, activateMemberAddOnError);
     }
 
-    function selectOrUnSelectUser(index) {
-      if (chatMembers.hasOwnProperty(vm.contactList[index].id)) {
-        delete chatMembers[vm.contactList[index].id];
-        vm.contactList[index].active = false;
+    function selectOrUnSelectUser(contact) {
+      if (chatMembers.hasOwnProperty(contact.id)) {
+        delete chatMembers[contact.id];
+        contact.active = false;
       } else {
-        chatMembers[vm.contactList[index].id] = "member";
-        vm.contactList[index].active = true;
+        chatMembers[contact.id] = "member";
+        contact.active = true;
       }
+      checkHasMembers();
     }
 
     function goToBackView() {
@@ -96,13 +97,17 @@
     }
 
     function checkHasMembers() {
-      return angular.equals(chatMembers, {});
+      if (Object.keys(chatMembers).length === 0 && chatMembers.constructor === Object) {
+        vm.hasMembers = false;
+      } else {
+        vm.hasMembers = true;
+      }
+      // return angular.equals(chatMembers, {});
     }
 
     function userListOnSuccessCallback(response) {
       filterMembers(response);
       // vm.contactList = response;
-      console.log("response", response);
     }
 
     function userListOnErrorCallback(error) {
@@ -136,7 +141,6 @@
     }
 
     function groupChatCreateSuccessCallback(response) {
-      console.log("create group", response);
       let newChatData;
       for (var key in response.data['threads'][loginUserId]) {
         if (response.data['threads'][loginUserId].hasOwnProperty(key)) {
@@ -144,7 +148,7 @@
         }
       }
       _messageDataService.setThread(newChatData);
-      $ionicBackdrop.release();
+      // $ionicBackdrop.release();
       $window.location.href = ('#/chat-messages?type=' + newChatData.type);
     }
 
@@ -165,7 +169,6 @@
 
       if (vm.view !== 'groupInfo') {
         $scope.groupInfo = {};
-
         let groupNamePopup = $ionicPopup.show({
           template: '<input type="text" required ng-model="groupInfo.name">',
           title: 'Enter Group Name',
@@ -179,16 +182,16 @@
                 if (!$scope.groupInfo.name) {
                   e.preventDefault();
                 } else {
-                  return $scope.groupInfo.name;
+                  tempfun($scope.groupInfo.name);
                 }
               }
             }
           ]
         });
 
-        groupNamePopup.then(function(res) {
+        function tempfun(res) {
           if (res) {
-            $ionicBackdrop.retain();
+            // $ionicBackdrop.retain();
             chatMembers[loginUserId] = "admin";
             let chatData = {
               members: chatMembers,
@@ -196,9 +199,23 @@
             };
             _chatCreateService.createGroupChat(chatData, groupChatCreateSuccessCallback, groupChatCreateErrorCallback);
           }
-        });
+        }
+
+        // groupNamePopup.then(function(res) {
+        //   console.log("createGroupChat 4");
+        //   if (res) {
+        //     console.log("name added");
+        //     // $ionicBackdrop.retain();
+        //     chatMembers[loginUserId] = "admin";
+        //     let chatData = {
+        //       members: chatMembers,
+        //       name: res
+        //     };
+        //     _chatCreateService.createGroupChat(chatData, groupChatCreateSuccessCallback, groupChatCreateErrorCallback);
+        //   }
+        // });
       } else {
-        $ionicBackdrop.retain();
+        // $ionicBackdrop.retain();
         let allMembers  = angular.extend({}, chatMembers, groupData.members);
         console.log("groupData", groupData);
         let tempGroupInfo = {

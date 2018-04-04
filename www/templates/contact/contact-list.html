@@ -19,7 +19,7 @@
 
   <!--Start - Navigation bar create group button-->
   <ion-nav-buttons side="secondary">
-    <button ng-if="!contactCtrl.checkHasMembers()" class="button button-clear button-small calm nav-text-buttons"
+    <button ng-if="contactCtrl.hasMembers" class="button button-clear button-small calm nav-text-buttons"
             ng-click="contactCtrl.createGroupChat()">{{contactCtrl.saveButtonText}}</button>
   </ion-nav-buttons>
   <!--End - Navigation bar create group button-->
@@ -65,7 +65,7 @@
       <ion-checkbox class="contact-checkbox" ng-repeat="contact in contactCtrl.contactList | filter : contactCtrl.contactShearch track by $index"
                     ng-class="contact.letter ? 'item-divider checkbox-divider':'item-checkbox-right item-accordion'"
                     ng-model="contact.active"
-                    ng-click="contactCtrl.selectOrUnselectUser($index)">
+                    ng-click="contactCtrl.selectOrUnselectUser(contact)">
         <p style="padding-left: 15px" ng-if="contact.letter">{{contact.name}}</p>
         <div ng-if="!contact.letter" class="row remove-padding">
           <div class="col col-20 col-center remove-padding">

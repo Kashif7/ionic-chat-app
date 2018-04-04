@@ -116,6 +116,7 @@
     function sendMessage() {
       console.log(newMessage, 'newMessage');
       newMessage.text = vm.newMessageText;
+      newMessage.message_type = thread.type;
       if (vm.newMessageText) {
         if (vm.chatType === 'Help Desk') {
           _messageDataService.sendMessageToHelpDesk(newMessage, sendMessageToHelpDeskOnSuccessCallback);
@@ -218,9 +219,9 @@
           $scope.$apply(() => {
             if (!checkExist(childSnapShot.key)) {
               pushNewMessage(childSnapShot);
+              $ionicScrollDelegate.scrollBottom();
             }
           });
-          $ionicScrollDelegate.scrollBottom();
         }, 0);
       });
     }
@@ -341,30 +342,31 @@
 
     function addMessages(messages) {
       let add;
+      if (messages.numChildren() !== 0) {
+        setTimeout(() => {
+          $scope.$apply(() => {
+            let index = 0;
+            let messageArray = [];
+            setLoadMoreButton(messages.numChildren());
+            messages.forEach((message) => {
+              if (index === 0) {
+                lastMessageId = message.key;
+              } else if(index === messages.numChildren()-1) {
+                console.log("bobobob");
+                $ionicScrollDelegate.scrollBottom();
+              }
 
-      setTimeout(() => {
-        $scope.$apply(() => {
-          let index = 0;
-          let messageArray = [];
-          setLoadMoreButton(messages.numChildren());
-          messages.forEach((message) => {
-            if (index === 0) {
-              lastMessageId = message.key;
-            } else if(index === messages.numChildren()-1) {
-              console.log("bobobob");
-              $ionicScrollDelegate.scrollBottom();
-            }
+              if (!checkExist(message.key)) {
+                messageArray.push(message.val());
+              }
+              vm.messages = vm.messages.concat(messageArray);
+              vm.messages = removeRepeatingValues(vm.messages);
 
-            if (!checkExist(message.key)) {
-              messageArray.push(message.val());
-            }
-            vm.messages = vm.messages.concat(messageArray);
-            vm.messages = removeRepeatingValues(vm.messages);
-
-            index++;
+              index++;
+            });
           });
-        });
-      }, 0);
+        }, 0);
+      }
     }
 
     function appendMessages(messages) {
