@@ -42,7 +42,7 @@
           }
           console.log(refString, 'refString');
         } else {
-          threadInfo = data.tag.split(" ");
+          threadInfo = data.data.tag.split(" ");
           let threadId = threadInfo[0];
           if (data.type === 'HelpDesk') {
             refString = `/threads/${user.id}/${threadId}`;
@@ -57,7 +57,7 @@
           let threadId = threadInfo[0];
           refString = `/threads/helpDesk/${threadId}`;
         } else {
-          threadInfo = data.tag.split(" ");
+          threadInfo = data.data.tag.split(" ");
           let threadId = threadInfo[0];
           refString = `/threads/helpDesk/${threadId}`;
         }
